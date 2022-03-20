@@ -24,7 +24,8 @@
   <entry>
     <title>pwnable_seethefile</title>
     <url>/2022/03/19/pwnable-seethefile/</url>
-    <content><![CDATA[<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">p  *(struct _IO_FILE_plus *)0x804c410</span><br><span class="line">gdb调FILE_PLUS结构体，可以是地址，也可以是stdin等</span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<p>这篇文章主要是在简单的记录小猫在学习IO_FILE时候遇到的一些问题。借用pwnable.tw题目seethefile</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">p  *(struct _IO_FILE_plus *)0x804c410</span><br><span class="line">gdb调FILE_PLUS结构体，可以是地址，也可以是stdin等</span><br></pre></td></tr></table></figure>
 
 <p>32位程序：</p>
 <ol>
