@@ -1,0 +1,195 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>tw2017parrot - Dreamcat</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="I IO_buf_base劫持技术，文章写的会比较凌乱，是在一边解题同时记录环境以及保护1234567891011121314giantbranch@ubuntu:~/Desktop/pwnable,"> 
+    <meta name="author" content="dreamcat"> 
+    <link rel="alternative" href="atom.xml" title="Dreamcat" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="tw2017parrot - Dreamcat"/>
+    <meta name="twitter:description" content="I IO_buf_base劫持技术，文章写的会比较凌乱，是在一边解题同时记录环境以及保护1234567891011121314giantbranch@ubuntu:~/Desktop/pwnable,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Dreamcat"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="tw2017parrot - Dreamcat"/>
+    <meta property="og:description" content="I IO_buf_base劫持技术，文章写的会比较凌乱，是在一边解题同时记录环境以及保护1234567891011121314giantbranch@ubuntu:~/Desktop/pwnable,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Dreamcat</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">tw2017parrot</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">tw2017parrot</h1>
+        <div class="stuff">
+            <span>三月 22, 2022</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/writeup/" rel="tag">writeup</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h1 id=""><a href="#" class="headerlink" title=""></a></h1><h1 id="I-IO-buf-base劫持技术，"><a href="#I-IO-buf-base劫持技术，" class="headerlink" title="I IO_buf_base劫持技术，"></a>I IO_buf_base劫持技术，</h1><h2 id="文章写的会比较凌乱，是在一边解题同时记录"><a href="#文章写的会比较凌乱，是在一边解题同时记录" class="headerlink" title="文章写的会比较凌乱，是在一边解题同时记录"></a>文章写的会比较凌乱，是在一边解题同时记录</h2><h2 id="环境以及保护"><a href="#环境以及保护" class="headerlink" title="环境以及保护"></a>环境以及保护</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">giantbranch@ubuntu:~/Desktop/pwnabletw/hijack_io_buf_base$ strings libc.so<span class="number">.6</span> | grep ubuntu </span><br><span class="line">GNU C <span class="title function_">Library</span> <span class="params">(Ubuntu GLIBC <span class="number">2.23</span><span class="number">-0u</span>buntu11)</span> stable release version 2.23, by Roland McGrath et al.</span><br><span class="line">&lt;https:<span class="comment">//bugs.launchpad.net/ubuntu/+source/glibc/+bugs&gt;.</span></span><br><span class="line">giantbranch@ubuntu:~/Desktop/pwnabletw/hijack_io_buf_base$ checksec --file=tw2017parrot</span><br><span class="line">[*] <span class="string">&#x27;/home/giantbranch/Desktop/pwnabletw/hijack_io_buf_base/tw2017parrot&#x27;</span></span><br><span class="line">    Arch:     amd64<span class="number">-64</span>-little</span><br><span class="line">    RELRO:    Full RELRO</span><br><span class="line">    Stack:    No canary found</span><br><span class="line">    NX:       NX enabled</span><br><span class="line">    PIE:      PIE enabled</span><br><span class="line">giantbranch@ubuntu:~/Desktop/pwnabletw/hijack_io_buf_base$ file tw2017parrot </span><br><span class="line">tw2017parrot: ELF <span class="number">64</span>-bit LSB shared object, x86<span class="number">-64</span>, version <span class="number">1</span> (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86<span class="number">-64.</span>so<span class="number">.2</span>, <span class="keyword">for</span> GNU/Linux <span class="number">2.6</span><span class="number">.32</span>, BuildID[sha1]=<span class="number">00f</span>bccd873daf9400480cbb4dbd48845f1bb97b8, not stripped</span><br><span class="line">giantbranch@ubuntu:~/Desktop/pwnabletw/hijack_io_buf_base$ </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>ubuntu2.23下的题目，只有canary保护没有开启，没有思路</p>
+<h2 id="主要代码"><a href="#主要代码" class="headerlink" title="主要代码"></a>主要代码</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> __cdecl __noreturn <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span> **argv, <span class="type">const</span> <span class="type">char</span> **envp)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">size_t</span> size; <span class="comment">// [rsp+8h] [rbp-18h] BYREF</span></span><br><span class="line">  <span class="type">void</span> *buf; <span class="comment">// [rsp+10h] [rbp-10h]</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 v5; <span class="comment">// [rsp+18h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v5 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  setvbuf(<span class="built_in">stdin</span>, <span class="number">0LL</span>, <span class="number">2</span>, <span class="number">0LL</span>);</span><br><span class="line">  setvbuf(<span class="built_in">stdout</span>, <span class="number">0LL</span>, <span class="number">2</span>, <span class="number">0LL</span>);</span><br><span class="line">  sleep(<span class="number">3u</span>);</span><br><span class="line">  <span class="keyword">while</span> ( <span class="number">1</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Size:&quot;</span>);</span><br><span class="line">    _isoc99_scanf(<span class="string">&quot;%lu&quot;</span>, &amp;size);</span><br><span class="line">    getchar();</span><br><span class="line">    <span class="keyword">if</span> ( !size )</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    buf = <span class="built_in">malloc</span>(size);</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Buffer:&quot;</span>);</span><br><span class="line">    read(<span class="number">0</span>, buf, size);</span><br><span class="line">    *((_BYTE *)buf + size - <span class="number">1</span>) = <span class="number">0</span>;			<span class="comment">//这个很关键</span></span><br><span class="line">    write(<span class="number">1</span>, buf, size);</span><br><span class="line">    <span class="built_in">free</span>(buf);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><h3 id="初步印象"><a href="#初步印象" class="headerlink" title="初步印象"></a>初步印象</h3><p>代码很简单，malloc,free没有多余的操作，但是malloc不会清空申请的堆块中的内存，同时我们可以输入空。但是只有一个堆块，紧邻topchunk,无法利用unsortedbin泄露 main_arena,铃响其他办法</p>
+<p>malloc的一个机制</p>
+<p>当我们在应用层调用malloc申请堆的时候，在glibc中实际上调用的是_lib_malloc函数，但是_lib_malloc函数只是用来简单的封装_int_malloc函数的，_int_malloc函数才是申请堆的核心函数。<br>_int_malloc会根据应用层用户申请的内存块大小，从而分配相应的chunk给用户使用。</p>
+<p>函数的分配堆内存的主要执行流程<br>①请求大小在fastbin的范围内：在fastbins中找是否有对应的chunk可以使用。<br>②请求大小在smallbin的范围内：在smallbin中找是否有对应的chunk可以使用。<br>③请求大小在largebin的范围内：先调用malloc_consolidate对fastbins进行整理加入unsortedbins。然后在unsortedbin中查看是否有满足要求的chunk可以使用。<br>④在largebin中寻找可用的chunk来使用。<br>⑤寻找较大的bin链中是否有可用的chunk来使用。<br>⑥切割topchunk来使用。<br>⑦topchunk也不够了，再次调用malloc_consolidate整理fastbins。<br>⑧topchunk不够用，再次malloc_consolidate之后还没有可以用的，最终调用sysmalloc（系统调用）申请内存。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; p *(<span class="keyword">struct</span> _IO_FILE_plus *)<span class="built_in">stdin</span></span><br><span class="line">$<span class="number">1</span> = &#123;</span><br><span class="line">  file = &#123;</span><br><span class="line">    _flags = <span class="number">-72540021</span>, </span><br><span class="line">    _IO_read_ptr = <span class="number">0x7f0883e32964</span> &lt;_IO_2_1_stdin_+<span class="number">132</span>&gt; <span class="string">&quot;&quot;</span>, </span><br><span class="line">    _IO_read_end = <span class="number">0x7f0883e32964</span> &lt;_IO_2_1_stdin_+<span class="number">132</span>&gt; <span class="string">&quot;&quot;</span>, </span><br><span class="line">    _IO_read_base = <span class="number">0x7f0883e32963</span> &lt;_IO_2_1_stdin_+<span class="number">131</span>&gt; <span class="string">&quot;\n&quot;</span>, </span><br><span class="line">    _IO_write_base = <span class="number">0x7f0883e32963</span> &lt;_IO_2_1_stdin_+<span class="number">131</span>&gt; <span class="string">&quot;\n&quot;</span>, </span><br><span class="line">    _IO_write_ptr = <span class="number">0x7f0883e32963</span> &lt;_IO_2_1_stdin_+<span class="number">131</span>&gt; <span class="string">&quot;\n&quot;</span>, </span><br><span class="line">    _IO_write_end = <span class="number">0x7f0883e32963</span> &lt;_IO_2_1_stdin_+<span class="number">131</span>&gt; <span class="string">&quot;\n&quot;</span>, </span><br><span class="line">    _IO_buf_base = <span class="number">0x7f0883e32963</span> &lt;_IO_2_1_stdin_+<span class="number">131</span>&gt; <span class="string">&quot;\n&quot;</span>, </span><br><span class="line">    _IO_buf_end = <span class="number">0x7f0883e32964</span> &lt;_IO_2_1_stdin_+<span class="number">132</span>&gt; <span class="string">&quot;&quot;</span>, </span><br><span class="line">    _IO_save_base = <span class="number">0x0</span>, </span><br><span class="line">    _IO_backup_base = <span class="number">0x0</span>, </span><br><span class="line">    _IO_save_end = <span class="number">0x0</span>, </span><br><span class="line">    _markers = <span class="number">0x0</span>, </span><br><span class="line">    _chain = <span class="number">0x0</span>, </span><br><span class="line">    _fileno = <span class="number">0</span>, </span><br><span class="line">    _flags2 = <span class="number">0</span>, </span><br><span class="line">    _old_offset = <span class="number">-1</span>, </span><br><span class="line">    _cur_column = <span class="number">0</span>, </span><br><span class="line">    _vtable_offset = <span class="number">0</span> <span class="string">&#x27;\000&#x27;</span>, </span><br><span class="line">    _shortbuf = <span class="string">&quot;\n&quot;</span>, </span><br><span class="line">    _lock = <span class="number">0x7f0883e34790</span> &lt;_IO_stdfile_0_lock&gt;, </span><br><span class="line">    _offset = <span class="number">-1</span>, </span><br><span class="line">    _codecvt = <span class="number">0x0</span>, </span><br><span class="line">    _wide_data = <span class="number">0x7f0883e329c0</span> &lt;_IO_wide_data_0&gt;, </span><br><span class="line">    _freeres_list = <span class="number">0x0</span>, </span><br><span class="line">    _freeres_buf = <span class="number">0x0</span>, </span><br><span class="line">    __pad5 = <span class="number">0</span>, </span><br><span class="line">    _mode = <span class="number">-1</span>, </span><br><span class="line">    _unused2 = <span class="string">&#x27;\000&#x27;</span> &lt;repeats <span class="number">19</span> times&gt;</span><br><span class="line">  &#125;, </span><br><span class="line">  vtable = <span class="number">0x7f0883e316e0</span> &lt;_IO_file_jumps&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这是正常的stdin的IO_FILE_plus结构体，_IO_buf_base 是输入缓冲区开始的地方（其实应该是read_base是开始的地方，但是这里肯可能是说read_base &#x3D; buf_base），记得程序代码那个末尾写0 吗。在这里将 _IO_buf_base最低位改为0.这个地址其实是_IO_write_base,这里就可以实现_IO_FILE_plus的覆盖</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; p *(<span class="keyword">struct</span> _IO_FILE_plus *)<span class="built_in">stdin</span></span><br><span class="line">$<span class="number">3</span> = &#123;</span><br><span class="line">  file = &#123;</span><br><span class="line">    _flags = <span class="number">-72539989</span>, </span><br><span class="line">    _IO_read_ptr = <span class="number">0x7f0883e32901</span> &lt;_IO_2_1_stdin_+<span class="number">33</span>&gt; <span class="string">&quot;&quot;</span>, </span><br><span class="line">    _IO_read_end = <span class="number">0x7f0883e32928</span> &lt;_IO_2_1_stdin_+<span class="number">72</span>&gt; <span class="string">&quot;&quot;</span>, </span><br><span class="line">    _IO_read_base = <span class="number">0x7f0883e32900</span> &lt;_IO_2_1_stdin_+<span class="number">32</span>&gt; <span class="string">&quot;&quot;</span>, </span><br><span class="line">    _IO_write_base = <span class="number">0x0</span>, </span><br><span class="line">    _IO_write_ptr = <span class="number">0x0</span>, </span><br><span class="line">    _IO_write_end = <span class="number">0x0</span>, </span><br><span class="line">    _IO_buf_base = <span class="number">0x7f0883e347a8</span> &lt;__free_hook&gt; <span class="string">&quot;&quot;</span>, </span><br><span class="line">    _IO_buf_end = <span class="number">0x7f0883e347b8</span> &lt;next_to_use&gt; <span class="string">&quot;&quot;</span>, </span><br><span class="line">    _IO_save_base = <span class="number">0x0</span>, </span><br><span class="line">    _IO_backup_base = <span class="number">0x0</span>, </span><br><span class="line">    _IO_save_end = <span class="number">0x0</span>, </span><br><span class="line">    _markers = <span class="number">0x0</span>, </span><br><span class="line">    _chain = <span class="number">0x0</span>, </span><br><span class="line">    _fileno = <span class="number">0</span>, </span><br><span class="line">    _flags2 = <span class="number">0</span>, </span><br><span class="line">    _old_offset = <span class="number">-1</span>, </span><br><span class="line">    _cur_column = <span class="number">0</span>, </span><br><span class="line">    _vtable_offset = <span class="number">0</span> <span class="string">&#x27;\000&#x27;</span>, </span><br><span class="line">    _shortbuf = <span class="string">&quot;\n&quot;</span>, </span><br><span class="line">    _lock = <span class="number">0x7f0883e34790</span> &lt;_IO_stdfile_0_lock&gt;, </span><br><span class="line">    _offset = <span class="number">-1</span>, </span><br><span class="line">    _codecvt = <span class="number">0x0</span>, </span><br><span class="line">    _wide_data = <span class="number">0x7f0883e329c0</span> &lt;_IO_wide_data_0&gt;, </span><br><span class="line">    _freeres_list = <span class="number">0x0</span>, </span><br><span class="line">    _freeres_buf = <span class="number">0x0</span>, </span><br><span class="line">    __pad5 = <span class="number">0</span>, </span><br><span class="line">    _mode = <span class="number">-1</span>, </span><br><span class="line">    _unused2 = <span class="string">&#x27;\000&#x27;</span> &lt;repeats <span class="number">19</span> times&gt;</span><br><span class="line">  &#125;, </span><br><span class="line">  vtable = <span class="number">0x7f0883e316e0</span> &lt;_IO_file_jumps&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#I-IO-buf-base%E5%8A%AB%E6%8C%81%E6%8A%80%E6%9C%AF%EF%BC%8C"><span class="toc-number">2.</span> <span class="toc-text">I IO_buf_base劫持技术，</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E5%86%99%E7%9A%84%E4%BC%9A%E6%AF%94%E8%BE%83%E5%87%8C%E4%B9%B1%EF%BC%8C%E6%98%AF%E5%9C%A8%E4%B8%80%E8%BE%B9%E8%A7%A3%E9%A2%98%E5%90%8C%E6%97%B6%E8%AE%B0%E5%BD%95"><span class="toc-number">2.1.</span> <span class="toc-text">文章写的会比较凌乱，是在一边解题同时记录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E4%BB%A5%E5%8F%8A%E4%BF%9D%E6%8A%A4"><span class="toc-number">2.2.</span> <span class="toc-text">环境以及保护</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E4%BB%A3%E7%A0%81"><span class="toc-number">2.3.</span> <span class="toc-text">主要代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%9E%90"><span class="toc-number">2.4.</span> <span class="toc-text">分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E6%AD%A5%E5%8D%B0%E8%B1%A1"><span class="toc-number">2.4.1.</span> <span class="toc-text">初步印象</span></a></li></ol></li></ol></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

