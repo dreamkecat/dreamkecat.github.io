@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-06-23T04:14:37.252Z</updated>
+  <updated>2022-06-23T04:25:53.862Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -21,15 +21,15 @@
     <link href="http://example.com/2022/06/23/test/"/>
     <id>http://example.com/2022/06/23/test/</id>
     <published>2022-06-23T03:56:22.000Z</published>
-    <updated>2022-06-23T04:14:37.252Z</updated>
+    <updated>2022-06-23T04:25:53.862Z</updated>
     
-    <content type="html"><![CDATA[<p>s</p><p><img src="/.com//image-20220623120838221.png" alt="image-20220623120838221"></p>]]></content>
+    <content type="html"><![CDATA[<p>s</p><p><img src="/.com//myBLOG\blog\source_posts\test\9}SY44NC03@1TZ[L3ICDSTV.png" alt="img"></p>]]></content>
     
     
       
       
     <summary type="html">&lt;p&gt;s&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/.com//image-20220623120838221.png&quot; alt=&quot;image-20220623120838221&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/.com//myBLOG\blog\source_posts\test\9}SY44NC03@1TZ[L3ICDSTV.png&quot; alt=&quot;img&quot;&gt;&lt;/p&gt;
 </summary>
       
     
