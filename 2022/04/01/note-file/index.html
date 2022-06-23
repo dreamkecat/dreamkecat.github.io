@@ -75,7 +75,7 @@
 <p>•当进行 malloc_consolidate 时，可能会把合并后的 chunk 放到 unsorted bin 中，如果不是和 top chunk 近邻的话</p>
 <p>•Unsorted Bin 在使用的过程中，采用的遍历顺序是 FIFO，即<strong>插入的时候插入到 unsorted bin 的头部，取出的时候从链表尾获取</strong></p>
 <p>•在程序 malloc 时，如果在 fastbin，small bin 中找不到对应大小的 chunk，就会尝试从 Unsorted Bin 中寻找 chunk。如果取出来的 chunk 大小刚好满足，就会直接返回给用户，否则就会把这些 chunk 分别插入到对应的 bin 中</p>
-<p><img src="C:\Users\32644\AppData\Roaming\Typora\typora-user-images\image-20220401163135175.png" alt="image-20220401163135175"></p>
+<p><img src="/.com//Users\32644\AppData\Roaming\Typora\typora-user-images\image-20220401163135175.png" alt="image-20220401163135175"></p>
 <p>如果我们控制了 bk 的值，我们就能将 unsorted_chunks (av) 写到bk+0x10地址，这是一个很大的值</p>
 <h2 id="过程："><a href="#过程：" class="headerlink" title="过程："></a>过程：</h2><p>1，构造 overlap，实现freechunk的覆盖</p>
 <p>2：修改unsorted_chunk的bk,</p>
