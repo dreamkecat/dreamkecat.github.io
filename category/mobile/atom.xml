@@ -6,12 +6,12 @@
     <updated>2022-07-18T03:08:17.000Z</updated>
     <category term="writeup" />
     <category term="learning" />
-    <category term="pwn" />
     <category term="Hello World" />
-    <category term="Learning" />
+    <category term="pwn" />
     <category term="二进制学习" />
     <category term="逆向" />
     <category term="reverse" />
+    <category term="Learning" />
     <entry>
         <id>http://example.com/2022/07/18/adworld-%E5%9F%BA%E7%A1%80%E7%9A%84android/</id>
         <title>adworld_基础的android</title>

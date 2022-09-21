@@ -6,12 +6,12 @@
     <updated>2021-03-18T16:00:00.000Z</updated>
     <category term="writeup" />
     <category term="learning" />
-    <category term="pwn" />
     <category term="Hello World" />
-    <category term="Learning" />
+    <category term="pwn" />
     <category term="二进制学习" />
     <category term="逆向" />
     <category term="reverse" />
+    <category term="Learning" />
     <entry>
         <id>http://example.com/2021/03/19/hello-world/</id>
         <title>Hello World</title>

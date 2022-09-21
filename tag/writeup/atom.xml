@@ -6,12 +6,12 @@
     <updated>2022-09-20T06:08:33.000Z</updated>
     <category term="writeup" />
     <category term="learning" />
-    <category term="pwn" />
     <category term="Hello World" />
-    <category term="Learning" />
+    <category term="pwn" />
     <category term="二进制学习" />
     <category term="逆向" />
     <category term="reverse" />
+    <category term="Learning" />
     <entry>
         <id>http://example.com/2022/09/20/tctf2022ezvm/</id>
         <title>tctf2022ezvm</title>
