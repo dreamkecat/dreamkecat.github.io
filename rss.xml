@@ -5,16 +5,32 @@
         <link>http://example.com</link>
         <description></description>
         <language>en</language>
-        <pubDate>Tue, 20 Sep 2022 14:08:33 +0800</pubDate>
-        <lastBuildDate>Tue, 20 Sep 2022 14:08:33 +0800</lastBuildDate>
+        <pubDate>Thu, 22 Sep 2022 00:04:23 +0800</pubDate>
+        <lastBuildDate>Thu, 22 Sep 2022 00:04:23 +0800</lastBuildDate>
         <category>writeup</category>
         <category>learning</category>
-        <category>pwn</category>
         <category>Hello World</category>
-        <category>Learning</category>
+        <category>pwn</category>
         <category>二进制学习</category>
+        <category>Learning</category>
         <category>逆向</category>
         <category>reverse</category>
+        <item>
+            <guid isPermalink="true">http://example.com/2022/09/22/99999/99999/</guid>
+            <title>99999</title>
+            <link>http://example.com/2022/09/22/99999/99999/</link>
+            <pubDate>Thu, 22 Sep 2022 00:04:23 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;aa&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;E:%5CmyBLOG%5Cblog%5Csource_posts%5C99999%5Cimage-20220922000642701.png&#34; alt=&#34;image-20220922000642701&#34;&gt;&lt;/p&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">http://example.com/2022/09/22/2022921/9999/</guid>
+            <title></title>
+            <link>http://example.com/2022/09/22/2022921/9999/</link>
+            <pubDate>Thu, 22 Sep 2022 00:03:39 +0800</pubDate>
+            <description><![CDATA[  ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">http://example.com/2022/09/20/tctf2022ezvm/</guid>
             <title>tctf2022ezvm</title>
@@ -266,9 +282,9 @@ chunk 的释放冲 i 性能申请没有对其进行清空，所以，我们申�
  ]]></description>
         </item>
         <item>
-            <guid isPermalink="true">http://example.com/2022/06/23/test/test/</guid>
+            <guid isPermalink="true">http://example.com/2022/06/23/test/</guid>
             <title>test</title>
-            <link>http://example.com/2022/06/23/test/test/</link>
+            <link>http://example.com/2022/06/23/test/</link>
             <pubDate>Thu, 23 Jun 2022 11:56:22 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;s&lt;/p&gt;
 &lt;p&gt;&lt;img data-src=&#34;E:%5CmyBLOG%5Cblog%5Csource_posts%5Ctest%5C9%7DSY44NC03@1TZ%5BL3ICDSTV.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
