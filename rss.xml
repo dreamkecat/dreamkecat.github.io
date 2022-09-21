@@ -9,12 +9,12 @@
         <lastBuildDate>Tue, 20 Sep 2022 14:08:33 +0800</lastBuildDate>
         <category>writeup</category>
         <category>learning</category>
-        <category>Hello World</category>
         <category>pwn</category>
+        <category>Hello World</category>
+        <category>Learning</category>
         <category>二进制学习</category>
         <category>逆向</category>
         <category>reverse</category>
-        <category>Learning</category>
         <item>
             <guid isPermalink="true">http://example.com/2022/09/20/tctf2022ezvm/</guid>
             <title>tctf2022ezvm</title>
@@ -266,9 +266,9 @@ chunk 的释放冲 i 性能申请没有对其进行清空，所以，我们申�
  ]]></description>
         </item>
         <item>
-            <guid isPermalink="true">http://example.com/2022/06/23/test/</guid>
+            <guid isPermalink="true">http://example.com/2022/06/23/test/test/</guid>
             <title>test</title>
-            <link>http://example.com/2022/06/23/test/</link>
+            <link>http://example.com/2022/06/23/test/test/</link>
             <pubDate>Thu, 23 Jun 2022 11:56:22 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;s&lt;/p&gt;
 &lt;p&gt;&lt;img data-src=&#34;E:%5CmyBLOG%5Cblog%5Csource_posts%5Ctest%5C9%7DSY44NC03@1TZ%5BL3ICDSTV.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;

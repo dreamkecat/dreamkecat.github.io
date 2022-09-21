@@ -9,12 +9,12 @@
         <lastBuildDate>Tue, 20 Sep 2022 14:08:33 +0800</lastBuildDate>
         <category>writeup</category>
         <category>learning</category>
-        <category>Hello World</category>
         <category>pwn</category>
+        <category>Hello World</category>
+        <category>Learning</category>
         <category>二进制学习</category>
         <category>逆向</category>
         <category>reverse</category>
-        <category>Learning</category>
         <item>
             <guid isPermalink="true">http://example.com/2022/09/20/tctf2022ezvm/</guid>
             <title>tctf2022ezvm</title>

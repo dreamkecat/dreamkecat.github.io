@@ -6,12 +6,12 @@
     <updated>2022-09-20T06:08:33.000Z</updated>
     <category term="writeup" />
     <category term="learning" />
-    <category term="Hello World" />
     <category term="pwn" />
+    <category term="Hello World" />
+    <category term="Learning" />
     <category term="二进制学习" />
     <category term="逆向" />
     <category term="reverse" />
-    <category term="Learning" />
     <entry>
         <id>http://example.com/2022/09/20/tctf2022ezvm/</id>
         <title>tctf2022ezvm</title>
@@ -263,9 +263,9 @@ chunk 的释放冲 i 性能申请没有对其进行清空，所以，我们申�
         <updated>2022-06-27T13:06:06.000Z</updated>
     </entry>
     <entry>
-        <id>http://example.com/2022/06/23/test/</id>
+        <id>http://example.com/2022/06/23/test/test/</id>
         <title>test</title>
-        <link rel="alternate" href="http://example.com/2022/06/23/test/"/>
+        <link rel="alternate" href="http://example.com/2022/06/23/test/test/"/>
         <content type="html">&lt;p&gt;s&lt;/p&gt;
 &lt;p&gt;&lt;img data-src=&#34;E:%5CmyBLOG%5Cblog%5Csource_posts%5Ctest%5C9%7DSY44NC03@1TZ%5BL3ICDSTV.png&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;
 </content>

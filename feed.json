@@ -53,8 +53,8 @@
             ]
         },
         {
-            "id": "http://example.com/2022/06/23/test/",
-            "url": "http://example.com/2022/06/23/test/",
+            "id": "http://example.com/2022/06/23/test/test/",
+            "url": "http://example.com/2022/06/23/test/test/",
             "title": "test",
             "date_published": "2022-06-23T03:56:22.000Z",
             "content_html": "<p>s</p>\n<p><img data-src=\"E:%5CmyBLOG%5Cblog%5Csource_posts%5Ctest%5C9%7DSY44NC03@1TZ%5BL3ICDSTV.png\" alt=\"img\"></p>\n",

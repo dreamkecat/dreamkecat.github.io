@@ -6,12 +6,12 @@
     <updated>2022-08-01T08:24:13.000Z</updated>
     <category term="writeup" />
     <category term="learning" />
-    <category term="Hello World" />
     <category term="pwn" />
+    <category term="Hello World" />
+    <category term="Learning" />
     <category term="二进制学习" />
     <category term="逆向" />
     <category term="reverse" />
-    <category term="Learning" />
     <entry>
         <id>http://example.com/2022/08/01/glibc-2-35%E4%B8%80%E4%BA%9B%E6%89%8B%E6%B3%95/</id>
         <title>glibc-2.35一些手法</title>
