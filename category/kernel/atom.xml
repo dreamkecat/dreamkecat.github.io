@@ -6,12 +6,12 @@
     <updated>2022-05-03T11:51:43.000Z</updated>
     <category term="writeup" />
     <category term="learning" />
-    <category term="Hello World" />
     <category term="pwn" />
+    <category term="Hello World" />
+    <category term="Learning" />
     <category term="二进制学习" />
     <category term="逆向" />
     <category term="reverse" />
-    <category term="Learning" />
     <entry>
         <id>http://example.com/2022/05/03/inctf2021-kqueue/</id>
         <title>inctf2021_kqueue</title>

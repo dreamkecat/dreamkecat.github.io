@@ -6,12 +6,12 @@
     <updated>2022-05-12T10:58:05.000Z</updated>
     <category term="writeup" />
     <category term="learning" />
-    <category term="Hello World" />
     <category term="pwn" />
+    <category term="Hello World" />
+    <category term="Learning" />
     <category term="二进制学习" />
     <category term="逆向" />
     <category term="reverse" />
-    <category term="Learning" />
     <entry>
         <id>http://example.com/2022/05/12/%E9%80%86%E5%90%91%E5%B8%B8%E8%A7%81%E7%AE%97%E6%B3%95/</id>
         <title>逆向常见算法</title>
