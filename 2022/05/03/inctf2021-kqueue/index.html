@@ -1,0 +1,556 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="我他喵的" href="http://example.com/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="我他喵的" href="http://example.com/atom.xml" />
+<link rel="alternate" type="application/json" title="我他喵的" href="http://example.com/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="learning" />
+
+
+<link rel="canonical" href="http://example.com/2022/05/03/inctf2021-kqueue/">
+
+
+
+  <title>
+inctf2021_kqueue - kernel |
+dreamcat = 我他喵的</title>
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">inctf2021_kqueue
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="Created: 2022-05-03 19:51:43">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">Posted on</span>
+    <time itemprop="dateCreated datePublished" datetime="2022-05-03T19:51:43+08:00">2022-05-03</time>
+  </span>
+  <span class="item" title="Symbols count in article">
+    <span class="icon">
+      <i class="ic i-pen"></i>
+    </span>
+    <span class="text">Symbols count in article</span>
+    <span>16k</span>
+    <span class="text">words</span>
+  </span>
+  <span class="item" title="Reading time">
+    <span class="icon">
+      <i class="ic i-clock"></i>
+    </span>
+    <span class="text">Reading time</span>
+    <span>15 mins.</span>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="Toggle navigation bar">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">dreamcat</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+        <ul>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giciszlczyj20zk0m816d.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gicivghyooj20zk0m8dir.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipesx5fdwj20zk0m81kx.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipeudstjqj20zk0m8k3r.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclwuom7cj20zk0m8dvn.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giciuv0socj20zk0m8qes.jpg"></li>
+        </ul>
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">Home</a></span><i class="ic i-angle-right"></i>
+<span  class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/kernel/" itemprop="item" rel="index" title="In kernel"><span itemprop="name">kernel</span></a>
+<meta itemprop="position" content="1" /></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="en">
+  <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/03/inctf2021-kqueue/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/avatar.jpg">
+    <meta itemprop="name" content="dreamcat">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="我他喵的">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h1 id="inctf2021-pwn-kqueueheap_overflow"><a class="markdownIt-Anchor" href="#inctf2021-pwn-kqueueheap_overflow">#</a> Inctf2021 pwn kqueue		heap_overflow</h1>
+<h2 id="环境以及保护"><a class="markdownIt-Anchor" href="#环境以及保护">#</a> 环境以及保护</h2>
+<p>首先这个文件系统解压出来重新打包会出现问题，因为按照上一篇博客所讲的，创建 file_system 文件夹后，把文件系统的包丢进去，一旦更改后缀名称就是导致归档失败，无法使用 gunzip 进行解包。手动提取后，使用 find 打包，会导致我们启动的时候，报错我们没有挂载的权限。所以我没有重新打包。</p>
+<p>提取出来的 vmlinux</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">dreamcat@ubuntu:~/Desktop/wykernel/inctf2021_kqueue$ checksec vmlinux</span><br><span class="line">[*] <span class="string">&#x27;/home/dreamcat/Desktop/wykernel/inctf2021_kqueue/vmlinux&#x27;</span></span><br><span class="line">    Arch:     amd64-64-little</span><br><span class="line">    RELRO:    No RELRO</span><br><span class="line">    Stack:    No canary found</span><br><span class="line">    NX:       NX disabled</span><br><span class="line">    PIE:      No PIE (0xffffffff81000000)</span><br><span class="line">    RWX:      Has RWX segments</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>文件系统加载了一个 mod，就是 kqueue</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">dreamcat@ubuntu:~/Desktop/wykernel/inctf2021_kqueue/file_system/root$ checksec --file=kqueue.ko</span><br><span class="line">[*] <span class="string">&#x27;/home/dreamcat/Desktop/wykernel/inctf2021_kqueue/file_system/root/kqueue.ko&#x27;</span></span><br><span class="line">    Arch:     amd64-64-little</span><br><span class="line">    RELRO:    No RELRO</span><br><span class="line">    Stack:    Canary found</span><br><span class="line">    NX:       NX enabled</span><br><span class="line">    PIE:      No PIE (0x0)</span><br></pre></td></tr></table></figure>
+<p>之开启了 canary 以及 NX 保护，（这里的 NX 就不允许我们执行用户态代码）</p>
+<p>chall, 启动脚本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">exec</span> qemu-system-x86_64 \</span><br><span class="line">    -cpu kvm64 \</span><br><span class="line">    -m 512 \</span><br><span class="line">    -nographic \</span><br><span class="line">    -kernel <span class="string">&quot;bzImage&quot;</span> \</span><br><span class="line">    -append <span class="string">&quot;console=ttyS0 panic=-1 pti=off kaslr quiet&quot;</span> \</span><br><span class="line">    -monitor /dev/null \</span><br><span class="line">    -initrd <span class="string">&quot;./rootfs.cpio&quot;</span> \</span><br><span class="line">    -net user \</span><br><span class="line">    -net nic</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>开启了 kaslr 地址随机化</p>
+<p>下面就是我们对题目的逆向</p>
+<h2 id="前置知识"><a class="markdownIt-Anchor" href="#前置知识">#</a> 前置知识</h2>
+<p>xlab&amp;slub 分配</p>
+<h2 id="题目分析"><a class="markdownIt-Anchor" href="#题目分析">#</a> 题目分析</h2>
+<p>题目加载了 kqueue 的模块，题目直接给出了源码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Generic header files */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/kernel.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/module.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/device.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/mutex.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/fs.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/slab.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;linux/uaccess.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;kqueue.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> GCC push_options</span></span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> GCC optimize (<span class="string">&quot;O1&quot;</span>)</span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> noinline <span class="type">long</span> <span class="title function_">kqueue_ioctl</span><span class="params">(<span class="keyword">struct</span> file *file, <span class="type">unsigned</span> <span class="type">int</span> cmd, <span class="type">unsigned</span> <span class="type">long</span> arg)</span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="type">long</span> result;</span><br><span class="line"></span><br><span class="line">    <span class="type">request_t</span> request;</span><br><span class="line">    </span><br><span class="line">    mutex_lock(&amp;operations_lock);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (copy_from_user((<span class="type">void</span> *)&amp;request, (<span class="type">void</span> *)arg, <span class="keyword">sizeof</span>(<span class="type">request_t</span>)))&#123;</span><br><span class="line">        err(<span class="string">&quot;[-] copy_from_user failed&quot;</span>);</span><br><span class="line">        <span class="keyword">goto</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">switch</span>(cmd)&#123;</span><br><span class="line">        <span class="keyword">case</span> CREATE_KQUEUE:</span><br><span class="line">            result = create_kqueue(request);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> DELETE_KQUEUE:</span><br><span class="line">            result = delete_kqueue(request);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> EDIT_KQUEUE:</span><br><span class="line">            result = edit_kqueue(request);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> SAVE:</span><br><span class="line">            result = save_kqueue_entries(request);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            result = INVALID;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">ret: </span><br><span class="line">    mutex_unlock(&amp;operations_lock);</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> noinline <span class="type">long</span> <span class="title function_">create_kqueue</span><span class="params">(<span class="type">request_t</span> request)</span>&#123;</span><br><span class="line">    <span class="type">long</span> result = INVALID;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(queueCount &gt; MAX_QUEUES)</span><br><span class="line">        err(<span class="string">&quot;[-] Max queue count reached&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* You can&#x27;t ask for 0 queues , how meaningless */</span></span><br><span class="line">    <span class="keyword">if</span>(request.max_entries&lt;<span class="number">1</span>)</span><br><span class="line">        err(<span class="string">&quot;[-] kqueue entries should be greater than 0&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Asking for too much is also not good */</span></span><br><span class="line">    <span class="keyword">if</span>(request.data_size&gt;MAX_DATA_SIZE)</span><br><span class="line">        err(<span class="string">&quot;[-] kqueue data size exceed&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Initialize kqueue_entry structure */</span></span><br><span class="line">    queue_entry *kqueue_entry;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Check if multiplication of 2 64 bit integers results in overflow */</span></span><br><span class="line">    ull space = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(__builtin_umulll_overflow(<span class="keyword">sizeof</span>(queue_entry),(request.max_entries+<span class="number">1</span>),&amp;space) == <span class="literal">true</span>)</span><br><span class="line">        err(<span class="string">&quot;[-] Integer overflow&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Size is the size of queue structure + size of entry * request entries */</span></span><br><span class="line">    ull queue_size = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(__builtin_saddll_overflow(<span class="keyword">sizeof</span>(<span class="built_in">queue</span>),space,&amp;queue_size) == <span class="literal">true</span>)</span><br><span class="line">        err(<span class="string">&quot;[-] Integer overflow&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Total size should not exceed a certain limit */</span></span><br><span class="line">    <span class="keyword">if</span>(queue_size&gt;<span class="keyword">sizeof</span>(<span class="built_in">queue</span>) + <span class="number">0x10000</span>)</span><br><span class="line">        err(<span class="string">&quot;[-] Max kqueue alloc limit reached&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* All checks done , now call kzalloc */</span></span><br><span class="line">    <span class="built_in">queue</span> *<span class="built_in">queue</span> = validate((<span class="type">char</span> *)kmalloc(queue_size,GFP_KERNEL));</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Main queue can also store data */</span></span><br><span class="line">    <span class="built_in">queue</span>-&gt;data = validate((<span class="type">char</span> *)kmalloc(request.data_size,GFP_KERNEL));</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Fill the remaining queue structure */</span></span><br><span class="line">    <span class="built_in">queue</span>-&gt;data_size   = request.data_size;</span><br><span class="line">    <span class="built_in">queue</span>-&gt;max_entries = request.max_entries;</span><br><span class="line">    <span class="built_in">queue</span>-&gt;queue_size  = queue_size;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Get to the place from where memory has to be handled */</span></span><br><span class="line">    kqueue_entry = (queue_entry *)((<span class="type">uint64_t</span>)(<span class="built_in">queue</span> + (<span class="keyword">sizeof</span>(<span class="built_in">queue</span>)+<span class="number">1</span>)/<span class="number">8</span>));</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Allocate all kqueue entries */</span></span><br><span class="line">    queue_entry* current_entry = kqueue_entry;</span><br><span class="line">    queue_entry* prev_entry = current_entry;</span><br><span class="line"></span><br><span class="line">    <span class="type">uint32_t</span> i=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;request.max_entries+<span class="number">1</span>;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(i!=request.max_entries)</span><br><span class="line">            prev_entry-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">        current_entry-&gt;idx = i;</span><br><span class="line">        current_entry-&gt;data = (<span class="type">char</span> *)(validate((<span class="type">char</span> *)kmalloc(request.data_size,GFP_KERNEL)));</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* Increment current_entry by size of queue_entry */</span></span><br><span class="line">        current_entry += <span class="keyword">sizeof</span>(queue_entry)/<span class="number">16</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* Populate next pointer of the previous entry */</span></span><br><span class="line">        prev_entry-&gt;next = current_entry;</span><br><span class="line">        prev_entry = prev_entry-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Find an appropriate slot in kqueues */</span></span><br><span class="line">    <span class="type">uint32_t</span> j = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;MAX_QUEUES;j++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(kqueues[j] == <span class="literal">NULL</span>)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(j&gt;MAX_QUEUES)</span><br><span class="line">        err(<span class="string">&quot;[-] No kqueue slot left&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Assign the newly created kqueue to the kqueues */</span></span><br><span class="line">    kqueues[j] = <span class="built_in">queue</span>;</span><br><span class="line">    queueCount++;</span><br><span class="line">    result = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> noinline <span class="type">long</span> <span class="title function_">delete_kqueue</span><span class="params">(<span class="type">request_t</span> request)</span>&#123;</span><br><span class="line">    <span class="comment">/* Check for out of bounds requests */</span></span><br><span class="line">    <span class="keyword">if</span>(request.queue_idx&gt;MAX_QUEUES)</span><br><span class="line">        err(<span class="string">&quot;[-] Invalid idx&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Check for existence of the request kqueue */</span></span><br><span class="line">    <span class="built_in">queue</span> *<span class="built_in">queue</span> = kqueues[request.queue_idx];</span><br><span class="line">    <span class="keyword">if</span>(!<span class="built_in">queue</span>)</span><br><span class="line">        err(<span class="string">&quot;[-] Requested kqueue does not exist&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    kfree(<span class="built_in">queue</span>);</span><br><span class="line">    <span class="built_in">memset</span>(<span class="built_in">queue</span>,<span class="number">0</span>,<span class="built_in">queue</span>-&gt;queue_size);</span><br><span class="line">    kqueues[request.queue_idx] = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> noinline <span class="type">long</span> <span class="title function_">edit_kqueue</span><span class="params">(<span class="type">request_t</span> request)</span>&#123;</span><br><span class="line">    <span class="comment">/* Check the idx of the kqueue */</span></span><br><span class="line">    <span class="keyword">if</span>(request.queue_idx &gt; MAX_QUEUES)</span><br><span class="line">        err(<span class="string">&quot;[-] Invalid kqueue idx&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Check if the kqueue exists at that idx */</span></span><br><span class="line">    <span class="built_in">queue</span> *<span class="built_in">queue</span> = kqueues[request.queue_idx];</span><br><span class="line">    <span class="keyword">if</span>(!<span class="built_in">queue</span>)</span><br><span class="line">        err(<span class="string">&quot;[-] kqueue does not exist&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Check the idx of the kqueue entry */</span></span><br><span class="line">    <span class="keyword">if</span>(request.entry_idx &gt; <span class="built_in">queue</span>-&gt;max_entries)</span><br><span class="line">        err(<span class="string">&quot;[-] Invalid kqueue entry_idx&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Get to the kqueue entry memory */</span></span><br><span class="line">    queue_entry *kqueue_entry = (queue_entry *)(<span class="built_in">queue</span> + (<span class="keyword">sizeof</span>(<span class="built_in">queue</span>)+<span class="number">1</span>)/<span class="number">8</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Check for the existence of the kqueue entry */</span></span><br><span class="line">    exists = <span class="literal">false</span>;</span><br><span class="line">    <span class="type">uint32_t</span> i=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;<span class="built_in">queue</span>-&gt;max_entries+<span class="number">1</span>;i++)&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">/* If kqueue entry found , do the necessary */</span></span><br><span class="line">        <span class="keyword">if</span>(kqueue_entry &amp;&amp; request.data &amp;&amp; <span class="built_in">queue</span>-&gt;data_size)&#123;</span><br><span class="line">            <span class="keyword">if</span>(kqueue_entry-&gt;idx == request.entry_idx)&#123;</span><br><span class="line">                validate(<span class="built_in">memcpy</span>(kqueue_entry-&gt;data,request.data,<span class="built_in">queue</span>-&gt;data_size));</span><br><span class="line">                exists = <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        kqueue_entry = kqueue_entry-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* What if the idx is 0, it means we have to update the main kqueue&#x27;s data */</span></span><br><span class="line">    <span class="keyword">if</span>(request.entry_idx==<span class="number">0</span> &amp;&amp; kqueue_entry &amp;&amp; request.data &amp;&amp; <span class="built_in">queue</span>-&gt;data_size)&#123;</span><br><span class="line">        validate(<span class="built_in">memcpy</span>(<span class="built_in">queue</span>-&gt;data,request.data,<span class="built_in">queue</span>-&gt;data_size));</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(!exists)</span><br><span class="line">        <span class="keyword">return</span> NOT_EXISTS;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="comment">/* Now you have the option to safely preserve your precious kqueues */</span></span><br><span class="line"><span class="type">static</span> noinline <span class="type">long</span> <span class="title function_">save_kqueue_entries</span><span class="params">(<span class="type">request_t</span> request)</span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Check for out of bounds queue_idx requests */</span></span><br><span class="line">    <span class="keyword">if</span>(request.queue_idx &gt; MAX_QUEUES)</span><br><span class="line">        err(<span class="string">&quot;[-] Invalid kqueue idx&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Check if queue is already saved or not */</span></span><br><span class="line">    <span class="keyword">if</span>(isSaved[request.queue_idx]==<span class="literal">true</span>)</span><br><span class="line">        err(<span class="string">&quot;[-] Queue already saved&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">queue</span> *<span class="built_in">queue</span> = validate(kqueues[request.queue_idx]);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Check if number of requested entries exceed the existing entries */</span></span><br><span class="line">    <span class="keyword">if</span>(request.max_entries &lt; <span class="number">1</span> || request.max_entries &gt; <span class="built_in">queue</span>-&gt;max_entries)</span><br><span class="line">        err(<span class="string">&quot;[-] Invalid entry count&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Allocate memory for the kqueue to be saved */</span></span><br><span class="line">    <span class="type">char</span> *new_queue = validate((<span class="type">char</span> *)kzalloc(<span class="built_in">queue</span>-&gt;queue_size,GFP_KERNEL));</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Each saved entry can have its own size */</span></span><br><span class="line">    <span class="keyword">if</span>(request.data_size &gt; <span class="built_in">queue</span>-&gt;queue_size)</span><br><span class="line">        err(<span class="string">&quot;[-] Entry size limit exceed&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Copy main&#x27;s queue&#x27;s data */</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">queue</span>-&gt;data &amp;&amp; request.data_size)</span><br><span class="line">        validate(<span class="built_in">memcpy</span>(new_queue,<span class="built_in">queue</span>-&gt;data,request.data_size));</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        err(<span class="string">&quot;[-] Internal error&quot;</span>);</span><br><span class="line">    new_queue += <span class="built_in">queue</span>-&gt;data_size;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Get to the entries of the kqueue */</span></span><br><span class="line">    queue_entry *kqueue_entry = (queue_entry *)(<span class="built_in">queue</span> + (<span class="keyword">sizeof</span>(<span class="built_in">queue</span>)+<span class="number">1</span>)/<span class="number">8</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* copy all possible kqueue entries */</span></span><br><span class="line">    <span class="type">uint32_t</span> i=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;request.max_entries+<span class="number">1</span>;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(!kqueue_entry || !kqueue_entry-&gt;data)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">if</span>(kqueue_entry-&gt;data &amp;&amp; request.data_size)</span><br><span class="line">            validate(<span class="built_in">memcpy</span>(new_queue,kqueue_entry-&gt;data,request.data_size));</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            err(<span class="string">&quot;[-] Internal error&quot;</span>);</span><br><span class="line">        kqueue_entry = kqueue_entry-&gt;next;</span><br><span class="line">        new_queue += <span class="built_in">queue</span>-&gt;data_size;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Mark the queue as saved */</span></span><br><span class="line">    isSaved[request.queue_idx] = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> GCC pop_options</span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> __init <span class="title function_">init_kqueue</span><span class="params">(<span class="type">void</span>)</span>&#123;</span><br><span class="line">    mutex_init(&amp;operations_lock);</span><br><span class="line">    reg = misc_register(&amp;kqueue_device);</span><br><span class="line">    <span class="keyword">if</span>(reg &lt; <span class="number">0</span>)&#123;</span><br><span class="line">        mutex_destroy(&amp;operations_lock);</span><br><span class="line">        err(<span class="string">&quot;[-] Failed to register kqueue&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> __exit <span class="title function_">exit_kqueue</span><span class="params">(<span class="type">void</span>)</span>&#123;</span><br><span class="line">    misc_deregister(&amp;kqueue_device);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">module_init(init_kqueue);</span><br><span class="line">module_exit(exit_kqueue);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>代码比较场我们一点点分析</p>
+<h3 id="kqueue_ioctl"><a class="markdownIt-Anchor" href="#kqueue_ioctl">#</a> kqueue_ioctl</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> noinline <span class="type">long</span> <span class="title function_">kqueue_ioctl</span><span class="params">(<span class="keyword">struct</span> file *file, <span class="type">unsigned</span> <span class="type">int</span> cmd, <span class="type">unsigned</span> <span class="type">long</span> arg)</span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="type">long</span> result;</span><br><span class="line"></span><br><span class="line">    <span class="type">request_t</span> request;</span><br><span class="line">    </span><br><span class="line">    mutex_lock(&amp;operations_lock);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (copy_from_user((<span class="type">void</span> *)&amp;request, (<span class="type">void</span> *)arg, <span class="keyword">sizeof</span>(<span class="type">request_t</span>)))&#123;</span><br><span class="line">        err(<span class="string">&quot;[-] copy_from_user failed&quot;</span>);</span><br><span class="line">        <span class="keyword">goto</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">switch</span>(cmd)&#123;</span><br><span class="line">        <span class="keyword">case</span> CREATE_KQUEUE:</span><br><span class="line">            result = create_kqueue(request);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> DELETE_KQUEUE:</span><br><span class="line">            result = delete_kqueue(request);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> EDIT_KQUEUE:</span><br><span class="line">            result = edit_kqueue(request);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> SAVE:</span><br><span class="line">            result = save_kqueue_entries(request);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            result = INVALID;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">ret: </span><br><span class="line">    mutex_unlock(&amp;operations_lock);</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>ioctl 函数，用于我们与设备的通信。首先会从用户态拷贝 request 的数据。一些重要结构体的定义如下</p>
+<h3 id="结构体"><a class="markdownIt-Anchor" href="#结构体">#</a> 结构体</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">    <span class="type">uint32_t</span> max_entries;</span><br><span class="line">    <span class="type">uint16_t</span> data_size;</span><br><span class="line">    <span class="type">uint16_t</span> entry_idx;</span><br><span class="line">    <span class="type">uint16_t</span> queue_idx;</span><br><span class="line">    <span class="type">char</span>* data;</span><br><span class="line">&#125;<span class="type">request_t</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">    <span class="type">uint16_t</span> data_size;</span><br><span class="line">    <span class="type">uint64_t</span> queue_size; <span class="comment">/* This needs to handle larger numbers */</span></span><br><span class="line">    <span class="type">uint32_t</span> max_entries;</span><br><span class="line">    <span class="type">uint16_t</span> idx;</span><br><span class="line">    <span class="type">char</span>* data;</span><br><span class="line">&#125;<span class="built_in">queue</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">queue_entry</span> <span class="title">queue_entry</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">queue_entry</span>&#123;</span>						<span class="comment">//队列的节点</span></span><br><span class="line">    <span class="type">uint16_t</span> idx;						<span class="comment">//节点的位置</span></span><br><span class="line">    <span class="type">char</span> *data;</span><br><span class="line">    queue_entry *next;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>然后就是根据我们输入的 cmd 进行操作，可以看到是我们熟悉的增删改操作。</p>
+<h3 id="create_kqueue"><a class="markdownIt-Anchor" href="#create_kqueue">#</a> create_kqueue</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> noinline <span class="type">long</span> <span class="title function_">create_kqueue</span><span class="params">(<span class="type">request_t</span> request)</span>&#123;</span><br><span class="line">    <span class="type">long</span> result = INVALID;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(queueCount &gt; MAX_QUEUES)												<span class="comment">//MAX_QUEUES= 5</span></span><br><span class="line">        err(<span class="string">&quot;[-] Max queue count reached&quot;</span>);					<span class="comment">//限制创建的数目为5</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* You can&#x27;t ask for 0 queues , how meaningless */</span></span><br><span class="line">    <span class="keyword">if</span>(request.max_entries&lt;<span class="number">1</span>)								<span class="comment">//我们创建的队列至少有一个节点</span></span><br><span class="line">        err(<span class="string">&quot;[-] kqueue entries should be greater than 0&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Asking for too much is also not good */</span></span><br><span class="line">    <span class="keyword">if</span>(request.data_size&gt;MAX_DATA_SIZE)						<span class="comment">//限制data的数据大小为0x20</span></span><br><span class="line">        err(<span class="string">&quot;[-] kqueue data size exceed&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Initialize kqueue_entry structure */</span></span><br><span class="line">    queue_entry *kqueue_entry;								<span class="comment">//初始化节点指针</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Check if multiplication of 2 64 bit integers results in overflow */</span></span><br><span class="line">    ull space = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(__builtin_umulll_overflow(<span class="keyword">sizeof</span>(queue_entry),(request.max_entries+<span class="number">1</span>),&amp;space) == <span class="literal">true</span>)</span><br><span class="line">        err(<span class="string">&quot;[-] Integer overflow&quot;</span>);</span><br><span class="line"><span class="comment">//Gcc 的内部函数，space= sizeof(queue_entry) * (request.max_entries+1)；每一个entry可以理解为一个node</span></span><br><span class="line">    <span class="comment">/* Size is the size of queue structure + size of entry * request entries */</span></span><br><span class="line">    ull queue_size = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(__builtin_saddll_overflow(<span class="keyword">sizeof</span>(<span class="built_in">queue</span>),space,&amp;queue_size) == <span class="literal">true</span>)</span><br><span class="line">        err(<span class="string">&quot;[-] Integer overflow&quot;</span>);</span><br><span class="line"><span class="comment">//Gcc 的内部函数，queue_size = sizeof(queue) + space</span></span><br><span class="line">    <span class="comment">/* Total size should not exceed a certain limit */</span></span><br><span class="line">    <span class="keyword">if</span>(queue_size&gt;<span class="keyword">sizeof</span>(<span class="built_in">queue</span>) + <span class="number">0x10000</span>)</span><br><span class="line">        err(<span class="string">&quot;[-] Max kqueue alloc limit reached&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* All checks done , now call kzalloc */</span></span><br><span class="line">    <span class="built_in">queue</span> *<span class="built_in">queue</span> = validate((<span class="type">char</span> *)kmalloc(queue_size,GFP_KERNEL));</span><br><span class="line"><span class="comment">//创建队列，queue_size = sizeof(queue_entry) * (request.max_entries+1) + sizeof(queue)；</span></span><br><span class="line">    <span class="comment">/* Main queue can also store data */</span></span><br><span class="line">    <span class="built_in">queue</span>-&gt;data = validate((<span class="type">char</span> *)kmalloc(request.data_size,GFP_KERNEL));</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Fill the remaining queue structure */</span></span><br><span class="line">    <span class="built_in">queue</span>-&gt;data_size   = request.data_size;</span><br><span class="line">    <span class="built_in">queue</span>-&gt;max_entries = request.max_entries;</span><br><span class="line">    <span class="built_in">queue</span>-&gt;queue_size  = queue_size;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Get to the place from where memory has to be handled */</span></span><br><span class="line">    kqueue_entry = (queue_entry *)((<span class="type">uint64_t</span>)(<span class="built_in">queue</span> + (<span class="keyword">sizeof</span>(<span class="built_in">queue</span>)+<span class="number">1</span>)/<span class="number">8</span>));<span class="comment">//(&amp;queue+0x18)指向的是第一个节点的位置</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Allocate all kqueue entries */</span></span><br><span class="line">    queue_entry* current_entry = kqueue_entry;</span><br><span class="line">    queue_entry* prev_entry = current_entry;</span><br><span class="line"></span><br><span class="line">    <span class="type">uint32_t</span> i=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;request.max_entries+<span class="number">1</span>;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(i!=request.max_entries)</span><br><span class="line">            prev_entry-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">        current_entry-&gt;idx = i;</span><br><span class="line">        current_entry-&gt;data = (<span class="type">char</span> *)(validate((<span class="type">char</span> *)kmalloc(request.data_size,GFP_KERNEL)));</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* Increment current_entry by size of queue_entry */</span></span><br><span class="line">        current_entry += <span class="keyword">sizeof</span>(queue_entry)/<span class="number">16</span>;			<span class="comment">//（queue_entry *）current_entry +=1，指向下一个结构体，所有的节点在queue空间是线性的，所以这个queue的空间其实就是queue(队列头信息) + n*queue_entry,</span></span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">        <span class="comment">/* Populate next pointer of the previous entry */</span></span><br><span class="line">        prev_entry-&gt;next = current_entry;					<span class="comment">//尾插法</span></span><br><span class="line">        prev_entry = prev_entry-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Find an appropriate slot in kqueues */</span></span><br><span class="line">    <span class="type">uint32_t</span> j = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;MAX_QUEUES;j++)&#123;							<span class="comment">//所有的队列形成一个数组kqueues,定义在头文件里</span></span><br><span class="line">        <span class="keyword">if</span>(kqueues[j] == <span class="literal">NULL</span>)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//queue *kqueues[MAX_QUEUES] = &#123;(queue *)NULL&#125;;</span></span><br><span class="line">    <span class="keyword">if</span>(j&gt;MAX_QUEUES)</span><br><span class="line">        err(<span class="string">&quot;[-] No kqueue slot left&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Assign the newly created kqueue to the kqueues */</span></span><br><span class="line">    kqueues[j] = <span class="built_in">queue</span>;</span><br><span class="line">    queueCount++;</span><br><span class="line">    result = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>整个创建新的 kqueue 的函数还是比较繁琐的，注释写道代码里</p>
+<p>大概就是，我们创建一个队列，整个队列包含所有的节点结构体，每个结构体的 data 指向一个新的堆块。然后把这个队列的头指针放入一个全局的数组。</p>
+<h3 id="delete_kqueue"><a class="markdownIt-Anchor" href="#delete_kqueue">#</a> delete_kqueue</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> noinline <span class="type">long</span> <span class="title function_">delete_kqueue</span><span class="params">(<span class="type">request_t</span> request)</span>&#123;</span><br><span class="line">    <span class="comment">/* Check for out of bounds requests */</span></span><br><span class="line">    <span class="keyword">if</span>(request.queue_idx&gt;MAX_QUEUES)</span><br><span class="line">        err(<span class="string">&quot;[-] Invalid idx&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Check for existence of the request kqueue */</span></span><br><span class="line">    <span class="built_in">queue</span> *<span class="built_in">queue</span> = kqueues[request.queue_idx];</span><br><span class="line">    <span class="keyword">if</span>(!<span class="built_in">queue</span>)</span><br><span class="line">        err(<span class="string">&quot;[-] Requested kqueue does not exist&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    kfree(<span class="built_in">queue</span>);</span><br><span class="line">    <span class="built_in">memset</span>(<span class="built_in">queue</span>,<span class="number">0</span>,<span class="built_in">queue</span>-&gt;queue_size);</span><br><span class="line">    kqueues[request.queue_idx] = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里会根据我们传入结构体的 queue_idx, 释放对应的 queue, 并且数据清空，不存在 uaf。</p>
+<h3 id="edit_kqueue"><a class="markdownIt-Anchor" href="#edit_kqueue">#</a> edit_kqueue</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> noinline <span class="type">long</span> <span class="title function_">edit_kqueue</span><span class="params">(<span class="type">request_t</span> request)</span>&#123;</span><br><span class="line">    <span class="comment">/* Check the idx of the kqueue */</span></span><br><span class="line">    <span class="keyword">if</span>(request.queue_idx &gt; MAX_QUEUES)</span><br><span class="line">        err(<span class="string">&quot;[-] Invalid kqueue idx&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Check if the kqueue exists at that idx */</span></span><br><span class="line">    <span class="built_in">queue</span> *<span class="built_in">queue</span> = kqueues[request.queue_idx];</span><br><span class="line">    <span class="keyword">if</span>(!<span class="built_in">queue</span>)</span><br><span class="line">        err(<span class="string">&quot;[-] kqueue does not exist&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Check the idx of the kqueue entry */</span></span><br><span class="line">    <span class="keyword">if</span>(request.entry_idx &gt; <span class="built_in">queue</span>-&gt;max_entries)</span><br><span class="line">        err(<span class="string">&quot;[-] Invalid kqueue entry_idx&quot;</span>);</span><br><span class="line"><span class="comment">//根据idx进行定位，定位到节点，每个节点不会保留data的大小，</span></span><br><span class="line">    <span class="comment">/* Get to the kqueue entry memory */</span></span><br><span class="line">    queue_entry *kqueue_entry = (queue_entry *)(<span class="built_in">queue</span> + (<span class="keyword">sizeof</span>(<span class="built_in">queue</span>)+<span class="number">1</span>)/<span class="number">8</span>);<span class="comment">//第一个头节点</span></span><br><span class="line"><span class="comment">//进行一个简单的遍历</span></span><br><span class="line">    <span class="comment">/* Check for the existence of the kqueue entry */</span></span><br><span class="line">    exists = <span class="literal">false</span>;</span><br><span class="line">    <span class="type">uint32_t</span> i=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;<span class="built_in">queue</span>-&gt;max_entries+<span class="number">1</span>;i++)&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">/* If kqueue entry found , do the necessary */</span></span><br><span class="line">        <span class="keyword">if</span>(kqueue_entry &amp;&amp; request.data &amp;&amp; <span class="built_in">queue</span>-&gt;data_size)&#123;<span class="comment">//节点存在，data指针不为空，</span></span><br><span class="line">            <span class="keyword">if</span>(kqueue_entry-&gt;idx == request.entry_idx)&#123;</span><br><span class="line">                validate(<span class="built_in">memcpy</span>(kqueue_entry-&gt;data,request.data,<span class="built_in">queue</span>-&gt;data_size));</span><br><span class="line">                exists = <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        kqueue_entry = kqueue_entry-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* What if the idx is 0, it means we have to update the main kqueue&#x27;s data */</span></span><br><span class="line">    <span class="keyword">if</span>(request.entry_idx==<span class="number">0</span> &amp;&amp; kqueue_entry &amp;&amp; request.data &amp;&amp; <span class="built_in">queue</span>-&gt;data_size)&#123;</span><br><span class="line">        validate(<span class="built_in">memcpy</span>(<span class="built_in">queue</span>-&gt;data,request.data,<span class="built_in">queue</span>-&gt;data_size));<span class="comment">//memcpy返回的是queue-&gt;data</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(!exists)</span><br><span class="line">        <span class="keyword">return</span> NOT_EXISTS;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<p>这里要注意下头部也是可以保存信息的，但是目前还未看到漏洞。</p>
+<h3 id="save_kqueue_entries"><a class="markdownIt-Anchor" href="#save_kqueue_entries">#</a> save_kqueue_entries</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> noinline <span class="type">long</span> <span class="title function_">save_kqueue_entries</span><span class="params">(<span class="type">request_t</span> request)</span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Check for out of bounds queue_idx requests */</span></span><br><span class="line">    <span class="keyword">if</span>(request.queue_idx &gt; MAX_QUEUES)</span><br><span class="line">        err(<span class="string">&quot;[-] Invalid kqueue idx&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Check if queue is already saved or not */</span></span><br><span class="line">    <span class="keyword">if</span>(isSaved[request.queue_idx]==<span class="literal">true</span>)				<span class="comment">//isSaved一个bool类型的数组</span></span><br><span class="line">        err(<span class="string">&quot;[-] Queue already saved&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">queue</span> *<span class="built_in">queue</span> = validate(kqueues[request.queue_idx]);	<span class="comment">//检查参数值是否为空的函数validate</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Check if number of requested entries exceed the existing entries */</span></span><br><span class="line">    <span class="keyword">if</span>(request.max_entries &lt; <span class="number">1</span> || request.max_entries &gt; <span class="built_in">queue</span>-&gt;max_entries)</span><br><span class="line">        err(<span class="string">&quot;[-] Invalid entry count&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Allocate memory for the kqueue to be saved */</span></span><br><span class="line">    <span class="type">char</span> *new_queue = validate((<span class="type">char</span> *)kzalloc(<span class="built_in">queue</span>-&gt;queue_size,GFP_KERNEL));<span class="comment">//新开一个空间</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Each saved entry can have its own size */</span></span><br><span class="line">    <span class="keyword">if</span>(request.data_size &gt; <span class="built_in">queue</span>-&gt;queue_size)</span><br><span class="line">        err(<span class="string">&quot;[-] Entry size limit exceed&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Copy main&#x27;s queue&#x27;s data */</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">queue</span>-&gt;data &amp;&amp; request.data_size)</span><br><span class="line">        validate(<span class="built_in">memcpy</span>(new_queue,<span class="built_in">queue</span>-&gt;data,request.data_size));<span class="comment">//没有检查size，</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        err(<span class="string">&quot;[-] Internal error&quot;</span>);</span><br><span class="line">    new_queue += <span class="built_in">queue</span>-&gt;data_size;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Get to the entries of the kqueue */</span></span><br><span class="line">    queue_entry *kqueue_entry = (queue_entry *)(<span class="built_in">queue</span> + (<span class="keyword">sizeof</span>(<span class="built_in">queue</span>)+<span class="number">1</span>)/<span class="number">8</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* copy all possible kqueue entries */</span></span><br><span class="line">    <span class="type">uint32_t</span> i=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;request.max_entries+<span class="number">1</span>;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(!kqueue_entry || !kqueue_entry-&gt;data)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">if</span>(kqueue_entry-&gt;data &amp;&amp; request.data_size)</span><br><span class="line">            validate(<span class="built_in">memcpy</span>(new_queue,kqueue_entry-&gt;data,request.data_size));</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            err(<span class="string">&quot;[-] Internal error&quot;</span>);</span><br><span class="line">        kqueue_entry = kqueue_entry-&gt;next;</span><br><span class="line">        new_queue += <span class="built_in">queue</span>-&gt;data_size;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Mark the queue as saved */</span></span><br><span class="line">    isSaved[request.queue_idx] = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      <div class="tags">
+          <a href="/tags/learning/" rel="tag"><i class="ic i-tag"></i> learning</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">Edited on</span>
+    <time title="Modified: 2022-05-04 07:50:30" itemprop="dateModified" datetime="2022-05-04T07:50:30+08:00">2022-05-04</time>
+  </span>
+</div>
+
+      
+<div class="reward">
+  <button><i class="ic i-heartbeat"></i> Donate</button>
+  <p>Give me a cup of [coffee]~(￣▽￣)~*</p>
+  <div id="qr">
+      
+      <div>
+        <img data-src="/images/wechatpay.png" alt="dreamcat WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/alipay.png" alt="dreamcat Alipay">
+        <p>Alipay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/paypal.png" alt="dreamcat PayPal">
+        <p>PayPal</p>
+      </div>
+  </div>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>Post author:  </strong>dreamcat <i class="ic i-at"><em>@</em></i>我他喵的
+  </li>
+  <li class="link">
+    <strong>Post link: </strong>
+    <a href="http://example.com/2022/05/03/inctf2021-kqueue/" title="inctf2021_kqueue">http://example.com/2022/05/03/inctf2021-kqueue/</a>
+  </li>
+  <li class="license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2022/05/02/ciscn-babydriver/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gicliwyw55j20zk0m8hdt.jpg" title="ciscn_babydriver">
+  <span class="type">Previous Post</span>
+  <span class="category"><i class="ic i-flag"></i> kernel</span>
+  <h3>ciscn_babydriver</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+      
+
+  <a href="/2022/05/06/slab%E3%80%81slub%E3%80%81slob%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipeudstjqj20zk0m8k3r.jpg" title="slab、slub、slob学习记录">
+  <span class="type">Next Post</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>slab、slub、slob学习记录</h3>
+  </a>
+
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="Contents">
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#inctf2021-pwn-kqueueheap_overflow"><span class="toc-number">1.</span> <span class="toc-text"> Inctf2021 pwn kqueue		heap_overflow</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E4%BB%A5%E5%8F%8A%E4%BF%9D%E6%8A%A4"><span class="toc-number">1.1.</span> <span class="toc-text"> 环境以及保护</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="toc-number">1.2.</span> <span class="toc-text"> 前置知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E5%88%86%E6%9E%90"><span class="toc-number">1.3.</span> <span class="toc-text"> 题目分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#kqueue_ioctl"><span class="toc-number">1.3.1.</span> <span class="toc-text"> kqueue_ioctl</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93"><span class="toc-number">1.3.2.</span> <span class="toc-text"> 结构体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#create_kqueue"><span class="toc-number">1.3.3.</span> <span class="toc-text"> create_kqueue</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#delete_kqueue"><span class="toc-number">1.3.4.</span> <span class="toc-text"> delete_kqueue</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#edit_kqueue"><span class="toc-number">1.3.5.</span> <span class="toc-text"> edit_kqueue</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#save_kqueue_entries"><span class="toc-number">1.3.6.</span> <span class="toc-text"> save_kqueue_entries</span></a></li></ol></li></ol></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="Related">
+        <ul>
+          <li><a href="/2022/05/01/%E5%BC%BA%E7%BD%91%E6%9D%AF2018-core/" rel="bookmark" title="强网杯2018_core">强网杯2018_core</a></li><li><a href="/2022/05/02/ciscn-babydriver/" rel="bookmark" title="ciscn_babydriver">ciscn_babydriver</a></li><li class="active"><a href="/2022/05/03/inctf2021-kqueue/" rel="bookmark" title="inctf2021_kqueue">inctf2021_kqueue</a></li>
+        </ul>
+      </div>
+      <div class="overview panel" data-title="Overview">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="dreamcat"
+      data-src="/images/avatar.jpg">
+  <p class="name" itemprop="name">dreamcat</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">33</span>
+        <span class="name">posts</span>
+      </a>
+    </div>
+    <div class="item categories">
+      <a href="/categories/">
+        <span class="count">4</span>
+        <span class="name">categories</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">8</span>
+        <span class="name">tags</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>Home</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+        <a href="/2022/05/02/ciscn-babydriver/" rel="prev" title="Previous Post"><i class="ic i-chevron-left"></i></a>
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+        <a href="/2022/05/06/slab%E3%80%81slub%E3%80%81slob%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" rel="next" title="Next Post"><i class="ic i-chevron-right"></i></a>
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>Random Posts</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/04/01/note-file/" title="note_file">note_file</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/04/14/heap-paradise/" title="heap_paradise">heap_paradise</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/06/27/%E5%AD%A6%E4%B9%A0%E5%91%A8%E8%AE%B0-%E2%80%94%E2%80%94%E4%B8%80/" title="学习周记 ——一">学习周记 ——一</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/04/18/starctf_examination/" title="examination">examination</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/04/19/starctf-babynote/" title="starctf_babynote">starctf_babynote</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/06/21/ciscn-2022-whatheap/" title="ciscn_2022_whatheap">ciscn_2022_whatheap</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/04/25/MRCTF-ezbash/" title="MRCTF_ezbash">MRCTF_ezbash</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/kernel/" title="In kernel">kernel</a>
+</div>
+
+    <span><a href="/2022/05/03/inctf2021-kqueue/" title="inctf2021_kqueue">inctf2021_kqueue</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/05/12/%E6%BB%B4%E6%B0%B4%E9%80%86%E5%90%91-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="滴水逆向_学习笔记">滴水逆向_学习笔记</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/03/20/buuoj-heapcreator/" title="buuoj_heapcreator">buuoj_heapcreator</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>Recent Comments</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2022</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">dreamcat @ dreamcat</span>
+  </div>
+  <div class="count">
+    <span class="post-meta-item-icon">
+      <i class="ic i-chart-area"></i>
+    </span>
+    <span title="Symbols count total">282k words</span>
+
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="ic i-coffee"></i>
+    </span>
+    <span title="Reading time total">4:16</span>
+  </div>
+  <div class="powered-by">
+    Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2022/05/03/inctf2021-kqueue/',
+    favicon: {
+      show: "（●´3｀●）Goooood",
+      hide: "(´Д｀)dreamcat?"
+    },
+    search : {
+      placeholder: "Search for Posts",
+      empty: "We didn't find any results for the search: ${query}",
+      stats: "${hits} results found in ${time} ms"
+    },
+    valine: true,fancybox: true,
+    copyright: 'Copied to clipboard successfully! <br> All articles in this blog are licensed under <i class="ic i-creative-commons"></i>BY-NC-SA.',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>

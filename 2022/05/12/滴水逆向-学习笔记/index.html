@@ -1,0 +1,542 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="我他喵的" href="http://example.com/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="我他喵的" href="http://example.com/atom.xml" />
+<link rel="alternate" type="application/json" title="我他喵的" href="http://example.com/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="逆向" />
+
+
+<link rel="canonical" href="http://example.com/2022/05/12/%E6%BB%B4%E6%B0%B4%E9%80%86%E5%90%91-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+
+
+  <title>
+滴水逆向_学习笔记 |
+dreamcat = 我他喵的</title>
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">滴水逆向_学习笔记
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="Created: 2022-05-12 10:10:58">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">Posted on</span>
+    <time itemprop="dateCreated datePublished" datetime="2022-05-12T10:10:58+08:00">2022-05-12</time>
+  </span>
+  <span class="item" title="Symbols count in article">
+    <span class="icon">
+      <i class="ic i-pen"></i>
+    </span>
+    <span class="text">Symbols count in article</span>
+    <span>3.9k</span>
+    <span class="text">words</span>
+  </span>
+  <span class="item" title="Reading time">
+    <span class="icon">
+      <i class="ic i-clock"></i>
+    </span>
+    <span class="text">Reading time</span>
+    <span>4 mins.</span>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="Toggle navigation bar">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">dreamcat</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+        <ul>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclize41wj20zk0m87gk.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclwrdwyaj20zk0m8are.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gicli9lfebj20zk0m84qp.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipeudstjqj20zk0m8k3r.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gicliierfjj20zk0m8npd.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giciukx8a7j20zk0m8aio.jpg"></li>
+        </ul>
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">Home</a></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="en">
+  <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/12/%E6%BB%B4%E6%B0%B4%E9%80%86%E5%90%91-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/avatar.jpg">
+    <meta itemprop="name" content="dreamcat">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="我他喵的">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h1 id="20220512开始加速学习逆向以滴水逆向的教程为路线"><a class="markdownIt-Anchor" href="#20220512开始加速学习逆向以滴水逆向的教程为路线">#</a> 20220512 开始加速学习逆向，以滴水逆向的教程为路线。</h1>
+<p>下面的内容基于 32 位 pe 程序</p>
+<h2 id="1进制"><a class="markdownIt-Anchor" href="#1进制">#</a> 1，进制</h2>
+<p>8 进制的 2-3.（32 位）</p>
+<p>010 - 011</p>
+<p>补码加法：0000 0000 0000 0000 0000 0000 0000 0010 +  1111 1111 1111 1111 1111 1111 1111 1101</p>
+<p>结果 17777777777…(8)</p>
+<h2 id="2exe执行文件如何执行程序"><a class="markdownIt-Anchor" href="#2exe执行文件如何执行程序">#</a> 2，EXE 执行文件如何执行程序</h2>
+<p><img data-src="https://img-blog.csdnimg.cn/e9028542f2504e34b2dbe6706c8cbd79.png" alt="img"></p>
+<p>什么是程序。什么是数据</p>
+<p>程序是数据与可执行代码的组合。</p>
+<p>PE 文件结构</p>
+<h3 id="dos头"><a class="markdownIt-Anchor" href="#dos头">#</a> dos 头</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_DOS_HEADER</span> &#123;</span>      <span class="comment">// DOS .EXE header</span></span><br><span class="line">    WORD   e_magic;                     <span class="comment">// Magic number</span></span><br><span class="line">    WORD   e_cblp;                      <span class="comment">// Bytes on last page of file</span></span><br><span class="line">    WORD   e_cp;                        <span class="comment">// Pages in file</span></span><br><span class="line">    WORD   e_crlc;                      <span class="comment">// Relocations</span></span><br><span class="line">    WORD   e_cparhdr;                   <span class="comment">// Size of header in paragraphs</span></span><br><span class="line">    WORD   e_minalloc;                  <span class="comment">// Minimum extra paragraphs needed</span></span><br><span class="line">    WORD   e_maxalloc;                  <span class="comment">// Maximum extra paragraphs needed</span></span><br><span class="line">    WORD   e_ss;                        <span class="comment">// Initial (relative) SS value</span></span><br><span class="line">    WORD   e_sp;                        <span class="comment">// Initial SP value</span></span><br><span class="line">    WORD   e_csum;                      <span class="comment">// Checksum</span></span><br><span class="line">    WORD   e_ip;                        <span class="comment">// Initial IP value</span></span><br><span class="line">    WORD   e_cs;                        <span class="comment">// Initial (relative) CS value</span></span><br><span class="line">    WORD   e_lfarlc;                    <span class="comment">// File address of relocation table</span></span><br><span class="line">    WORD   e_ovno;                      <span class="comment">// Overlay number</span></span><br><span class="line">    WORD   e_res[<span class="number">4</span>];                    <span class="comment">// Reserved words</span></span><br><span class="line">    WORD   e_oemid;                     <span class="comment">// OEM identifier (for e_oeminfo)</span></span><br><span class="line">    WORD   e_oeminfo;                   <span class="comment">// OEM information; e_oemid specific</span></span><br><span class="line">    WORD   e_res2[<span class="number">10</span>];                  <span class="comment">// Reserved words</span></span><br><span class="line">    DWORD   e_lfanew;                    <span class="comment">// File address of new exe header	0x3c</span></span><br><span class="line">&#125; IMAGE_DOS_HEADER, *PIMAGE_DOS_HEADER;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>DOS 头目前已经没有什么作用了，保留的目的是为了向下兼容 16 位程序</p>
+<p><img data-src="C:%5CUsers%5C32644%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20220512103830333.png" alt="image-20220512103830333"></p>
+<p>0x3c 地址的数据是 0x000000d8,（windows 中，高地址在前。）这里指向的是数据存储的起点，但不是程序入口。这里指向的是 PE</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">iMAGE_NT_HEADERS</span>&#123;</span></span><br><span class="line"><span class="number">0x00</span>	DWORD Signature</span><br><span class="line"><span class="number">0x04</span>	_iMAGE_FILE_HEADER FileHeader</span><br><span class="line"><span class="number">0x18</span>	_iMAGE_OPTIONAL_HEADER OptionalHeader</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="程序入口"><a class="markdownIt-Anchor" href="#程序入口">#</a> 程序入口</h2>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_OPTIONAL_HEADER</span> &#123;</span></span><br><span class="line">  WORD                 Magic;</span><br><span class="line">  BYTE                 MajorLinkerVersion;</span><br><span class="line">  BYTE                 MinorLinkerVersion;</span><br><span class="line">  DWORD                SizeOfCode;</span><br><span class="line">  DWORD                SizeOfInitializedData;</span><br><span class="line">  DWORD                SizeOfUninitializedData;</span><br><span class="line">  DWORD                AddressOfEntryPoint;			<span class="comment">//入口点</span></span><br><span class="line">  DWORD                BaseOfCode;					<span class="comment">//代码基址</span></span><br><span class="line">  DWORD                BaseOfData;					<span class="comment">//数据基址</span></span><br><span class="line">  DWORD                ImageBase;					<span class="comment">//镜像基址</span></span><br><span class="line">  DWORD                SectionAlignment;</span><br><span class="line">  DWORD                FileAlignment;</span><br><span class="line">  WORD                 MajorOperatingSystemVersion;</span><br><span class="line">  WORD                 MinorOperatingSystemVersion;</span><br><span class="line">  WORD                 MajorImageVersion;</span><br><span class="line">  WORD                 MinorImageVersion;</span><br><span class="line">  WORD                 MajorSubsystemVersion;</span><br><span class="line">  WORD                 MinorSubsystemVersion;</span><br><span class="line">  DWORD                Win32VersionValue;</span><br><span class="line">  DWORD                SizeOfImage;</span><br><span class="line">  DWORD                SizeOfHeaders;</span><br><span class="line">  DWORD                CheckSum;</span><br><span class="line">  WORD                 Subsystem;</span><br><span class="line">  WORD                 DllCharacteristics;</span><br><span class="line">  DWORD                SizeOfStackReserve;</span><br><span class="line">  DWORD                SizeOfStackCommit;</span><br><span class="line">  DWORD                SizeOfHeapReserve;</span><br><span class="line">  DWORD                SizeOfHeapCommit;</span><br><span class="line">  DWORD                LoaderFlags;</span><br><span class="line">  DWORD                NumberOfRvaAndSizes;</span><br><span class="line">  IMAGE_DATA_DIRECTORY DataDirectory[IMAGE_NUMBEROF_DIRECTORY_ENTRIES];</span><br><span class="line">&#125; IMAGE_OPTIONAL_HEADER32, *PIMAGE_OPTIONAL_HEADER32;</span><br></pre></td></tr></table></figure>
+<p><em>iMAGE_OPTIONAL_HEADER OptionalHeader   结构体紧跟在</em>    iMAGE_NT_HEADERS 的后面。</p>
+<p>AddressOfEntryPoint 在结构体中的偏移是 0x10,</p>
+<p>上面的截图为例，入口点在 0x100h，数据是 0x00001307</p>
+<p>代码基址是 0x00001000, 数据段基址 0x00006000。这里我们通过 ida 分析发现，</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">.text:<span class="number">00401000</span> ;</span><br><span class="line">.text:<span class="number">00401000</span> ; +-------------------------------------------------------------------------+</span><br><span class="line">.text:<span class="number">00401000</span> ; |      This file was generated by The Interactive <span class="title function_">Disassembler</span> <span class="params">(IDA)</span>      |</span><br><span class="line">.text:00401000 ; |           Copyright (c) <span class="number">2020</span> Hex-Rays, &lt;support@hex-rays.com&gt;           |</span><br><span class="line">.text:<span class="number">00401000</span> ; |                      License info: <span class="number">50</span><span class="number">-5947</span><span class="number">-5F</span>4E<span class="number">-42</span>                      |</span><br><span class="line">.text:<span class="number">00401000</span> ; |                      P.Y.G Team, Personal license                       |</span><br><span class="line">.text:<span class="number">00401000</span> ; +-------------------------------------------------------------------------+</span><br><span class="line">.text:<span class="number">00401000</span> ;</span><br><span class="line">.text:<span class="number">00401000</span> ; Input SHA256 : F6BCC742755C60202D85EDD7307567103C8804F2249D16591040A3390E571CBE</span><br><span class="line">.text:<span class="number">00401000</span> ; Input MD5    : <span class="number">3</span>D47DDF04CC6A8120C400A5F304E3ED6</span><br><span class="line">.text:<span class="number">00401000</span> ; Input CRC32  : <span class="number">4F</span>14BDF8</span><br><span class="line">.text:<span class="number">00401000</span></span><br><span class="line">.text:<span class="number">00401000</span> ; File Name   : C:\Users\<span class="number">32644</span>\Desktop\reverse\csaw2013reversing2\<span class="number">0453</span>d21297a743e199d8a7de75179e52 (<span class="number">1</span>).exe</span><br><span class="line">.text:<span class="number">00401000</span> ; Format      : Portable executable <span class="keyword">for</span> <span class="number">80386</span> (PE)</span><br><span class="line">.text:<span class="number">00401000</span> ; Imagebase   : <span class="number">400000</span></span><br><span class="line">.text:<span class="number">00401000</span> ; Timestamp   : <span class="number">54123</span>A17 (Fri Sep <span class="number">12</span> <span class="number">00</span>:<span class="number">11</span>:<span class="number">03</span> <span class="number">2014</span>)</span><br><span class="line">.text:<span class="number">00401000</span> ; Section <span class="number">1.</span> (virtual address <span class="number">00001000</span>)</span><br><span class="line">.text:<span class="number">00401000</span> ; Virtual size                  : <span class="number">000044</span>D2 (  <span class="number">17618.</span>)</span><br><span class="line">.text:<span class="number">00401000</span> ; Section size in file          : <span class="number">00004600</span> (  <span class="number">17920.</span>)</span><br><span class="line">.text:<span class="number">00401000</span> ; Offset to raw data <span class="keyword">for</span> section: <span class="number">00000400</span></span><br><span class="line">.text:<span class="number">00401000</span> ; Flags <span class="number">60000020</span>: Text Executable Readable</span><br><span class="line">.text:<span class="number">00401000</span> ; Alignment     : <span class="keyword">default</span></span><br><span class="line">.text:<span class="number">00401000</span> ; PDB File Name : C:\Users\exploitation\documents\visual studio <span class="number">2010</span>\Projects\csaw2013reversing2\Release\csaw2013reversing2.pdb</span><br><span class="line">.text:<span class="number">00401000</span> ; OS type         :  MS Windows</span><br><span class="line">.text:<span class="number">00401000</span> ; Application type:  Executable <span class="number">32b</span>it</span><br><span class="line">.text:<span class="number">00401000</span></span><br><span class="line">.text:<span class="number">00401000</span>                 <span class="number">.686</span>p</span><br><span class="line">.text:<span class="number">00401000</span>                 .mmx</span><br><span class="line">.text:<span class="number">00401000</span>                 .model flat</span><br><span class="line">...</span><br><span class="line">.text:<span class="number">00405600</span> _text           ends</span><br><span class="line">.text:<span class="number">00405600</span></span><br><span class="line">.idata:<span class="number">00406000</span> ; Section <span class="number">2.</span> (virtual address <span class="number">00006000</span>)</span><br></pre></td></tr></table></figure>
+<p>这个两个基址，其实是相对地址，也就是关于镜像基址（BaseOfImage）的偏移</p>
+
+      <div class="tags">
+          <a href="/tags/%E9%80%86%E5%90%91/" rel="tag"><i class="ic i-tag"></i> 逆向</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">Edited on</span>
+    <time title="Modified: 2022-05-12 11:39:02" itemprop="dateModified" datetime="2022-05-12T11:39:02+08:00">2022-05-12</time>
+  </span>
+</div>
+
+      
+<div class="reward">
+  <button><i class="ic i-heartbeat"></i> Donate</button>
+  <p>Give me a cup of [coffee]~(￣▽￣)~*</p>
+  <div id="qr">
+      
+      <div>
+        <img data-src="/images/wechatpay.png" alt="dreamcat WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/alipay.png" alt="dreamcat Alipay">
+        <p>Alipay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/paypal.png" alt="dreamcat PayPal">
+        <p>PayPal</p>
+      </div>
+  </div>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>Post author:  </strong>dreamcat <i class="ic i-at"><em>@</em></i>我他喵的
+  </li>
+  <li class="link">
+    <strong>Post link: </strong>
+    <a href="http://example.com/2022/05/12/%E6%BB%B4%E6%B0%B4%E9%80%86%E5%90%91-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="滴水逆向_学习笔记">http://example.com/2022/05/12/滴水逆向-学习笔记/</a>
+  </li>
+  <li class="license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2022/05/10/torghast/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gicli3sbvtj20zk0m8x6p.jpg" title="torghast">
+  <span class="type">Previous Post</span>
+  <span class="category"><i class="ic i-flag"></i> pwn</span>
+  <h3>torghast</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+      
+
+  <a href="/2022/05/12/%E9%80%86%E5%90%91%E5%B8%B8%E8%A7%81%E7%AE%97%E6%B3%95/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclgi503lj20zk0m8hdt.jpg" title="逆向常见算法">
+  <span class="type">Next Post</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>逆向常见算法</h3>
+  </a>
+
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="Contents">
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#20220512%E5%BC%80%E5%A7%8B%E5%8A%A0%E9%80%9F%E5%AD%A6%E4%B9%A0%E9%80%86%E5%90%91%E4%BB%A5%E6%BB%B4%E6%B0%B4%E9%80%86%E5%90%91%E7%9A%84%E6%95%99%E7%A8%8B%E4%B8%BA%E8%B7%AF%E7%BA%BF"><span class="toc-number">1.</span> <span class="toc-text"> 20220512 开始加速学习逆向，以滴水逆向的教程为路线。</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E8%BF%9B%E5%88%B6"><span class="toc-number">1.1.</span> <span class="toc-text"> 1，进制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2exe%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6%E5%A6%82%E4%BD%95%E6%89%A7%E8%A1%8C%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.2.</span> <span class="toc-text"> 2，EXE 执行文件如何执行程序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#dos%E5%A4%B4"><span class="toc-number">1.2.1.</span> <span class="toc-text"> dos 头</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%85%A5%E5%8F%A3"><span class="toc-number">1.3.</span> <span class="toc-text"> 程序入口</span></a></li></ol></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="Related">
+      </div>
+      <div class="overview panel" data-title="Overview">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="dreamcat"
+      data-src="/images/avatar.jpg">
+  <p class="name" itemprop="name">dreamcat</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">33</span>
+        <span class="name">posts</span>
+      </a>
+    </div>
+    <div class="item categories">
+      <a href="/categories/">
+        <span class="count">4</span>
+        <span class="name">categories</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">8</span>
+        <span class="name">tags</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>Home</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+        <a href="/2022/05/10/torghast/" rel="prev" title="Previous Post"><i class="ic i-chevron-left"></i></a>
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+        <a href="/2022/05/12/%E9%80%86%E5%90%91%E5%B8%B8%E8%A7%81%E7%AE%97%E6%B3%95/" rel="next" title="Next Post"><i class="ic i-chevron-right"></i></a>
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>Random Posts</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/begin/" title="In begin">begin</a>
+</div>
+
+    <span><a href="/2021/03/19/hello-world/" title="Hello World">Hello World</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/03/22/tw2017parrot/" title="tw2017parrot">tw2017parrot</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/06/21/ciscn-2022-whatheap/" title="ciscn_2022_whatheap">ciscn_2022_whatheap</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/kernel/" title="In kernel">kernel</a>
+</div>
+
+    <span><a href="/2022/05/02/ciscn-babydriver/" title="ciscn_babydriver">ciscn_babydriver</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/04/18/starctf_examination/" title="examination">examination</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/06/18/ciscn2022-syscall/" title="ciscn2022_syscall">ciscn2022_syscall</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/05/12/%E9%80%86%E5%90%91%E5%B8%B8%E8%A7%81%E7%AE%97%E6%B3%95/" title="逆向常见算法">逆向常见算法</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/kernel/" title="In kernel">kernel</a>
+</div>
+
+    <span><a href="/2022/05/03/inctf2021-kqueue/" title="inctf2021_kqueue">inctf2021_kqueue</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/05/10/torghast/" title="torghast">torghast</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/05/13/pwnable-re-alloc/" title="pwnable-re-alloc">pwnable-re-alloc</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>Recent Comments</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2022</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">dreamcat @ dreamcat</span>
+  </div>
+  <div class="count">
+    <span class="post-meta-item-icon">
+      <i class="ic i-chart-area"></i>
+    </span>
+    <span title="Symbols count total">282k words</span>
+
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="ic i-coffee"></i>
+    </span>
+    <span title="Reading time total">4:16</span>
+  </div>
+  <div class="powered-by">
+    Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2022/05/12/滴水逆向-学习笔记/',
+    favicon: {
+      show: "（●´3｀●）Goooood",
+      hide: "(´Д｀)dreamcat?"
+    },
+    search : {
+      placeholder: "Search for Posts",
+      empty: "We didn't find any results for the search: ${query}",
+      stats: "${hits} results found in ${time} ms"
+    },
+    valine: true,fancybox: true,
+    copyright: 'Copied to clipboard successfully! <br> All articles in this blog are licensed under <i class="ic i-creative-commons"></i>BY-NC-SA.',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>

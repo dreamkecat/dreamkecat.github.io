@@ -1,0 +1,537 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="我他喵的" href="http://example.com/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="我他喵的" href="http://example.com/atom.xml" />
+<link rel="alternate" type="application/json" title="我他喵的" href="http://example.com/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="writeup" />
+
+
+<link rel="canonical" href="http://example.com/2022/05/13/pwnable-re-alloc/">
+
+
+
+  <title>
+pwnable-re-alloc - pwn |
+dreamcat = 我他喵的</title>
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">pwnable-re-alloc
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="Created: 2022-05-13 16:28:21">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">Posted on</span>
+    <time itemprop="dateCreated datePublished" datetime="2022-05-13T16:28:21+08:00">2022-05-13</time>
+  </span>
+  <span class="item" title="Symbols count in article">
+    <span class="icon">
+      <i class="ic i-pen"></i>
+    </span>
+    <span class="text">Symbols count in article</span>
+    <span>5.1k</span>
+    <span class="text">words</span>
+  </span>
+  <span class="item" title="Reading time">
+    <span class="icon">
+      <i class="ic i-clock"></i>
+    </span>
+    <span class="text">Reading time</span>
+    <span>5 mins.</span>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="Toggle navigation bar">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">dreamcat</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+        <ul>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipeybxm1pj20zk0m8niv.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gicljgocqbj20zk0m8e81.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipetlbztpj20zk0m84qp.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giph4wqtg4j20zk0m8x6p.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gicis3attqj20zk0m8k7l.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gicm07ih54j20zk0m84qp.jpg"></li>
+        </ul>
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">Home</a></span><i class="ic i-angle-right"></i>
+<span  class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/pwn/" itemprop="item" rel="index" title="In pwn"><span itemprop="name">pwn</span></a>
+<meta itemprop="position" content="1" /></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="en">
+  <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/13/pwnable-re-alloc/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/avatar.jpg">
+    <meta itemprop="name" content="dreamcat">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="我他喵的">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h1 id="pwnabletw"><a class="markdownIt-Anchor" href="#pwnabletw">#</a> <span class="exturl" data-url="aHR0cDovL1B3bmFibGUudHc=">Pwnable.tw</span> 	re-alloc</h1>
+<p>说明：因为没有合适的 glibc 资源（自已懒），这里只是进行了一个理论分析。</p>
+<h2 id="环境保护"><a class="markdownIt-Anchor" href="#环境保护">#</a> 环境保护</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">dreamcat@ubuntu:~/Desktop/pwnable/re-alloc$ checksec --file=re-alloc</span><br><span class="line">RELRO           STACK CANARY      NX            PIE             RPATH      RUNPATH	Symbols		FORTIFY	Fortified	Fortifiable	FILE</span><br><span class="line">Partial RELRO   Canary found      NX enabled    No PIE          No RPATH   No RUNPATH   83) Symbols	  Yes	1		2		re-alloc</span><br><span class="line">dreamcat@ubuntu:~/Desktop/pwnable/re-alloc$ strings libc-9bb401974abeef59efcdd0ae35c5fc0ce63d3e7b.so | grep ubuntu</span><br><span class="line">GNU C Library (Ubuntu GLIBC 2.29-0ubuntu2) stable release version 2.29.</span><br><span class="line">&lt;https://bugs.launchpad.net/ubuntu/+<span class="built_in">source</span>/glibc/+bugs&gt;.</span><br><span class="line">dreamcat@ubuntu:~/Desktop/pwnable/re-alloc$ </span><br></pre></td></tr></table></figure>
+<p>2.29 的一个 glibc，这里要注意的就是对 tcache 一个保护机制，将 tcache_chunk 的包括指针指向了 tcache。没有 pie 的保护。</p>
+<p>而且 RELRO 没有全开，就意味着我们可以修改 got 表。只要我们有办法泄露出 libc。以及任意地址写。</p>
+<h2 id="代码分析"><a class="markdownIt-Anchor" href="#代码分析">#</a> 代码分析</h2>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">menu</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;$$$$$$$$$$$$$$$$$$$$$$$$$$$$&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(&amp;byte_402070);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;$$$$$$$$$$$$$$$$$$$$$$$$$$$$&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;$   1. Alloc               $&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;$   2. Realloc             $&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;$   3. Free                $&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;$   4. Exit                $&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;$$$$$$$$$$$$$$$$$$$$$$$$$$$&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">printf</span>(<span class="string">&quot;Your choice: &quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>主要实现了增删，全局没有 malloc 函数，但是 realloc 内在内部调用 malloc。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> *__libc_realloc (<span class="type">void</span> *oldmem, <span class="type">size_t</span> bytes)</span><br><span class="line">&#123;</span><br><span class="line">  mstate ar_ptr;</span><br><span class="line">  INTERNAL_SIZE_T nb;         <span class="comment">/* padded request size */</span></span><br><span class="line"></span><br><span class="line">  <span class="type">void</span> *newp;             <span class="comment">/* chunk to return */</span></span><br><span class="line"></span><br><span class="line">  <span class="type">void</span> *(*hook) (<span class="type">void</span> *, <span class="type">size_t</span>, <span class="type">const</span> <span class="type">void</span> *) =</span><br><span class="line">    atomic_forced_read (__realloc_hook);</span><br><span class="line">  <span class="keyword">if</span> (__builtin_expect (hook != <span class="literal">NULL</span>, <span class="number">0</span>))</span><br><span class="line">    <span class="keyword">return</span> (*hook)(oldmem, bytes, RETURN_ADDRESS (<span class="number">0</span>));</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">if</span> REALLOC_ZERO_BYTES_FREES</span></span><br><span class="line">  <span class="keyword">if</span> (bytes == <span class="number">0</span> &amp;&amp; oldmem != <span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">      __libc_free (oldmem); <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/* realloc of null is supposed to be same as malloc */</span></span><br><span class="line">  <span class="keyword">if</span> (oldmem == <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">return</span> __libc_malloc (bytes);</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* chunk corresponding to oldmem */</span></span><br><span class="line">  <span class="type">const</span> mchunkptr oldp = mem2chunk (oldmem);</span><br><span class="line">  <span class="comment">/* its size */</span></span><br><span class="line">  <span class="type">const</span> INTERNAL_SIZE_T oldsize = chunksize (oldp);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (chunk_is_mmapped (oldp))</span><br><span class="line">    ar_ptr = <span class="literal">NULL</span>;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      MAYBE_INIT_TCACHE ();</span><br><span class="line">      ar_ptr = arena_for_chunk (oldp);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Little security check which won&#x27;t hurt performance: the allocator</span></span><br><span class="line"><span class="comment">     never wrapps around at the end of the address space.  Therefore</span></span><br><span class="line"><span class="comment">     we can exclude some size values which might appear here by</span></span><br><span class="line"><span class="comment">     accident or by &quot;design&quot; from some intruder.  We need to bypass</span></span><br><span class="line"><span class="comment">     this check for dumped fake mmap chunks from the old main arena</span></span><br><span class="line"><span class="comment">     because the new malloc may provide additional alignment.  */</span></span><br><span class="line">  <span class="keyword">if</span> ((__builtin_expect ((<span class="type">uintptr_t</span>) oldp &gt; (<span class="type">uintptr_t</span>) -oldsize, <span class="number">0</span>)</span><br><span class="line">       || __builtin_expect (misaligned_chunk (oldp), <span class="number">0</span>))</span><br><span class="line">      &amp;&amp; !DUMPED_MAIN_ARENA_CHUNK (oldp))</span><br><span class="line">      malloc_printerr (<span class="string">&quot;realloc(): invalid pointer&quot;</span>);</span><br><span class="line"></span><br><span class="line">  checked_request2size (bytes, nb);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (chunk_is_mmapped (oldp))</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="comment">/* If this is a faked mmapped chunk from the dumped main arena,</span></span><br><span class="line"><span class="comment">	 always make a copy (and do not free the old chunk).  */</span></span><br><span class="line">      <span class="keyword">if</span> (DUMPED_MAIN_ARENA_CHUNK (oldp))</span><br><span class="line">	&#123;</span><br><span class="line">	  <span class="comment">/* Must alloc, copy, free. */</span></span><br><span class="line">	  <span class="type">void</span> *newmem = __libc_malloc (bytes);</span><br><span class="line">	  <span class="keyword">if</span> (newmem == <span class="number">0</span>)</span><br><span class="line">	    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">	  <span class="comment">/* Copy as many bytes as are available from the old chunk</span></span><br><span class="line"><span class="comment">	     and fit into the new size.  NB: The overhead for faked</span></span><br><span class="line"><span class="comment">	     mmapped chunks is only SIZE_SZ, not 2 * SIZE_SZ as for</span></span><br><span class="line"><span class="comment">	     regular mmapped chunks.  */</span></span><br><span class="line">	  <span class="keyword">if</span> (bytes &gt; oldsize - SIZE_SZ)</span><br><span class="line">	    bytes = oldsize - SIZE_SZ;</span><br><span class="line">	  <span class="built_in">memcpy</span> (newmem, oldmem, bytes);</span><br><span class="line">	  <span class="keyword">return</span> newmem;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">      <span class="type">void</span> *newmem;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">if</span> HAVE_MREMAP</span></span><br><span class="line">      newp = mremap_chunk (oldp, nb);</span><br><span class="line">      <span class="keyword">if</span> (newp)</span><br><span class="line">        <span class="keyword">return</span> chunk2mem (newp);</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">      <span class="comment">/* Note the extra SIZE_SZ overhead. */</span></span><br><span class="line">      <span class="keyword">if</span> (oldsize - SIZE_SZ &gt;= nb)</span><br><span class="line">        <span class="keyword">return</span> oldmem;                         <span class="comment">/* do nothing */</span></span><br><span class="line"></span><br><span class="line">      <span class="comment">/* Must alloc, copy, free. */</span></span><br><span class="line">      newmem = __libc_malloc (bytes);</span><br><span class="line">      <span class="keyword">if</span> (newmem == <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;              <span class="comment">/* propagate failure */</span></span><br><span class="line"></span><br><span class="line">      <span class="built_in">memcpy</span> (newmem, oldmem, oldsize - <span class="number">2</span> * SIZE_SZ);</span><br><span class="line">      munmap_chunk (oldp);</span><br><span class="line">      <span class="keyword">return</span> newmem;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (SINGLE_THREAD_P)</span><br><span class="line">    &#123;</span><br><span class="line">      newp = _int_realloc (ar_ptr, oldp, oldsize, nb);</span><br><span class="line">      assert (!newp || chunk_is_mmapped (mem2chunk (newp)) ||</span><br><span class="line">	      ar_ptr == arena_for_chunk (mem2chunk (newp)));</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> newp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  __libc_lock_lock (ar_ptr-&gt;mutex);</span><br><span class="line"></span><br><span class="line">  newp = _int_realloc (ar_ptr, oldp, oldsize, nb);</span><br><span class="line"></span><br><span class="line">  __libc_lock_unlock (ar_ptr-&gt;mutex);</span><br><span class="line">  assert (!newp || chunk_is_mmapped (mem2chunk (newp)) ||</span><br><span class="line">          ar_ptr == arena_for_chunk (mem2chunk (newp)));</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (newp == <span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="comment">/* Try harder to allocate memory in other arenas.  */</span></span><br><span class="line">      LIBC_PROBE (memory_realloc_retry, <span class="number">2</span>, bytes, oldmem);</span><br><span class="line">      newp = __libc_malloc (bytes);</span><br><span class="line">      <span class="keyword">if</span> (newp != <span class="literal">NULL</span>)</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="built_in">memcpy</span> (newp, oldmem, oldsize - SIZE_SZ);</span><br><span class="line">          _int_free (ar_ptr, oldp, <span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> newp;</span><br><span class="line">&#125;</span><br><span class="line">libc_hidden_def (__libc_realloc)</span><br></pre></td></tr></table></figure>
+<p>大致意思就是如果 realloc (NULL,size) 就会调用 malloc。</p>
+<p>realloc (ptr,0)，调用 free。程序也是用这里实现的 free</p>
+<p>realloc (ptr,chunksize (ptr)), 不做任何事情。</p>
+<p>如果申请一个更大的空间，会检查当前堆块的附近是否有足够的空间，没有，则重新申请，然后将数据 copy 过去，并 free 原来的 chunk</p>
+<p>申小空间会将多余的空间释放掉。</p>
+<p>程序只允许我们存储两个 chunk 再 heap [2], 并且限制了我们的申请大小位 0x78。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">allocate</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  _BYTE *v0; <span class="comment">// rax</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 v2; <span class="comment">// [rsp+0h] [rbp-20h]</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 size; <span class="comment">// [rsp+8h] [rbp-18h]</span></span><br><span class="line">  <span class="type">void</span> *v4; <span class="comment">// [rsp+18h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Index:&quot;</span>);</span><br><span class="line">  v2 = read_long();</span><br><span class="line">  <span class="keyword">if</span> ( v2 &gt; <span class="number">1</span> || heap[v2] )</span><br><span class="line">  &#123;</span><br><span class="line">    LODWORD(v0) = <span class="built_in">puts</span>(<span class="string">&quot;Invalid !&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Size:&quot;</span>);</span><br><span class="line">    size = read_long();</span><br><span class="line">    <span class="keyword">if</span> ( size &lt;= <span class="number">0x78</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      v4 = <span class="built_in">realloc</span>(<span class="number">0LL</span>, size);</span><br><span class="line">      <span class="keyword">if</span> ( v4 )</span><br><span class="line">      &#123;</span><br><span class="line">        heap[v2] = v4;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Data:&quot;</span>);</span><br><span class="line">        v0 = (_BYTE *)(heap[v2] + read_input(heap[v2], (<span class="type">unsigned</span> <span class="type">int</span>)size));		<span class="comment">//一字节溢出</span></span><br><span class="line">        *v0 = <span class="number">0</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">      &#123;</span><br><span class="line">        LODWORD(v0) = <span class="built_in">puts</span>(<span class="string">&quot;alloc error&quot;</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      LODWORD(v0) = <span class="built_in">puts</span>(<span class="string">&quot;Too large!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> (<span class="type">int</span>)v0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>allocate 函数里存在 off_by_one 的 null 溢出。</p>
+<p>程序并没有输出的功能。</p>
+
+      <div class="tags">
+          <a href="/tags/writeup/" rel="tag"><i class="ic i-tag"></i> writeup</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">Edited on</span>
+    <time title="Modified: 2022-05-13 17:15:01" itemprop="dateModified" datetime="2022-05-13T17:15:01+08:00">2022-05-13</time>
+  </span>
+</div>
+
+      
+<div class="reward">
+  <button><i class="ic i-heartbeat"></i> Donate</button>
+  <p>Give me a cup of [coffee]~(￣▽￣)~*</p>
+  <div id="qr">
+      
+      <div>
+        <img data-src="/images/wechatpay.png" alt="dreamcat WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/alipay.png" alt="dreamcat Alipay">
+        <p>Alipay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/paypal.png" alt="dreamcat PayPal">
+        <p>PayPal</p>
+      </div>
+  </div>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>Post author:  </strong>dreamcat <i class="ic i-at"><em>@</em></i>我他喵的
+  </li>
+  <li class="link">
+    <strong>Post link: </strong>
+    <a href="http://example.com/2022/05/13/pwnable-re-alloc/" title="pwnable-re-alloc">http://example.com/2022/05/13/pwnable-re-alloc/</a>
+  </li>
+  <li class="license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2022/05/12/%E9%80%86%E5%90%91%E5%B8%B8%E8%A7%81%E7%AE%97%E6%B3%95/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipeyhsblkj20zk0m81kx.jpg" title="逆向常见算法">
+  <span class="type">Previous Post</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>逆向常见算法</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+      
+
+  <a href="/2022/06/03/%E9%AB%98%E7%89%88%E6%9C%ACglibc%E5%A0%86%E7%9A%84%E5%87%A0%E7%A7%8D%E5%88%A9%E7%94%A8%E6%89%8B%E6%B3%95/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipesx5fdwj20zk0m81kx.jpg" title="高版本glibc堆的几种利用手法">
+  <span class="type">Next Post</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>高版本glibc堆的几种利用手法</h3>
+  </a>
+
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="Contents">
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#pwnabletw"><span class="toc-number">1.</span> <span class="toc-text"> Pwnable.tw 	re-alloc</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E4%BF%9D%E6%8A%A4"><span class="toc-number">1.1.</span> <span class="toc-text"> 环境保护</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90"><span class="toc-number">1.2.</span> <span class="toc-text"> 代码分析</span></a></li></ol></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="Related">
+        <ul>
+          <li><a href="/2022/03/19/pwnable-seethefile/" rel="bookmark" title="pwnable_seethefile">pwnable_seethefile</a></li><li><a href="/2022/03/20/buuoj-heapcreator/" rel="bookmark" title="buuoj_heapcreator">buuoj_heapcreator</a></li><li><a href="/2022/03/21/roarctf-2019-easypwn/" rel="bookmark" title="roarctf_2019_easypwn">roarctf_2019_easypwn</a></li><li><a href="/2022/03/22/tw2017parrot/" rel="bookmark" title="tw2017parrot">tw2017parrot</a></li><li><a href="/2022/04/01/note-file/" rel="bookmark" title="note_file">note_file</a></li><li><a href="/2022/04/01/tcache-tear/" rel="bookmark" title="tcache_tear">tcache_tear</a></li><li><a href="/2022/04/10/pwnable-bookwriter/" rel="bookmark" title=""></a></li><li><a href="/2022/04/14/heap-paradise/" rel="bookmark" title="heap_paradise">heap_paradise</a></li><li><a href="/2022/04/18/starctf_examination/" rel="bookmark" title="examination">examination</a></li><li><a href="/2022/04/19/starctf-babynote/" rel="bookmark" title="starctf_babynote">starctf_babynote</a></li><li><a href="/2022/04/25/MRCTF-ezbash/" rel="bookmark" title="MRCTF_ezbash">MRCTF_ezbash</a></li><li><a href="/2022/05/10/chunzhiIOT/" rel="bookmark" title="chunzhiIOT">chunzhiIOT</a></li><li><a href="/2022/05/10/torghast/" rel="bookmark" title="torghast">torghast</a></li><li class="active"><a href="/2022/05/13/pwnable-re-alloc/" rel="bookmark" title="pwnable-re-alloc">pwnable-re-alloc</a></li><li><a href="/2022/06/18/ciscn2022-syscall/" rel="bookmark" title="ciscn2022_syscall">ciscn2022_syscall</a></li><li><a href="/2022/06/19/ciscn-2022-popcalc/" rel="bookmark" title="ciscn_2022_popcalc">ciscn_2022_popcalc</a></li><li><a href="/2022/06/20/ciscn-2022-planecoode/" rel="bookmark" title="ciscn_2022_planecoode">ciscn_2022_planecoode</a></li><li><a href="/2022/09/20/tctf2022ezvm/" rel="bookmark" title="tctf2022ezvm">tctf2022ezvm</a></li>
+        </ul>
+      </div>
+      <div class="overview panel" data-title="Overview">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="dreamcat"
+      data-src="/images/avatar.jpg">
+  <p class="name" itemprop="name">dreamcat</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">33</span>
+        <span class="name">posts</span>
+      </a>
+    </div>
+    <div class="item categories">
+      <a href="/categories/">
+        <span class="count">4</span>
+        <span class="name">categories</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">8</span>
+        <span class="name">tags</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>Home</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+        <a href="/2022/05/12/%E9%80%86%E5%90%91%E5%B8%B8%E8%A7%81%E7%AE%97%E6%B3%95/" rel="prev" title="Previous Post"><i class="ic i-chevron-left"></i></a>
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+        <a href="/2022/06/03/%E9%AB%98%E7%89%88%E6%9C%ACglibc%E5%A0%86%E7%9A%84%E5%87%A0%E7%A7%8D%E5%88%A9%E7%94%A8%E6%89%8B%E6%B3%95/" rel="next" title="Next Post"><i class="ic i-chevron-right"></i></a>
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>Random Posts</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/04/19/starctf-babynote/" title="starctf_babynote">starctf_babynote</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/04/18/starctf_examination/" title="examination">examination</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/kernel/" title="In kernel">kernel</a>
+</div>
+
+    <span><a href="/2022/05/01/%E5%BC%BA%E7%BD%91%E6%9D%AF2018-core/" title="强网杯2018_core">强网杯2018_core</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/05/06/slab%E3%80%81slub%E3%80%81slob%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" title="slab、slub、slob学习记录">slab、slub、slob学习记录</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/05/12/%E6%BB%B4%E6%B0%B4%E9%80%86%E5%90%91-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="滴水逆向_学习笔记">滴水逆向_学习笔记</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/08/01/glibc-2-35%E4%B8%80%E4%BA%9B%E6%89%8B%E6%B3%95/" title="glibc-2.35一些手法">glibc-2.35一些手法</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/04/14/heap-paradise/" title="heap_paradise">heap_paradise</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/07/20/360dsctf2022-eznote/" title="360dsctf2022_eznote">360dsctf2022_eznote</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/03/21/roarctf-2019-easypwn/" title="roarctf_2019_easypwn">roarctf_2019_easypwn</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/06/23/test/" title="test">test</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>Recent Comments</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2022</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">dreamcat @ dreamcat</span>
+  </div>
+  <div class="count">
+    <span class="post-meta-item-icon">
+      <i class="ic i-chart-area"></i>
+    </span>
+    <span title="Symbols count total">282k words</span>
+
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="ic i-coffee"></i>
+    </span>
+    <span title="Reading time total">4:16</span>
+  </div>
+  <div class="powered-by">
+    Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2022/05/13/pwnable-re-alloc/',
+    favicon: {
+      show: "（●´3｀●）Goooood",
+      hide: "(´Д｀)dreamcat?"
+    },
+    search : {
+      placeholder: "Search for Posts",
+      empty: "We didn't find any results for the search: ${query}",
+      stats: "${hits} results found in ${time} ms"
+    },
+    valine: true,fancybox: true,
+    copyright: 'Copied to clipboard successfully! <br> All articles in this blog are licensed under <i class="ic i-creative-commons"></i>BY-NC-SA.',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>

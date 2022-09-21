@@ -1,0 +1,18 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "我他喵的 • All posts by \"reverse\" tag",
+    "description": "",
+    "home_page_url": "http://example.com",
+    "items": [
+        {
+            "id": "http://example.com/2022/05/12/%E9%80%86%E5%90%91%E5%B8%B8%E8%A7%81%E7%AE%97%E6%B3%95/",
+            "url": "http://example.com/2022/05/12/%E9%80%86%E5%90%91%E5%B8%B8%E8%A7%81%E7%AE%97%E6%B3%95/",
+            "title": "逆向常见算法",
+            "date_published": "2022-05-12T10:58:05.000Z",
+            "content_html": "<h1 id=\"reverse-常见的加密算法\"><a class=\"markdownIt-Anchor\" href=\"#reverse-常见的加密算法\">#</a> Reverse \t常见的加密算法</h1>\n<p>在 reverse 的题目中，常常会对我们的输入以及内存数据进行加密，然后与已有的密文进行对比，从而判断我们的输入是否正确</p>\n<h2 id=\"基于特征值识别的加密算法desaest系列md5sm4\"><a class=\"markdownIt-Anchor\" href=\"#基于特征值识别的加密算法desaest系列md5sm4\">#</a> 基于特征值识别的加密算法：DES，AES，T 系列，md5,sm4</h2>\n<p>ida pro 插件</p>\n<p><span class=\"exturl\" data-url=\"aHR0cHM6Ly9naXRodWIuY29tL3BvbHltb3JmL2ZpbmRjcnB5dC15YXJh\">https://github.com/polymorf/findcrpyt-yara</span></p>\n<h3 id=\"t系列\"><a class=\"markdownIt-Anchor\" href=\"#t系列\">#</a> T 系列</h3>\n<h4 id=\"teaxteaxxtea\"><a class=\"markdownIt-Anchor\" href=\"#teaxteaxxtea\">#</a> TEA，XTEA，XXTEA</h4>\n<p>有一个明确的特征值，然后对明文进行一些基本的算数运算</p>\n<h3 id=\"aes块加密算法\"><a class=\"markdownIt-Anchor\" href=\"#aes块加密算法\">#</a> AES—— 块加密算法</h3>\n<p>有一个固定的 256 字节的数组</p>\n<p>sbox [256] 的数组（用于矩阵运算的密钥）, 但是密钥不一定在程序中定义，可能是通过算法函数生成。这里也是出题人常用的出题思路 —— 修改 sbox。</p>\n<p>AES 基于单个块的加密，一次处理 4 个字节的数据</p>\n<h3 id=\"rc4\"><a class=\"markdownIt-Anchor\" href=\"#rc4\">#</a> RC4</h3>\n<p>通过一个 key，生成一个 sbox，再由 sbox 生成一个 keystream，明文与 keystream 亦或得到明文</p>\n<h3 id=\"md5\"><a class=\"markdownIt-Anchor\" href=\"#md5\">#</a> MD5</h3>\n<p>有 4 个固定的 32bit 的值</p>\n<h3 id=\"sm4\"><a class=\"markdownIt-Anchor\" href=\"#sm4\">#</a> SM4</h3>\n<p>有一个固定的 256 字节的数组</p>\n<h3 id=\"des\"><a class=\"markdownIt-Anchor\" href=\"#des\">#</a> DES</h3>\n<p>有一个固定的 64 字节的数组</p>\n<h3 id=\"第三方库加密\"><a class=\"markdownIt-Anchor\" href=\"#第三方库加密\">#</a> 第三方库加密</h3>\n<p>调用第三方的库函数，对数据进行加密。这时候我们需要去寻找对应的加密函数的调用信息，dll，so 文件提供的 api。也有可能是使用的网络上开源的加密算法。</p>\n<h2 id=\"加密算法的模式\"><a class=\"markdownIt-Anchor\" href=\"#加密算法的模式\">#</a> 加密算法的模式</h2>\n<h3 id=\"分组加密模式12常用\"><a class=\"markdownIt-Anchor\" href=\"#分组加密模式12常用\">#</a> 分组加密模式（1，2 常用）</h3>\n<h4 id=\"1电码本模式ecb\"><a class=\"markdownIt-Anchor\" href=\"#1电码本模式ecb\">#</a> 1，电码本模式 ecb</h4>\n<p>将明文分成多个块，对每个块进行单独的加密，然后拼接成密文，解密的流程就是将加密快换成解密块</p>\n<h4 id=\"2密码分组链接模式cbc\"><a class=\"markdownIt-Anchor\" href=\"#2密码分组链接模式cbc\">#</a> 2，密码分组链接模式 CBC</h4>\n<p>将明文分组程多个明文块 plaintext，算法需要两个额外的值，initialization Vector (IV), 这是一个与明文块大小相同的数据块，用于与第一个 plaintext 进行亦或（初始化），得到中间的块，Block Cipher Encryption，然后 BCE 与 key 进行加密运算的带第一个密文块，Ciphertext。后面按照同样的流程，只不过不再是使用给出的 IV，而是将上一个密文块用作本次加密的 IV。</p>\n<h4 id=\"3计算器模式ctr\"><a class=\"markdownIt-Anchor\" href=\"#3计算器模式ctr\">#</a> 3，计算器模式 CTR</h4>\n<h4 id=\"4密码反馈模式cfb\"><a class=\"markdownIt-Anchor\" href=\"#4密码反馈模式cfb\">#</a> 4，密码反馈模式 CFB</h4>\n<h4 id=\"5输出反馈模式ofb\"><a class=\"markdownIt-Anchor\" href=\"#5输出反馈模式ofb\">#</a> 5，输出反馈模式 OFB</h4>\n",
+            "tags": [
+                "reverse"
+            ]
+        }
+    ]
+}

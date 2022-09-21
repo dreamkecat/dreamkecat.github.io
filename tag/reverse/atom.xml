@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>http://example.com</id>
+    <title>我他喵的 • Posts by &#34;reverse&#34; tag</title>
+    <link href="http://example.com" />
+    <updated>2022-05-12T10:58:05.000Z</updated>
+    <category term="writeup" />
+    <category term="learning" />
+    <category term="Hello World" />
+    <category term="pwn" />
+    <category term="二进制学习" />
+    <category term="逆向" />
+    <category term="reverse" />
+    <category term="Learning" />
+    <entry>
+        <id>http://example.com/2022/05/12/%E9%80%86%E5%90%91%E5%B8%B8%E8%A7%81%E7%AE%97%E6%B3%95/</id>
+        <title>逆向常见算法</title>
+        <link rel="alternate" href="http://example.com/2022/05/12/%E9%80%86%E5%90%91%E5%B8%B8%E8%A7%81%E7%AE%97%E6%B3%95/"/>
+        <content type="html">&lt;h1 id=&#34;reverse-常见的加密算法&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#reverse-常见的加密算法&#34;&gt;#&lt;/a&gt; Reverse 	常见的加密算法&lt;/h1&gt;
+&lt;p&gt;在 reverse 的题目中，常常会对我们的输入以及内存数据进行加密，然后与已有的密文进行对比，从而判断我们的输入是否正确&lt;/p&gt;
+&lt;h2 id=&#34;基于特征值识别的加密算法desaest系列md5sm4&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#基于特征值识别的加密算法desaest系列md5sm4&#34;&gt;#&lt;/a&gt; 基于特征值识别的加密算法：DES，AES，T 系列，md5,sm4&lt;/h2&gt;
+&lt;p&gt;ida pro 插件&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9naXRodWIuY29tL3BvbHltb3JmL2ZpbmRjcnB5dC15YXJh&#34;&gt;https://github.com/polymorf/findcrpyt-yara&lt;/span&gt;&lt;/p&gt;
+&lt;h3 id=&#34;t系列&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#t系列&#34;&gt;#&lt;/a&gt; T 系列&lt;/h3&gt;
+&lt;h4 id=&#34;teaxteaxxtea&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#teaxteaxxtea&#34;&gt;#&lt;/a&gt; TEA，XTEA，XXTEA&lt;/h4&gt;
+&lt;p&gt;有一个明确的特征值，然后对明文进行一些基本的算数运算&lt;/p&gt;
+&lt;h3 id=&#34;aes块加密算法&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#aes块加密算法&#34;&gt;#&lt;/a&gt; AES—— 块加密算法&lt;/h3&gt;
+&lt;p&gt;有一个固定的 256 字节的数组&lt;/p&gt;
+&lt;p&gt;sbox [256] 的数组（用于矩阵运算的密钥）, 但是密钥不一定在程序中定义，可能是通过算法函数生成。这里也是出题人常用的出题思路 —— 修改 sbox。&lt;/p&gt;
+&lt;p&gt;AES 基于单个块的加密，一次处理 4 个字节的数据&lt;/p&gt;
+&lt;h3 id=&#34;rc4&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#rc4&#34;&gt;#&lt;/a&gt; RC4&lt;/h3&gt;
+&lt;p&gt;通过一个 key，生成一个 sbox，再由 sbox 生成一个 keystream，明文与 keystream 亦或得到明文&lt;/p&gt;
+&lt;h3 id=&#34;md5&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#md5&#34;&gt;#&lt;/a&gt; MD5&lt;/h3&gt;
+&lt;p&gt;有 4 个固定的 32bit 的值&lt;/p&gt;
+&lt;h3 id=&#34;sm4&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#sm4&#34;&gt;#&lt;/a&gt; SM4&lt;/h3&gt;
+&lt;p&gt;有一个固定的 256 字节的数组&lt;/p&gt;
+&lt;h3 id=&#34;des&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#des&#34;&gt;#&lt;/a&gt; DES&lt;/h3&gt;
+&lt;p&gt;有一个固定的 64 字节的数组&lt;/p&gt;
+&lt;h3 id=&#34;第三方库加密&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#第三方库加密&#34;&gt;#&lt;/a&gt; 第三方库加密&lt;/h3&gt;
+&lt;p&gt;调用第三方的库函数，对数据进行加密。这时候我们需要去寻找对应的加密函数的调用信息，dll，so 文件提供的 api。也有可能是使用的网络上开源的加密算法。&lt;/p&gt;
+&lt;h2 id=&#34;加密算法的模式&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#加密算法的模式&#34;&gt;#&lt;/a&gt; 加密算法的模式&lt;/h2&gt;
+&lt;h3 id=&#34;分组加密模式12常用&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#分组加密模式12常用&#34;&gt;#&lt;/a&gt; 分组加密模式（1，2 常用）&lt;/h3&gt;
+&lt;h4 id=&#34;1电码本模式ecb&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#1电码本模式ecb&#34;&gt;#&lt;/a&gt; 1，电码本模式 ecb&lt;/h4&gt;
+&lt;p&gt;将明文分成多个块，对每个块进行单独的加密，然后拼接成密文，解密的流程就是将加密快换成解密块&lt;/p&gt;
+&lt;h4 id=&#34;2密码分组链接模式cbc&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#2密码分组链接模式cbc&#34;&gt;#&lt;/a&gt; 2，密码分组链接模式 CBC&lt;/h4&gt;
+&lt;p&gt;将明文分组程多个明文块 plaintext，算法需要两个额外的值，initialization Vector (IV), 这是一个与明文块大小相同的数据块，用于与第一个 plaintext 进行亦或（初始化），得到中间的块，Block Cipher Encryption，然后 BCE 与 key 进行加密运算的带第一个密文块，Ciphertext。后面按照同样的流程，只不过不再是使用给出的 IV，而是将上一个密文块用作本次加密的 IV。&lt;/p&gt;
+&lt;h4 id=&#34;3计算器模式ctr&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#3计算器模式ctr&#34;&gt;#&lt;/a&gt; 3，计算器模式 CTR&lt;/h4&gt;
+&lt;h4 id=&#34;4密码反馈模式cfb&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#4密码反馈模式cfb&#34;&gt;#&lt;/a&gt; 4，密码反馈模式 CFB&lt;/h4&gt;
+&lt;h4 id=&#34;5输出反馈模式ofb&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#5输出反馈模式ofb&#34;&gt;#&lt;/a&gt; 5，输出反馈模式 OFB&lt;/h4&gt;
+</content>
+        <category term="reverse" />
+        <updated>2022-05-12T10:58:05.000Z</updated>
+    </entry>
+</feed>

