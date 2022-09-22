@@ -117,12 +117,12 @@ dreamcat = 我他喵的</title>
       </div>
       <div id="imgs" class="pjax">
         <ul>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipew28b65j20zk0m8hdt.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giph47e9vtj20zk0m8x6l.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclhnx9glj20zk0m8npd.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicitspjpbj20zk0m81ky.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipet4bz0yj20zk0m8e81.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipeyonbf9j20zk0m8e81.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giclhnx9glj20zk0m8npd.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipew28b65j20zk0m8hdt.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giciryrr3rj20zk0m8nhk.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipewr8iypj20zk0m8b29.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giclh5u05ej20zk0m87df.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipeyonbf9j20zk0m8e81.jpg"></li>
         </ul>
       </div>
     </header>
@@ -181,10 +181,10 @@ dreamcat = 我他喵的</title>
 <p>这几个常用的钩子函数，而我们最常用的 malloc_hook 以及 free_hook 被完全的禁止了（虽然我们依旧可以在程序中找到对应的符号，但是相关的函数不在对其进行调用），我们只能另寻出路。其实在 2.29 以后的版本中，很多手法都已经失效了，我们常用的无外乎就是劫持程序执行流，以及输入输出流。在 2.23 的版本中，我们是可以修改 vtable，但是 2.24 后就禁止修改，以及再到后面的一些版本还会检查我们的 vtable 是否在允许的范围中（所有的 vtable 储存在一个数组中，以__start_libc_IO_vtables 开始，__stop_libc_IO_vtables 结束）。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">_IO_vtable_check (<span class="type">void</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> SHARED</span></span><br><span class="line">  <span class="comment">/* Honor the compatibility flag.  */</span></span><br><span class="line">  <span class="type">void</span> (*flag) (<span class="type">void</span>) = atomic_load_relaxed (&amp;IO_accept_foreign_vtables);</span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> PTR_DEMANGLE</span></span><br><span class="line">  PTR_DEMANGLE (flag);</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">  <span class="keyword">if</span> (flag == &amp;_IO_vtable_check)</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* In case this libc copy is in a non-default namespace, we always</span></span><br><span class="line"><span class="comment">     need to accept foreign vtables because there is always a</span></span><br><span class="line"><span class="comment">     possibility that FILE * objects are passed across the linking</span></span><br><span class="line"><span class="comment">     boundary.  */</span></span><br><span class="line">  &#123;</span><br><span class="line">    Dl_info di;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">link_map</span> *<span class="title">l</span>;</span></span><br><span class="line">    <span class="keyword">if</span> (!rtld_active ()</span><br><span class="line">        || (_dl_addr (_IO_vtable_check, &amp;di, &amp;l, <span class="literal">NULL</span>) != <span class="number">0</span></span><br><span class="line">            &amp;&amp; l-&gt;l_ns != LM_ID_BASE))</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 <p>但是，在 2.34 的早期版本又是可以写的（glibc-2.34-0ubuntu1_amd64）</p>
-<p><img data-src="p1.jpg" alt="p1"></p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/dreamkecat/blog_img//blog_img/image-20220922125041443.png" alt="image-20220922125041443"></p>
 <p>这个时候我们可以尝试攻击 vtable 结构体，达到 getshell 的目的。</p>
 <p>但是在后面的几次更新中，又将修复了这个漏洞，在 (Ubuntu GLIBC 2.34-0ubuntu3.2) 2.34 版本中，就不可以修改（目前已知在 2.340ubuntu3 版本以及之前的版本依旧有可写的权限）</p>
-<p><img data-src="p2.png" alt="p2"></p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/dreamkecat/blog_img//blog_img/image-20220922124814590.png" alt="image-20220922124814590"></p>
 <p>我们可以找到很多关于如何绕过 vtable check 的办法进行劫持 IO 流，其中最主流的还是利用 _IO_str_jumps  和 _IO_wstr_jumps 两个虚表，</p>
 <p>二者利用几乎一样。我们在源码 /libio/strops.c 可以看到相关的 vatable 的内容，以下我以_IO_str_jumps 作主要说明。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IO_jump_t</span> _<span class="title">IO_str_jumps</span> <span class="title">libio_vtable</span> =</span></span><br><span class="line">&#123;</span><br><span class="line">  JUMP_INIT_DUMMY,</span><br><span class="line">  JUMP_INIT(finish, _IO_str_finish),</span><br><span class="line">  JUMP_INIT(overflow, _IO_str_overflow),</span><br><span class="line">  JUMP_INIT(underflow, _IO_str_underflow),</span><br><span class="line">  JUMP_INIT(uflow, _IO_default_uflow),</span><br><span class="line">  JUMP_INIT(pbackfail, _IO_str_pbackfail),</span><br><span class="line">  JUMP_INIT(xsputn, _IO_default_xsputn),</span><br><span class="line">  JUMP_INIT(xsgetn, _IO_default_xsgetn),</span><br><span class="line">  JUMP_INIT(seekoff, _IO_str_seekoff),</span><br><span class="line">  JUMP_INIT(seekpos, _IO_default_seekpos),</span><br><span class="line">  JUMP_INIT(setbuf, _IO_default_setbuf),</span><br><span class="line">  JUMP_INIT(sync, _IO_default_sync),</span><br><span class="line">  JUMP_INIT(doallocate, _IO_default_doallocate),</span><br><span class="line">  JUMP_INIT(read, _IO_default_read),</span><br><span class="line">  JUMP_INIT(write, _IO_default_write),</span><br><span class="line">  JUMP_INIT(seek, _IO_default_seek),</span><br><span class="line">  JUMP_INIT(close, _IO_default_close),</span><br><span class="line">  JUMP_INIT(stat, _IO_default_stat),</span><br><span class="line">  JUMP_INIT(showmanyc, _IO_default_showmanyc),</span><br><span class="line">  JUMP_INIT(imbue, _IO_default_imbue)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -222,7 +222,7 @@ JUMP_INIT(overflow, _IO_str_overflow),</p>
 <p>下面是 exit 执行的一个过程</p>
 <h5 id="exit-_dl_fini-fini_t-arrayi"><a class="markdownIt-Anchor" href="#exit-_dl_fini-fini_t-arrayi">#</a> exit -&gt; _dl_fini -&gt;((fini_t) array[i]) ();</h5>
 <p>​		banana 手法，通过伪造修改相关的表项，以达到调用后门来获得权限。这里我们重点说一下，在 ubuntu3.2 下利用的可行性。大多数师傅对于 banana 的攻击方式主要有两种，一是攻击_rtld_global 这个全局符号所保存的 link_map 的链表。伪造整个链表，进行劫持。相关的全局变量是可以写的。后面会解释这个变量的用处。</p>
-<p><img data-src="p3.png" alt="p3"></p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/dreamkecat/blog_img//blog_img/image-20220922124833560.png" alt="image-20220922124833560"></p>
 <p>另外一个与之相比破坏性比较小，更容易成功。由于 link_map 通过链表链接，但是在加载 exit 的时候，相关函数智慧通过 link_map-&gt;l_next 指针进行相关的检查。我们可以在某个特定的位置，更改 next 指针，将下一以链表节点转为我们控制的地方，比如 heap 上。</p>
 <p>​	很多朋友看了上面的可能会比较蒙，下面我具体说一参数。</p>
 <p>关于 link_map, 我们攻击 exit 时，会使用到一个 link_map 的链表，链表的一些信息保存在 struct rtld_global 结构体中，这个结构体信息很多，很繁杂，但是 banana 只用到了几个关键的点。</p>
@@ -251,7 +251,7 @@ JUMP_INIT(overflow, _IO_str_overflow),</p>
 <p>检查 <code>l-&gt;l_init_called &gt; 8</code>            这个其实跟数据的处理有关</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> <span class="type">int</span> l_relocated:<span class="number">1</span>;	<span class="comment">/* Nonzero if object&#x27;s relocations done.  */</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> l_init_called:<span class="number">1</span>; <span class="comment">/* Nonzero if DT_INIT function called.  */</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> l_global:<span class="number">1</span>;	<span class="comment">/* Nonzero if object in _dl_global_scope.  */</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> l_reserved:<span class="number">2</span>;	<span class="comment">/* Reserved for internal use.  */</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> l_phdr_allocated:<span class="number">1</span>; <span class="comment">/* Nonzero if the data structure pointed</span></span><br><span class="line"><span class="comment">					to by `l_phdr&#x27; is allocated.  */</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> l_soname_added:<span class="number">1</span>; <span class="comment">/* Nonzero if the SONAME is for sure in</span></span><br></pre></td></tr></table></figure>
 <p>在 lunk_map 结构体中，这个变量是 4 字节，与结构体开始位置的偏移量为 0x31c。pwndbg 帮我们解释了数据的结果，这里的数据要大于 8，我们不妨之际设置为 9. 不同节点可以有所差异，下面是一个结果为 1 的数据</p>
-<p><img data-src="p4.png" alt="p4"></p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/dreamkecat/blog_img//blog_img/image-20220922124850825.png" alt="image-20220922124850825"></p>
 <p>以及一个不为 1 的数据</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; p *(<span class="keyword">struct</span> link_map *)<span class="number">0x7f56e43ba7d0</span></span><br><span class="line">$<span class="number">5</span> = &#123;</span><br><span class="line">  l_addr = <span class="number">140725148598272</span>,</span><br><span class="line">  l_name = <span class="number">0x7ffd207e4371</span> <span class="string">&quot;linux-vdso.so.1&quot;</span>,</span><br><span class="line">  l_ld = <span class="number">0x7ffd207e43e0</span>,</span><br><span class="line">  l_next = <span class="number">0x7f56e4382000</span>,</span><br><span class="line">  l_prev = <span class="number">0x7f56e43ba220</span>,</span><br><span class="line">  l_real = <span class="number">0x7f56e43ba7d0</span>,</span><br><span class="line">...</span><br><span class="line">  l_relocated = <span class="number">1</span>,</span><br><span class="line">  l_init_called = <span class="number">0</span>,</span><br><span class="line">  l_global = <span class="number">0</span>,</span><br><span class="line">...</span><br><span class="line">pwndbg&gt; x/wx <span class="number">0x7f56e43ba7d0</span>+<span class="number">0x31c</span></span><br><span class="line"><span class="number">0x7f56e43baaec</span>:	<span class="number">0x00000005</span></span><br><span class="line">pwndbg&gt; </span><br><span class="line"></span><br></pre></td></tr></table></figure>
 </li>
@@ -281,7 +281,7 @@ JUMP_INIT(overflow, _IO_str_overflow),</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; tel <span class="number">0x55a656f072a0</span>(fake) <span class="number">40</span></span><br><span class="line"><span class="number">00</span>:<span class="number">0000</span>│  <span class="number">0x55a656f072a0</span> ◂— <span class="number">0x0</span>							<span class="comment">//l_addr</span></span><br><span class="line">... ↓     <span class="number">4</span> skipped</span><br><span class="line"><span class="number">05</span>:<span class="number">0028</span>│  <span class="number">0x55a656f072c8</span> —▸ <span class="number">0x55a656f072a0</span> ◂— <span class="number">0x0</span>				<span class="comment">//l_real</span></span><br><span class="line"><span class="number">06</span>:<span class="number">0030</span>│  <span class="number">0x55a656f072d0</span> ◂— <span class="number">0x0</span></span><br><span class="line"><span class="number">07</span>:<span class="number">0038</span>│  <span class="number">0x55a656f072d8</span> ◂— <span class="number">0x41</span> </span><br><span class="line"><span class="number">08</span>:<span class="number">0040</span>│  <span class="number">0x55a656f072e0</span> ◂— <span class="number">0x0</span></span><br><span class="line"><span class="number">09</span>:<span class="number">0048</span>│  <span class="number">0x55a656f072e8</span> —▸ <span class="number">0x55a656f072f8</span> —▸ <span class="number">0x7f56e4244cec</span> (execvpe+<span class="number">652</span>) ◂— mov    rdx, r12</span><br><span class="line"><span class="number">0</span>a:<span class="number">0050</span>│  <span class="number">0x55a656f072f0</span> ◂— <span class="number">0x8</span></span><br><span class="line"><span class="number">0b</span>:<span class="number">0058</span>│  <span class="number">0x55a656f072f8</span> —▸ <span class="number">0x7f56e4244cec</span> (execvpe+<span class="number">652</span>) ◂— mov    rdx, r12</span><br><span class="line"><span class="number">0</span>c:<span class="number">0060</span>│  <span class="number">0x55a656f07300</span> ◂— <span class="number">0xa</span> /</span><br><span class="line"><span class="number">0</span>d:<span class="number">0068</span>│  <span class="number">0x55a656f07308</span> ◂— <span class="number">0x0</span></span><br><span class="line"><span class="number">0</span>e:<span class="number">0070</span>│  <span class="number">0x55a656f07310</span> ◂— <span class="number">0x0</span></span><br><span class="line"><span class="number">0f</span>:<span class="number">0078</span>│  <span class="number">0x55a656f07318</span> ◂— <span class="number">0x41</span></span><br><span class="line"><span class="number">10</span>:<span class="number">0080</span>│  <span class="number">0x55a656f07320</span> ◂— <span class="number">0x0</span></span><br><span class="line">... ↓     <span class="number">6</span> skipped</span><br><span class="line"><span class="number">17</span>:<span class="number">00b</span>8│  <span class="number">0x55a656f07358</span> ◂— <span class="number">0x41</span></span><br><span class="line"><span class="number">18</span>:<span class="number">00</span>c0│  <span class="number">0x55a656f07360</span> ◂— <span class="number">0x0</span></span><br><span class="line">... ↓     <span class="number">6</span> skipped</span><br><span class="line"><span class="number">1f</span>:<span class="number">00f</span>8│  <span class="number">0x55a656f07398</span> ◂— <span class="number">0x41</span> </span><br><span class="line"><span class="number">20</span>:<span class="number">0100</span>│  <span class="number">0x55a656f073a0</span> ◂— <span class="number">0x0</span></span><br><span class="line"><span class="number">21</span>:<span class="number">0108</span>│  <span class="number">0x55a656f073a8</span> ◂— <span class="number">0x0</span></span><br><span class="line"><span class="number">22</span>:<span class="number">0110</span>│  <span class="number">0x55a656f073b0</span> —▸ <span class="number">0x55a656f072e0</span> 	<span class="comment">//l_info[26]</span></span><br><span class="line"><span class="number">23</span>:<span class="number">0118</span>│  <span class="number">0x55a656f073b8</span> ◂— <span class="number">0x0</span></span><br><span class="line"><span class="number">24</span>:<span class="number">0120</span>│  <span class="number">0x55a656f073c0</span> —▸ <span class="number">0x55a656f072e8</span>  <span class="comment">//l_info[28]</span></span><br><span class="line"><span class="number">25</span>:<span class="number">0128</span>│  <span class="number">0x55a656f073c8</span> ◂— <span class="number">0xa</span> </span><br><span class="line"><span class="number">26</span>:<span class="number">0130</span>│  <span class="number">0x55a656f073d0</span> ◂— <span class="number">0x0</span></span><br><span class="line"><span class="number">27</span>:<span class="number">0138</span>│  <span class="number">0x55a656f073d8</span> ◂— <span class="number">0x41</span> </span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>最后我们就是利用 onegadget 获得 shell 了。</p>
 <p>利用 gdb 万能必挂点，结合 one_gadget 工具帮助我们快速找到合适的 one_gadget</p>
-<p><img data-src="./p5.png" alt="p5"></p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/dreamkecat/blog_img//blog_img/image-20220922124913109.png" alt="image-20220922124913109"></p>
 <h5 id="一些注意点"><a class="markdownIt-Anchor" href="#一些注意点">#</a> 一些注意点：</h5>
 <p>​	因为_rtld_global 这个符号是存在与 ld.so 文件中，往往出题人不会给出 ld.so 文件，，rtld_global_ptr 与 libc_base 的偏移在本地与远程并不是固定的，可能会在地址的第 2 字节处发生变化，因此可以爆破 256 种可能得到远程环境的精确偏移</p>
 <h2 id="总结"><a class="markdownIt-Anchor" href="#总结">#</a> 总结：</h2>
@@ -316,7 +316,7 @@ JUMP_INIT(overflow, _IO_str_overflow),</p>
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">Edited on</span>
-    <time title="Modified: 2022-06-23 11:56:07" itemprop="dateModified" datetime="2022-06-23T11:56:07+08:00">2022-06-23</time>
+    <time title="Modified: 2022-09-22 12:51:34" itemprop="dateModified" datetime="2022-09-22T12:51:34+08:00">2022-09-22</time>
   </span>
 </div>
 
@@ -371,7 +371,7 @@ JUMP_INIT(overflow, _IO_str_overflow),</p>
     <div class="item left">
       
 
-  <a href="/2022/05/13/pwnable-re-alloc/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclfb3vzhj20zk0m8wny.jpg" title="pwnable-re-alloc">
+  <a href="/2022/05/13/pwnable-re-alloc/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva4.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipevo9j1jj20zk0m8e81.jpg" title="pwnable-re-alloc">
   <span class="type">Previous Post</span>
   <span class="category"><i class="ic i-flag"></i> pwn</span>
   <h3>pwnable-re-alloc</h3>
@@ -381,7 +381,7 @@ JUMP_INIT(overflow, _IO_str_overflow),</p>
     <div class="item right">
       
 
-  <a href="/2022/06/11/vm%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclhpw3lwj20zk0m8gvw.jpg" title="vm学习笔记">
+  <a href="/2022/06/11/vm%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva4.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipew8gmvyj20zk0m87wh.jpg" title="vm学习笔记">
   <span class="type">Next Post</span>
   <span class="category"><i class="ic i-flag"></i> </span>
   <h3>vm学习笔记</h3>
@@ -418,7 +418,7 @@ JUMP_INIT(overflow, _IO_str_overflow),</p>
 <nav class="state">
     <div class="item posts">
       <a href="/archives/">
-        <span class="count">35</span>
+        <span class="count">32</span>
         <span class="name">posts</span>
       </a>
     </div>
@@ -482,10 +482,18 @@ JUMP_INIT(overflow, _IO_str_overflow),</p>
   <li class="item">
     
 <div class="breadcrumb">
-<a href="/categories/pwn/" title="In pwn">pwn</a>
 </div>
 
-    <span><a href="/2022/03/21/roarctf-2019-easypwn/" title="roarctf_2019_easypwn">roarctf_2019_easypwn</a></span>
+    <span><a href="/2022/06/21/ciscn-2022-whatheap/" title="ciscn_2022_whatheap">ciscn_2022_whatheap</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/05/12/%E9%80%86%E5%90%91%E5%B8%B8%E8%A7%81%E7%AE%97%E6%B3%95/" title="逆向常见算法">逆向常见算法</a></span>
   </li>
 
       
@@ -495,27 +503,7 @@ JUMP_INIT(overflow, _IO_str_overflow),</p>
 <a href="/categories/pwn/" title="In pwn">pwn</a>
 </div>
 
-    <span><a href="/2022/06/19/ciscn-2022-popcalc/" title="ciscn_2022_popcalc">ciscn_2022_popcalc</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/mobile/" title="In mobile">mobile</a>
-</div>
-
-    <span><a href="/2022/07/18/adworld-%E5%9F%BA%E7%A1%80%E7%9A%84android/" title="adworld_基础的android">adworld_基础的android</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/pwn/" title="In pwn">pwn</a>
-</div>
-
-    <span><a href="/2022/05/10/chunzhiIOT/" title="chunzhiIOT">chunzhiIOT</a></span>
+    <span><a href="/2022/03/22/tw2017parrot/" title="tw2017parrot">tw2017parrot</a></span>
   </li>
 
       
@@ -524,36 +512,7 @@ JUMP_INIT(overflow, _IO_str_overflow),</p>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/06/11/vm%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="vm学习笔记">vm学习笔记</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/pwn/" title="In pwn">pwn</a>
-</div>
-
-    <span><a href="/2022/04/25/MRCTF-ezbash/" title="MRCTF_ezbash">MRCTF_ezbash</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/07/20/360dsctf2022-eznote/" title="360dsctf2022_eznote">360dsctf2022_eznote</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/kernel/" title="In kernel">kernel</a>
-</div>
-
-    <span><a href="/2022/05/03/inctf2021-kqueue/" title="inctf2021_kqueue">inctf2021_kqueue</a></span>
+    <span><a href="/2022/06/27/%E5%AD%A6%E4%B9%A0%E5%91%A8%E8%AE%B0-%E2%80%94%E2%80%94%E4%B8%80/" title="学习周记 ——一">学习周记 ——一</a></span>
   </li>
 
       
@@ -572,7 +531,46 @@ JUMP_INIT(overflow, _IO_str_overflow),</p>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/06/21/ciscn-2022-whatheap/" title="ciscn_2022_whatheap">ciscn_2022_whatheap</a></span>
+    <span><a href="/2022/08/01/glibc-2-35%E4%B8%80%E4%BA%9B%E6%89%8B%E6%B3%95/" title="glibc-2.35一些手法">glibc-2.35一些手法</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/kernel/" title="In kernel">kernel</a>
+</div>
+
+    <span><a href="/2022/05/01/%E5%BC%BA%E7%BD%91%E6%9D%AF2018-core/" title="强网杯2018_core">强网杯2018_core</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/06/03/%E9%AB%98%E7%89%88%E6%9C%ACglibc%E5%A0%86%E7%9A%84%E5%87%A0%E7%A7%8D%E5%88%A9%E7%94%A8%E6%89%8B%E6%B3%95/" title="高版本glibc堆的几种利用手法">高版本glibc堆的几种利用手法</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/kernel/" title="In kernel">kernel</a>
+</div>
+
+    <span><a href="/2022/05/02/ciscn-babydriver/" title="ciscn_babydriver">ciscn_babydriver</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/04/25/MRCTF-ezbash/" title="MRCTF_ezbash">MRCTF_ezbash</a></span>
   </li>
 
   </ul>

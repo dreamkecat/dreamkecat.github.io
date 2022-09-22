@@ -88,12 +88,12 @@
       </div>
       <div id="imgs" class="pjax">
         <ul>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipetlbztpj20zk0m84qp.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclwrdwyaj20zk0m8are.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclil3m4ej20zk0m8tn8.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicliierfjj20zk0m8npd.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicli9lfebj20zk0m84qp.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclimtf7dj20zk0m8qav.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gicitht3xtj20zk0m8k5v.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipex2cdtbj20zk0m8x6p.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gicmnywqgpj20zk0m8dwx.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipevo9j1jj20zk0m8e81.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giciusoyjnj219g0u0x56.jpg"></li>
+          <li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipexj2jgzj20zk0m8b09.jpg"></li>
         </ul>
       </div>
     </header>
@@ -119,144 +119,7 @@
         
 <article class="item">
   <div class="cover">
-    <a href="/2022/05/03/inctf2021-kqueue/" itemprop="url" title="inctf2021_kqueue"><img data-src="https://tva2.sinaimg.cn/mw690/6833939bly1gipet4bz0yj20zk0m8e81.jpg"></a>
-  </div>
-  <div class="info">
-    
-<div class="meta">
-  <span class="item" title="Created: 2022-05-03 19:51:43">
-    <span class="icon">
-      <i class="ic i-calendar"></i>
-    </span>
-    <time itemprop="dateCreated datePublished" datetime="2022-05-03T19:51:43+08:00">2022-05-03</time>
-  </span>
-  <span class="item" title="Symbols count in article">
-    <span class="icon">
-      <i class="ic i-pen"></i>
-    </span>
-    <span>16k</span>
-    <span class="text">words</span>
-  </span>
-  <span class="item" title="Reading time">
-    <span class="icon">
-      <i class="ic i-clock"></i>
-    </span>
-    <span>15 mins.</span>
-  </span>
-</div>
-
-    <h3><a href="/2022/05/03/inctf2021-kqueue/" itemprop="url" title="inctf2021_kqueue">inctf2021_kqueue</a></h3>
-    <div class="excerpt">
-        # Inctf2021 pwn kqueue		heap_overflow
-# 环境以及保护
-首先这个文件系统解压出来重新打包会出现问题，因为按照上一篇博客所讲的，创建 file_system 文件夹后，把文件系统的包丢进去，一旦更改后缀名称就是导致归档失败，无法使用 gunzip 进行解包。手动提取后，使用 find 打包，会导致我们启动的时候，报错我们没有挂载的权限。所以我没有重新打包。
-提取出来的 vmlinux
-123456789dreamcat@ubuntu:~/Desktop/wykernel/inctf2021_kqueue$ checksec vmlinux[*]...
-    </div>
-    <div class="meta footer">
-      <span>
-        <a href="/categories/kernel/" itemprop="url" title="kernel"><i class="ic i-flag"></i>kernel</a>
-      </span>
-    </div>
-    <a href="/2022/05/03/inctf2021-kqueue/" itemprop="url" title="inctf2021_kqueue" class="btn">more...</a>
-  </div>
-</article>
-
-        
-<article class="item">
-  <div class="cover">
-    <a href="/2022/05/02/ciscn-babydriver/" itemprop="url" title="ciscn_babydriver"><img data-src="https://tva2.sinaimg.cn/mw690/6833939bly1giclga70tsj20zk0m84mr.jpg"></a>
-  </div>
-  <div class="info">
-    
-<div class="meta">
-  <span class="item" title="Created: 2022-05-02 14:36:45">
-    <span class="icon">
-      <i class="ic i-calendar"></i>
-    </span>
-    <time itemprop="dateCreated datePublished" datetime="2022-05-02T14:36:45+08:00">2022-05-02</time>
-  </span>
-  <span class="item" title="Symbols count in article">
-    <span class="icon">
-      <i class="ic i-pen"></i>
-    </span>
-    <span>8.9k</span>
-    <span class="text">words</span>
-  </span>
-  <span class="item" title="Reading time">
-    <span class="icon">
-      <i class="ic i-clock"></i>
-    </span>
-    <span>8 mins.</span>
-  </span>
-</div>
-
-    <h3><a href="/2022/05/02/ciscn-babydriver/" itemprop="url" title="ciscn_babydriver">ciscn_babydriver</a></h3>
-    <div class="excerpt">
-        # ciscn_babydriver	uaf,	修改自身的 cred
-# 保护检查：
-# qemu
-12345dreamcat@ubuntu:~/Desktop/kernel/babydriver$ cat boot.sh #!/bin/bashqemu-system-x86_64 -initrd fs.cpio -kernel bzImage -append &amp;#x27;console=ttyS0 root=/dev/ram oops=panic panic=1&amp;#x27; -enable-kvm -monitor /dev/null -m 128M --nographic...
-    </div>
-    <div class="meta footer">
-      <span>
-        <a href="/categories/kernel/" itemprop="url" title="kernel"><i class="ic i-flag"></i>kernel</a>
-      </span>
-    </div>
-    <a href="/2022/05/02/ciscn-babydriver/" itemprop="url" title="ciscn_babydriver" class="btn">more...</a>
-  </div>
-</article>
-
-        
-<article class="item">
-  <div class="cover">
-    <a href="/2022/05/01/%E5%BC%BA%E7%BD%91%E6%9D%AF2018-core/" itemprop="url" title="强网杯2018_core"><img data-src="https://tva2.sinaimg.cn/mw690/6833939bly1gicit4jrvuj20zk0m8785.jpg"></a>
-  </div>
-  <div class="info">
-    
-<div class="meta">
-  <span class="item" title="Created: 2022-05-01 18:14:39">
-    <span class="icon">
-      <i class="ic i-calendar"></i>
-    </span>
-    <time itemprop="dateCreated datePublished" datetime="2022-05-01T18:14:39+08:00">2022-05-01</time>
-  </span>
-  <span class="item" title="Symbols count in article">
-    <span class="icon">
-      <i class="ic i-pen"></i>
-    </span>
-    <span>8.9k</span>
-    <span class="text">words</span>
-  </span>
-  <span class="item" title="Reading time">
-    <span class="icon">
-      <i class="ic i-clock"></i>
-    </span>
-    <span>8 mins.</span>
-  </span>
-</div>
-
-    <h3><a href="/2022/05/01/%E5%BC%BA%E7%BD%91%E6%9D%AF2018-core/" itemprop="url" title="强网杯2018_core">强网杯2018_core</a></h3>
-    <div class="excerpt">
-        # 2018 强网杯 core，作为 kernel 学习开始的记录，栈溢出，ret2rop
-# 前置 zhishi
-# 1. 题目环境
-题目保护环境有两类，一类可执行文件的保护机制，一类是文件系统驱动内核的保护机制
-123456789101112131415161718dreamcat@ubuntu:~/Desktop/kernel/2018qwb_core/give_to_player$ checksec core.ko[*]...
-    </div>
-    <div class="meta footer">
-      <span>
-        <a href="/categories/kernel/" itemprop="url" title="kernel"><i class="ic i-flag"></i>kernel</a>
-      </span>
-    </div>
-    <a href="/2022/05/01/%E5%BC%BA%E7%BD%91%E6%9D%AF2018-core/" itemprop="url" title="强网杯2018_core" class="btn">more...</a>
-  </div>
-</article>
-
-        
-<article class="item">
-  <div class="cover">
-    <a href="/2022/04/25/MRCTF-ezbash/" itemprop="url" title="MRCTF_ezbash"><img data-src="https://tva2.sinaimg.cn/mw690/6833939bly1giclj9410cj20zk0m8h12.jpg"></a>
+    <a href="/2022/04/25/MRCTF-ezbash/" itemprop="url" title="MRCTF_ezbash"><img data-src="https://tva4.sinaimg.cn/mw690/6833939bly1gipetlbztpj20zk0m84qp.jpg"></a>
   </div>
   <div class="info">
     
@@ -303,7 +166,7 @@ https://github.com/dreamkecat/dreamkecat.github.io/tree/main/challenge/MRctf_ezb
         
 <article class="item">
   <div class="cover">
-    <a href="/2022/04/19/starctf-babynote/" itemprop="url" title="starctf_babynote"><img data-src="https://tva2.sinaimg.cn/mw690/6833939bly1giciszlczyj20zk0m816d.jpg"></a>
+    <a href="/2022/04/19/starctf-babynote/" itemprop="url" title="starctf_babynote"><img data-src="https://tva4.sinaimg.cn/mw690/6833939bly1gipetv6p75j20zk0m8x6p.jpg"></a>
   </div>
   <div class="info">
     
@@ -347,7 +210,7 @@ https://github.com/dreamkecat/dreamkecat.github.io/tree/main/challenge/MRctf_ezb
         
 <article class="item">
   <div class="cover">
-    <a href="/2022/04/18/starctf_examination/" itemprop="url" title="examination"><img data-src="https://tva2.sinaimg.cn/mw690/6833939bly1gicm0n457cj20zk0m8e81.jpg"></a>
+    <a href="/2022/04/18/starctf_examination/" itemprop="url" title="examination"><img data-src="https://tva4.sinaimg.cn/mw690/6833939bly1giciryrr3rj20zk0m8nhk.jpg"></a>
   </div>
   <div class="info">
     
@@ -391,7 +254,7 @@ https://github.com/dreamkecat/dreamkecat.github.io/tree/main/challenge/MRctf_ezb
         
 <article class="item">
   <div class="cover">
-    <a href="/2022/04/14/heap-paradise/" itemprop="url" title="heap_paradise"><img data-src="https://tva2.sinaimg.cn/mw690/6833939bly1gicli3sbvtj20zk0m8x6p.jpg"></a>
+    <a href="/2022/04/14/heap-paradise/" itemprop="url" title="heap_paradise"><img data-src="https://tva4.sinaimg.cn/mw690/6833939bly1gicis3attqj20zk0m8k7l.jpg"></a>
   </div>
   <div class="info">
     
@@ -433,7 +296,7 @@ https://github.com/dreamkecat/dreamkecat.github.io/tree/main/challenge/MRctf_ezb
         
 <article class="item">
   <div class="cover">
-    <a href="/2022/04/10/pwnable-bookwriter/" itemprop="url" title="Untitled"><img data-src="https://tva2.sinaimg.cn/mw690/6833939bly1gicivghyooj20zk0m8dir.jpg"></a>
+    <a href="/2022/04/10/pwnable-bookwriter/" itemprop="url" title="Untitled"><img data-src="https://tva4.sinaimg.cn/mw690/6833939bly1giclxfdlttj20zk0m8npd.jpg"></a>
   </div>
   <div class="info">
     
@@ -477,7 +340,7 @@ https://github.com/dreamkecat/dreamkecat.github.io/tree/main/challenge/MRctf_ezb
         
 <article class="item">
   <div class="cover">
-    <a href="/2022/04/01/tcache-tear/" itemprop="url" title="tcache_tear"><img data-src="https://tva2.sinaimg.cn/mw690/6833939bly1giclga70tsj20zk0m84mr.jpg"></a>
+    <a href="/2022/04/01/tcache-tear/" itemprop="url" title="tcache_tear"><img data-src="https://tva4.sinaimg.cn/mw690/6833939bly1gipexw3o58j20zk0m8e81.jpg"></a>
   </div>
   <div class="info">
     
@@ -521,7 +384,7 @@ https://github.com/dreamkecat/dreamkecat.github.io/tree/main/challenge/MRctf_ezb
         
 <article class="item">
   <div class="cover">
-    <a href="/2022/04/01/note-file/" itemprop="url" title="note_file"><img data-src="https://tva2.sinaimg.cn/mw690/6833939bly1gipexbei4hj20zk0m8npd.jpg"></a>
+    <a href="/2022/04/01/note-file/" itemprop="url" title="note_file"><img data-src="https://tva4.sinaimg.cn/mw690/6833939bly1giph4baakhj20zk0m8h5q.jpg"></a>
   </div>
   <div class="info">
     
@@ -562,6 +425,143 @@ https://github.com/dreamkecat/dreamkecat.github.io/tree/main/challenge/MRctf_ezb
   </div>
 </article>
 
+        
+<article class="item">
+  <div class="cover">
+    <a href="/2022/03/22/tw2017parrot/" itemprop="url" title="tw2017parrot"><img data-src="https://tva4.sinaimg.cn/mw690/6833939bly1gipevuctzzj20zk0m84qp.jpg"></a>
+  </div>
+  <div class="info">
+    
+<div class="meta">
+  <span class="item" title="Created: 2022-03-22 20:11:00">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <time itemprop="dateCreated datePublished" datetime="2022-03-22T20:11:00+08:00">2022-03-22</time>
+  </span>
+  <span class="item" title="Symbols count in article">
+    <span class="icon">
+      <i class="ic i-pen"></i>
+    </span>
+    <span>4.4k</span>
+    <span class="text">words</span>
+  </span>
+  <span class="item" title="Reading time">
+    <span class="icon">
+      <i class="ic i-clock"></i>
+    </span>
+    <span>4 mins.</span>
+  </span>
+</div>
+
+    <h3><a href="/2022/03/22/tw2017parrot/" itemprop="url" title="tw2017parrot">tw2017parrot</a></h3>
+    <div class="excerpt">
+        #
+# I IO_buf_base 劫持技术，
+# 文章写的会比较凌乱，是在一边解题同时记录
+# 环境以及保护
+1234567891011121314giantbranch@ubuntu:~/Desktop/pwnabletw/hijack_io_buf_base$ strings libc.so.6 | grep ubuntu GNU C Library (Ubuntu GLIBC 2.23-0ubuntu11) stable release version 2.23, by Roland McGrath et...
+    </div>
+    <div class="meta footer">
+      <span>
+        <a href="/categories/pwn/" itemprop="url" title="pwn"><i class="ic i-flag"></i>pwn</a>
+      </span>
+    </div>
+    <a href="/2022/03/22/tw2017parrot/" itemprop="url" title="tw2017parrot" class="btn">more...</a>
+  </div>
+</article>
+
+        
+<article class="item">
+  <div class="cover">
+    <a href="/2022/03/21/roarctf-2019-easypwn/" itemprop="url" title="roarctf_2019_easypwn"><img data-src="https://tva4.sinaimg.cn/mw690/6833939bly1giciundwu5j20zk0m8n9e.jpg"></a>
+  </div>
+  <div class="info">
+    
+<div class="meta">
+  <span class="item" title="Created: 2022-03-21 23:38:20">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <time itemprop="dateCreated datePublished" datetime="2022-03-21T23:38:20+08:00">2022-03-21</time>
+  </span>
+  <span class="item" title="Symbols count in article">
+    <span class="icon">
+      <i class="ic i-pen"></i>
+    </span>
+    <span>15k</span>
+    <span class="text">words</span>
+  </span>
+  <span class="item" title="Reading time">
+    <span class="icon">
+      <i class="ic i-clock"></i>
+    </span>
+    <span>14 mins.</span>
+  </span>
+</div>
+
+    <h3><a href="/2022/03/21/roarctf-2019-easypwn/" itemprop="url" title="roarctf_2019_easypwn">roarctf_2019_easypwn</a></h3>
+    <div class="excerpt">
+        # 这次的题比较难搞，但是攻击点挺单一，过程中里到了 2 个手法
+# 环境以及保护
+1234567giantbranch@ubuntu:~/Desktop/buuoj/roarctf_2019_easy_pwn$ checksec --file=roarctf[*] &amp;#x27;/home/giantbranch/Desktop/buuoj/roarctf_2019_easy_pwn/roarctf&amp;#x27; Arch: amd64-64-little RELRO: Full RELRO Stack: Canary found NX: NX enabled PIE: PIE...
+    </div>
+    <div class="meta footer">
+      <span>
+        <a href="/categories/pwn/" itemprop="url" title="pwn"><i class="ic i-flag"></i>pwn</a>
+      </span>
+    </div>
+    <a href="/2022/03/21/roarctf-2019-easypwn/" itemprop="url" title="roarctf_2019_easypwn" class="btn">more...</a>
+  </div>
+</article>
+
+        
+<article class="item">
+  <div class="cover">
+    <a href="/2022/03/20/buuoj-heapcreator/" itemprop="url" title="buuoj_heapcreator"><img data-src="https://tva4.sinaimg.cn/mw690/6833939bly1giciundwu5j20zk0m8n9e.jpg"></a>
+  </div>
+  <div class="info">
+    
+<div class="meta">
+  <span class="item" title="Created: 2022-03-20 23:59:28">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <time itemprop="dateCreated datePublished" datetime="2022-03-20T23:59:28+08:00">2022-03-20</time>
+  </span>
+  <span class="item" title="Symbols count in article">
+    <span class="icon">
+      <i class="ic i-pen"></i>
+    </span>
+    <span>13k</span>
+    <span class="text">words</span>
+  </span>
+  <span class="item" title="Reading time">
+    <span class="icon">
+      <i class="ic i-clock"></i>
+    </span>
+    <span>12 mins.</span>
+  </span>
+</div>
+
+    <h3><a href="/2022/03/20/buuoj-heapcreator/" itemprop="url" title="buuoj_heapcreator">buuoj_heapcreator</a></h3>
+    <div class="excerpt">
+        # 这次刷题记录开始着重整理下在 Glibc-2.23 下的一些利用姿势
+说明下 buuoj 的一些不好的地方，buuoj 基本不会给 libc, 而有些没有后门的程序，往往需要去泄露 libc 的基地址，但是最近的一些题目很孬去匹配到正确的版本，我也就不清楚是什么问题了。这里就不过多赘述了，而匹配 libc 就不作为本文的一个要点。我们只要在本地同通过测试就好了
+# 浅析
+题目环境以及保护
+ubuntu16
+12345678910$ checksec --file=heapcreator[*]...
+    </div>
+    <div class="meta footer">
+      <span>
+        <a href="/categories/pwn/" itemprop="url" title="pwn"><i class="ic i-flag"></i>pwn</a>
+      </span>
+    </div>
+    <a href="/2022/03/20/buuoj-heapcreator/" itemprop="url" title="buuoj_heapcreator" class="btn">more...</a>
+  </div>
+</article>
+
     </div>
 
   </div>
@@ -597,7 +597,7 @@ https://github.com/dreamkecat/dreamkecat.github.io/tree/main/challenge/MRctf_ezb
 <nav class="state">
     <div class="item posts">
       <a href="/archives/">
-        <span class="count">35</span>
+        <span class="count">32</span>
         <span class="name">posts</span>
       </a>
     </div>
@@ -660,38 +660,19 @@ https://github.com/dreamkecat/dreamkecat.github.io/tree/main/challenge/MRctf_ezb
   <li class="item">
     
 <div class="breadcrumb">
-<a href="/categories/pwn/" title="In pwn">pwn</a>
 </div>
 
-    <span><a href="/2022/03/22/tw2017parrot/" title="tw2017parrot">tw2017parrot</a></span>
+    <span><a href="/2022/05/06/slab%E3%80%81slub%E3%80%81slob%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" title="slab、slub、slob学习记录">slab、slub、slob学习记录</a></span>
   </li>
 
       
   <li class="item">
     
 <div class="breadcrumb">
+<a href="/categories/kernel/" title="In kernel">kernel</a>
 </div>
 
-    <span><a href="/2022/06/21/ciscn-2022-whatheap/" title="ciscn_2022_whatheap">ciscn_2022_whatheap</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/06/03/%E9%AB%98%E7%89%88%E6%9C%ACglibc%E5%A0%86%E7%9A%84%E5%87%A0%E7%A7%8D%E5%88%A9%E7%94%A8%E6%89%8B%E6%B3%95/" title="高版本glibc堆的几种利用手法">高版本glibc堆的几种利用手法</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/pwn/" title="In pwn">pwn</a>
-</div>
-
-    <span><a href="/2022/04/10/pwnable-bookwriter/" title="Untitled">Untitled</a></span>
+    <span><a href="/2022/05/02/ciscn-babydriver/" title="ciscn_babydriver">ciscn_babydriver</a></span>
   </li>
 
       
@@ -701,16 +682,6 @@ https://github.com/dreamkecat/dreamkecat.github.io/tree/main/challenge/MRctf_ezb
 </div>
 
     <span><a href="/2022/06/27/%E5%AD%A6%E4%B9%A0%E5%91%A8%E8%AE%B0-%E2%80%94%E2%80%94%E4%B8%80/" title="学习周记 ——一">学习周记 ——一</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/pwn/" title="In pwn">pwn</a>
-</div>
-
-    <span><a href="/2022/04/18/starctf_examination/" title="examination">examination</a></span>
   </li>
 
       
@@ -737,20 +708,50 @@ https://github.com/dreamkecat/dreamkecat.github.io/tree/main/challenge/MRctf_ezb
   <li class="item">
     
 <div class="breadcrumb">
-<a href="/categories/pwn/" title="In pwn">pwn</a>
+<a href="/categories/kernel/" title="In kernel">kernel</a>
 </div>
 
-    <span><a href="/2022/04/14/heap-paradise/" title="heap_paradise">heap_paradise</a></span>
+    <span><a href="/2022/05/03/inctf2021-kqueue/" title="inctf2021_kqueue">inctf2021_kqueue</a></span>
   </li>
 
       
   <li class="item">
     
 <div class="breadcrumb">
-<a href="/categories/kernel/" title="In kernel">kernel</a>
+<a href="/categories/pwn/" title="In pwn">pwn</a>
 </div>
 
-    <span><a href="/2022/05/01/%E5%BC%BA%E7%BD%91%E6%9D%AF2018-core/" title="强网杯2018_core">强网杯2018_core</a></span>
+    <span><a href="/2022/03/22/tw2017parrot/" title="tw2017parrot">tw2017parrot</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/06/20/ciscn-2022-planecoode/" title="ciscn_2022_planecoode">ciscn_2022_planecoode</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/pwn/" title="In pwn">pwn</a>
+</div>
+
+    <span><a href="/2022/03/21/roarctf-2019-easypwn/" title="roarctf_2019_easypwn">roarctf_2019_easypwn</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/begin/" title="In begin">begin</a>
+</div>
+
+    <span><a href="/2021/03/19/hello-world/" title="Hello World">Hello World</a></span>
   </li>
 
   </ul>
